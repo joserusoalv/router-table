@@ -21,27 +21,33 @@ interface Todo {
 @Component({
   selector: 'app-todos-table',
   template: `
-    <section class="todos-container">
+    <section class="todos-container" data-testid="todos-container">
       <div class="controls">
         <input
+          data-testid="search-input"
           type="search"
           placeholder="Buscar por título..."
           [value]="searchTerm()"
           (input)="onSearch($event)"
         />
 
-        <select [value]="filter()" (change)="onFilter($event)">
+        <select
+          data-testid="completed-filter"
+          [value]="filter()"
+          (change)="onFilter($event)"
+        >
           <option value="all">Todos</option>
           <option value="completed">Completado</option>
           <option value="not-completed">No completado</option>
         </select>
       </div>
+
       @if (todos.isLoading()) {
-      <div class="loading">Cargando...</div>
+      <div class="loading" data-testid="loading">Cargando...</div>
       } @else if (todos.error()) {
-      <div class="error">Error al cargar los datos</div>
+      <div class="error" data-testid="error">Error al cargar los datos</div>
       } @else {
-      <table>
+      <table data-testid="todos-table">
         <thead>
           <tr>
             <th>ID</th>
@@ -51,19 +57,25 @@ interface Todo {
         </thead>
         <tbody>
           @for (todo of filteredTodos(); track todo.id) {
-          <tr>
-            <td>{{ todo.id }}</td>
-            <td [innerHTML]="todo.title | highlight : searchTerm()">
+          <tr data-testid="todo-row" [attr.data-completed]="todo.completed">
+            <td data-testid="todo-id">{{ todo.id }}</td>
+            <td
+              data-testid="todo-title"
+              [innerHTML]="todo.title | highlight : searchTerm()"
+            >
               {{ todo.title }}
             </td>
-            <td>
-              <span [class.completed]="todo.completed">
+            <td data-testid="todo-completed">
+              <span
+                [class.completed]="todo.completed"
+                data-testid="todo-completed-badge"
+              >
                 {{ todo.completed ? 'Sí' : 'No' }}
               </span>
             </td>
           </tr>
-          }@empty {
-          <tr>
+          } @empty {
+          <tr data-testid="empty-row">
             <td colspan="3">No se encontraron resultados</td>
           </tr>
           }

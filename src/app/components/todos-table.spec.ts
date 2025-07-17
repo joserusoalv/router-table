@@ -99,68 +99,95 @@ function setupFetchMock(
 // -----------------------------------------------------------------------------
 // Harness de pruebas para el componente
 // -----------------------------------------------------------------------------
+type CompletedFilterValue = 'all' | 'completed' | 'not-completed';
+
 interface TodosTableHarness {
   fixture: ComponentFixture<TodosTable>;
   native: HTMLElement;
   component: TodosTable;
-  // Acciones
   setSearch(value: string): Promise<void>;
-  setCompletedFilter(
-    value: 'all' | 'completed' | 'not-completed'
-  ): Promise<void>;
+  setCompletedFilter(value: CompletedFilterValue): Promise<void>;
   pushQueryParams(params: Record<string, any>): Promise<void>;
-  // Lecturas
   loadingText(): string | null;
   errorText(): string | null;
-  getRowEls(): NodeListOf<HTMLTableRowElement>;
+  getRowEls(): HTMLTableRowElement[];
   getRowTitles(): string[];
+  getRowCompletionFlags(): boolean[]; // true = completado
 }
 
 async function renderTodosTable(): Promise<TodosTableHarness> {
   const fixture = TestBed.createComponent(TodosTable);
   await fixture.whenStable();
   fixture.detectChanges();
+
   const native = fixture.nativeElement as HTMLElement;
   const component = fixture.componentInstance;
 
-  async function detect() {
+  const detect = async () => {
     fixture.detectChanges();
     await fixture.whenStable();
-    fixture.detectChanges(); // segunda pasada por si hay cambios post-async
-  }
+    fixture.detectChanges();
+  };
 
-  async function setSearch(value: string) {
-    const input = getElement<HTMLInputElement>(native, 'input[type="search"]');
+  const getSearchEl = () =>
+    native.querySelector<HTMLInputElement>('[data-testid="search-input"]')!;
+  const getFilterEl = () =>
+    native.querySelector<HTMLSelectElement>(
+      '[data-testid="completed-filter"]'
+    )!;
+
+  const getRowEls = () =>
+    Array.from(
+      native.querySelectorAll<HTMLTableRowElement>('[data-testid="todo-row"]')
+    );
+
+  const getRowTitles = () =>
+    getRowEls().map(
+      (r) =>
+        r
+          .querySelector<HTMLElement>('[data-testid="todo-title"]')!
+          .textContent?.trim() ?? ''
+    );
+
+  const getRowCompletionFlags = () =>
+    getRowEls().map((r) => {
+      const badge = r.querySelector<HTMLElement>(
+        '[data-testid="todo-completed-badge"]'
+      );
+      const txt = badge?.textContent?.trim().toLowerCase() ?? '';
+      return txt === 'sí' || txt === 'si';
+    });
+
+  const loadingText = () =>
+    native.querySelector('[data-testid="loading"]')?.textContent?.trim() ??
+    null;
+  const errorText = () =>
+    native.querySelector('[data-testid="error"]')?.textContent?.trim() ?? null;
+
+  const setSearch = async (value: string) => {
+    const input = getSearchEl();
     input.value = value;
     input.dispatchEvent(new Event('input'));
     await detect();
-  }
+  };
 
-  async function setCompletedFilter(
-    value: 'all' | 'completed' | 'not-completed'
-  ) {
-    const select = getElement<HTMLSelectElement>(native, 'select');
-    // asumimos opciones: '' | 'completed' | 'not-completed'
-    select.value = value === 'all' ? '' : value;
-    select.dispatchEvent(new Event('change'));
+  const setCompletedFilter = async (
+    value: CompletedFilterValue
+  ): Promise<void> => {
+    const select = getFilterEl();
+    if (select.value !== value) {
+      select.value = value;
+      select.dispatchEvent(new Event('change'));
+    }
     await detect();
-  }
+  };
 
-  async function pushQueryParams(params: Record<string, any>) {
+  const pushQueryParams = async (
+    params: Record<string, any>
+  ): Promise<void> => {
     queryParamsSubject.next(params);
     await detect();
-  }
-
-  const loadingText = () =>
-    native.querySelector('.loading')?.textContent?.trim() ?? null;
-  const errorText = () =>
-    native.querySelector('.error')?.textContent?.trim() ?? null;
-  const getRowEls = () =>
-    native.querySelectorAll<HTMLTableRowElement>('tbody tr');
-  const getRowTitles = () =>
-    Array.from(getRowEls()).map(
-      (tr) => tr.querySelector('td:nth-child(2)')?.textContent?.trim() ?? ''
-    );
+  };
 
   return {
     fixture,
@@ -173,34 +200,26 @@ async function renderTodosTable(): Promise<TodosTableHarness> {
     errorText,
     getRowEls,
     getRowTitles,
+    getRowCompletionFlags,
   };
 }
 
 // -----------------------------------------------------------------------------
 // Expect helpers
 // -----------------------------------------------------------------------------
-function expectTableToHaveTitles(
-  h: TodosTableHarness,
-  expectedTitles: string[]
-) {
-  const titles = h.getRowTitles();
-  expect(titles).toEqual(expectedTitles);
+function expectTableToHaveTitles(h: TodosTableHarness, expected: string[]) {
+  expect(h.getRowTitles()).toStrictEqual(expected);
 }
 
-function expectTableEmptyMessage(
-  h: TodosTableHarness,
-  expectedSubstring = 'No se encontraron resultados'
-) {
-  const rows = h.getRowEls();
-  expect(rows.length).toBe(1); // fila vacía
-  expect(rows[0].textContent).toContain(expectedSubstring);
+function expectTableEmptyMessage(h: TodosTableHarness) {
+  // no filas de datos: debería existir fila empty
+  const empty = h.native.querySelector('[data-testid="empty-row"]');
+  expect(empty).not.toBeNull();
+  expect(empty!.textContent).toContain('No se encontraron resultados');
 }
 
-// Utilidad para contar filas "completadas" (contienen 'Sí')
-function countCompletedRows(h: TodosTableHarness) {
-  return Array.from(h.getRowEls()).filter((tr) =>
-    tr.textContent?.includes('Sí')
-  ).length;
+function countCompletedRows(h: TodosTableHarness): number {
+  return h.getRowCompletionFlags().filter(Boolean).length;
 }
 
 // -----------------------------------------------------------------------------
@@ -283,46 +302,33 @@ describe('TodosTable', () => {
     it('filtra a solo completados', async () => {
       setupFetchMock(fetchSpy, MOCK_TODOS);
       const h = await renderTodosTable();
+
       await h.setCompletedFilter('completed');
-      expect(countCompletedRows(h)).toBe(2);
+
+      expect(countCompletedRows(h)).toBe(
+        MOCK_TODOS.filter((t) => t.completed).length
+      );
+
+      expectTableToHaveTitles(
+        h,
+        MOCK_TODOS.filter((t) => t.completed).map((t) => t.title)
+      );
     });
 
     it('filtra a solo pendientes', async () => {
       setupFetchMock(fetchSpy, MOCK_TODOS);
-      const fixture = TestBed.createComponent(TodosTable);
-      await fixture.whenStable();
-      fixture.detectChanges();
+      const h = await renderTodosTable();
 
-      const native = fixture.nativeElement as HTMLElement;
-      const select = native.querySelector<HTMLSelectElement>('select')!;
-      select.value = 'not-completed';
-      select.dispatchEvent(new Event('change'));
-      fixture.detectChanges();
-      await fixture.whenStable();
-      fixture.detectChanges();
+      await h.setCompletedFilter('not-completed');
 
-      const rows = Array.from(native.querySelectorAll('tbody tr'));
-      const titles = rows
-        .map(
-          (r) => r.querySelector('td:nth-child(2)')?.textContent?.trim() ?? ''
-        )
-        .filter((t) => t && t !== 'No se encontraron resultados');
+      // Ninguna fila debe mostrar 'Sí'
+      expect(countCompletedRows(h)).toBe(0);
 
-      expect(titles).toStrictEqual(
+      // Los títulos deben corresponder a los TODOs con completed === false
+      expectTableToHaveTitles(
+        h,
         MOCK_TODOS.filter((t) => !t.completed).map((t) => t.title)
       );
-
-      const completedValues = rows
-        .map(
-          (r) =>
-            r
-              .querySelector('td:nth-child(3)')
-              ?.textContent?.trim()
-              .toLowerCase() ?? ''
-        )
-        .filter((t) => t && t !== 'No se encontraron resultados');
-
-      expect(completedValues.every((txt) => txt === 'no')).toBe(true);
     });
   });
 
