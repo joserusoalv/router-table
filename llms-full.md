@@ -1,5 +1,3 @@
-
-
 <big style="margin-top: 2em">
 Angular is a web framework that empowers developers to build fast, reliable applications.
 </big>
@@ -14,16 +12,23 @@ what it's like to use Angular, or get started in the [Tutorial](tutorials/learn-
 prefer following step-by-step instructions.
 
 ## Features that power your development
+
 ## Develop applications faster than ever
+
 ## Ship with confidence
+
 ## Works at any scale
+
 ## Open-source first
+
 ## A thriving community
+
 Get started with Angular quickly with online starters or locally with your terminal.
 
 ## Play Online
 
 If you just want to play around with Angular in your browser without setting up a project, you can use our online sandbox:
+
 ## Set up a new project locally
 
 If you're starting a new project, you'll most likely want to create a local project so that you can use tooling such as Git.
@@ -47,18 +52,22 @@ Open a terminal (if you're using [Visual Studio Code](https://code.visualstudio.
 // npm
 npm install -g @angular/cli
 ```
+
 ```
 // pnpm
 pnpm install -g @angular/cli
 ```
+
 ```
 // yarn
 yarn global add @angular/cli
 ```
+
 ```
 // bun
 bun install -g @angular/cli
 ```
+
 If you are having issues running this command in Windows or Unix, check out the [CLI docs](/tools/cli/setup-local#install-the-angular-cli) for more info.
 
 #### Create a new project
@@ -68,6 +77,7 @@ In your terminal, run the CLI command `ng new` with the desired project name. In
 ```shell
 ng new <project-name>
 ```
+
 You will be presented with some configuration options for your project. Use the arrow and enter keys to navigate and select which options you desire.
 
 If you don't have any preferences, just hit the enter key to take the default options and continue with the setup.
@@ -88,11 +98,13 @@ In your terminal, switch to your new Angular project.
 ```shell
 cd my-first-angular-app
 ```
+
 All of your dependencies should be installed at this point (which you can verify by checking for the existent for a `node_modules` folder in your project), so you can start your project by running the command:
 
 ```shell
 npm start
 ```
+
 If everything is successful, you should see a similar confirmation message in your terminal:
 
 ```shell
@@ -104,9 +116,14 @@ NOTE: Raw file sizes do not reflect development server per-request transformatio
 
 And now you can visit the path in `Local` (e.g., `http://localhost:4200`) to see your application. Happy coding! 🎉
 
+### Using AI for Development
+
+To get started with building in your preferred AI powered IDE, [check out Angular prompt rules and best practices](/ai/develop-with-ai).
+
 ## Next steps
 
 Now that you've created your Angular project, you can learn more about Angular in our [Essentials guide](/essentials) or choose a topic in our in-depth guides!
+
 # Angular coding style guide
 
 ## Introduction
@@ -204,7 +221,7 @@ Avoid creating subdirectories based on the type of code that lives in those dire
 example, avoid creating directories like `components`, `directives`, and `services`.
 
 Avoid putting so many files into one directory that it becomes hard to read or navigate. As the
-number files in a directory grows, consider splitting further into additional sub-directories.
+number of files in a directory grows, consider splitting further into additional sub-directories.
 
 ### One concept per file
 
@@ -221,10 +238,10 @@ When in doubt, go with the approach that leads to smaller files.
 
 Prefer using the `inject` function over injecting constructor parameters. The `inject` function works the same way as constructor parameter injection, but offers several style advantages:
 
-*   `inject` is generally more readable, especially when a class injects many dependencies.
-*   It's more syntactically straightforward to add comments to injected dependencies
-*   `inject` offers better type inference.
-*   When targeting ES2022+ with [`useDefineForClassFields`](https://www.typescriptlang.org/tsconfig/#useDefineForClassFields), you can avoid separating field declaration and initialization when fields read on injected dependencies.
+- `inject` is generally more readable, especially when a class injects many dependencies.
+- It's more syntactically straightforward to add comments to injected dependencies
+- `inject` offers better type inference.
+- When targeting ES2022+ with [`useDefineForClassFields`](https://www.typescriptlang.org/tsconfig/#useDefineForClassFields), you can avoid separating field declaration and initialization when fields read on injected dependencies.
 
 [You can refactor existing code to `inject` with an automatic tool](reference/migrations/inject-function).
 
@@ -306,7 +323,9 @@ properties initialized by `input`, `model`, `output`, and queries. The readonly 
 ensures that the value set by Angular is not overwritten.
 
 ```ts
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class UserProfile {
   readonly userId = input();
   readonly userSaved = output();
@@ -317,7 +336,9 @@ For components and directives that use the decorator-based `@Input`, `@Output`, 
 advice applies to output properties and queries, but not input properties.
 
 ```ts
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class UserProfile {
   @Output() readonly userSaved = new EventEmitter<void>();
   @ViewChildren(PaymentMethod) readonly paymentMethods?: QueryList<PaymentMethod>;
@@ -326,14 +347,17 @@ export class UserProfile {
 
 ### Prefer `class` and `style` over `ngClass` and `ngStyle`
 
-Prefer `class` and `style` bindings over using the `NgClass` and `NgStyle` directives.
+Prefer `class` and `style` bindings over using the [`NgClass`](/api/common/NgClass) and [`NgStyle`](/api/common/NgStyle) directives.
 
 ```html
 <!-- PREFER -->
 <div [class.admin]="isAdmin" [class.dense]="density === 'high'">
-
-<!-- AVOID -->
-<div [ngClass]="{admin: isAdmin, dense: density === 'high'}">
+  <!-- OR -->
+  <div [class]="{admin: isAdmin, dense: density === 'high'}">
+    <!-- AVOID -->
+    <div [ngClass]="{admin: isAdmin, dense: density === 'high'}"></div>
+  </div>
+</div>
 ```
 
 Both `class` and `style` bindings use a more straightforward syntax that aligns closely with
@@ -342,6 +366,8 @@ developers familiar with basic HTML.
 
 Additionally, the `NgClass` and `NgStyle` directives incur an additional performance cost compared
 to the built-in `class` and `style` binding syntax.
+
+For more details, refer to the [bindings guide](/guide/templates/binding#css-class-and-style-property-bindings)
 
 ### Name event handlers for what they _do_, not for the triggering event
 
@@ -369,16 +395,18 @@ single well-named handler. In these cases, it's fine to fall back to a name like
 then delegate to more specific behaviors based on the event details:
 
 ```ts
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 class RichText {
   handleKeydown(event: KeyboardEvent) {
     if (event.ctrlKey) {
-      if (event.key === 'B') {
+      if (event.key === "B") {
         this.activateBold();
-      } else if (event.key === 'I') {
+      } else if (event.key === "I") {
         this.activateItalic();
       }
-// ...
+      // ...
     }
   }
 }
@@ -412,15 +440,19 @@ Angular provides a TypeScript interface for each lifecycle method. When adding a
 your class, import and `implement` these interfaces to ensure that the methods are named correctly.
 
 ```ts
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit } from "@angular/core";
 
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class UserProfile implements OnInit {
-
   // The `OnInit` interface ensures this method is named correctly.
-  ngOnInit() { /* ... */ }
+  ngOnInit() {
+    /* ... */
+  }
 }
 ```
+
 Components are the main building blocks of Angular applications. Each component represents a part of a larger web page. Organizing an application into components helps provide structure to your project, clearly separating code into specific parts that are easy to maintain and grow over time.
 
 ## Defining a component
@@ -437,13 +469,15 @@ Here is a simplified example of a `UserProfile` component.
 ```typescript
 // user-profile.ts
 @Component({
-  selector: 'user-profile',
+  selector: "user-profile",
   template: `
     <h1>User profile</h1>
     <p>This is the user profile page</p>
   `,
 })
-export class UserProfile { /* Your component code goes here */ }
+export class UserProfile {
+  /* Your component code goes here */
+}
 ```
 
 The `@Component` decorator also optionally accepts a `styles` property for any CSS you want to apply to your template:
@@ -451,14 +485,16 @@ The `@Component` decorator also optionally accepts a `styles` property for any C
 ```typescript
 // user-profile.ts
 @Component({
-  selector: 'user-profile',
+  selector: "user-profile",
   template: `
     <h1>User profile</h1>
     <p>This is the user profile page</p>
   `,
   styles: `h1 { font-size: 3em; } `,
 })
-export class UserProfile { /* Your component code goes here */ }
+export class UserProfile {
+  /* Your component code goes here */
+}
 ```
 
 ### Separating HTML and CSS into separate files
@@ -468,9 +504,9 @@ You can define a component's HTML and CSS in separate files using `templateUrl` 
 ```typescript
 // user-profile.ts
 @Component({
-  selector: 'user-profile',
-  templateUrl: 'user-profile.html',
-  styleUrl: 'user-profile.css',
+  selector: "user-profile",
+  templateUrl: "user-profile.html",
+  styleUrl: "user-profile.css",
 })
 export class UserProfile {
   // Component behavior is defined in here
@@ -479,7 +515,7 @@ export class UserProfile {
 
 ```html
 <!-- user-profile.html -->
-<h1>Use profile</h1>
+<h1>User profile</h1>
 <p>This is the user profile page</p>
 ```
 
@@ -506,6 +542,7 @@ flowchart TD
 Here, the `UserProfile` component uses several other components to produce the final page.
 
 To import and use a component, you need to:
+
 1. In your component's TypeScript file, add an `import` statement for the component you want to use.
 2. In your `@Component` decorator, add an entry to the `imports` array for the component you want to use.
 3. In your component's template, add an element that matches the selector of the component you want to use.
@@ -514,10 +551,10 @@ Here's an example of a `UserProfile` component importing a `ProfilePhoto` compon
 
 ```typescript
 // user-profile.ts
-import {ProfilePhoto} from 'profile-photo.ts';
+import { ProfilePhoto } from "profile-photo.ts";
 
 @Component({
-  selector: 'user-profile',
+  selector: "user-profile",
   imports: [ProfilePhoto],
   template: `
     <h1>User profile</h1>
@@ -535,6 +572,7 @@ TIP: Want to know more about Angular components? See the [In-depth Components gu
 ## Next Step
 
 Now that you know how components work in Angular, it's time to learn how we add and manage dynamic data in our application.
+
 # Component selectors
 
 TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
@@ -550,6 +588,7 @@ the component is used:
 })
 export class ProfilePhoto { }
 ```
+
 You use a component by creating a matching HTML element in the templates of _other_ components:
 
 ```typescript
@@ -561,6 +600,7 @@ You use a component by creating a matching HTML element in the templates of _oth
 })
 export class UserProfile { }
 ```
+
 **Angular matches selectors statically at compile-time**. Changing the DOM at run-time, either via
 Angular bindings or with DOM APIs, does not affect the components rendered.
 
@@ -605,6 +645,7 @@ matching `textarea` elements:
 })
 export class DropZone { }
 ```
+
 Angular does not support any other pseudo-classes or pseudo-elements in component selectors.
 
 ### Combining selectors
@@ -619,6 +660,7 @@ elements that specify `type="reset"`:
 })
 export class ResetButton { }
 ```
+
 You can also define multiple selectors with a comma-separated list:
 
 ```typescript
@@ -628,6 +670,7 @@ You can also define multiple selectors with a comma-separated list:
 })
 export class DropZone { }
 ```
+
 Angular creates a component for each element that matches _any_ of the selectors in the list.
 
 ## Choosing a selector
@@ -666,6 +709,7 @@ standard `<button>` element by using an attribute selector:
 })
 export class YouTubeUploadButton { }
 ```
+
 This approach allows consumers of the component to directly use all the element's standard APIs
 without extra work. This is especially valuable for ARIA attributes such as `aria-label`.
 
@@ -676,6 +720,7 @@ See [Importing and using components](guide/components/importing) for more inform
 
 Components that define attribute selectors should use lowercase, dash-case attributes. You can
 follow the same prefixing recommendation described above.
+
 # Styling components
 
 TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
@@ -684,22 +729,24 @@ Components can optionally include CSS styles that apply to that component's DOM:
 
 ```typescript
 @Component({
-  selector: 'profile-photo',
-  template: `<img src="profile-photo.jpg" alt="Your profile photo">`,
+  selector: "profile-photo",
+  template: `<img src="profile-photo.jpg" alt="Your profile photo" />`,
   styles: ` img { border-radius: 50%; } `,
 })
-export class ProfilePhoto { }
+export class ProfilePhoto {}
 ```
+
 You can also choose to write your styles in separate files:
 
 ```typescript
 @Component({
-  selector: 'profile-photo',
-  templateUrl: 'profile-photo.html',
-  styleUrl: 'profile-photo.css',
+  selector: "profile-photo",
+  templateUrl: "profile-photo.html",
+  styleUrl: "profile-photo.css",
 })
-export class ProfilePhoto { }
+export class ProfilePhoto {}
 ```
+
 When Angular compiles your component, these styles are emitted with your component's JavaScript
 output. This means that component styles participate in the JavaScript module system. When you
 render an Angular component, the framework automatically includes its associated styles, even when
@@ -722,6 +769,7 @@ You can specify the mode in the `@Component` decorator:
 })
 export class ProfilePhoto { }
 ```
+
 ### ViewEncapsulation.Emulated
 
 By default, Angular uses emulated encapsulation so that a component's styles only apply to elements
@@ -790,6 +838,7 @@ reference CSS files. Additionally, your CSS may
 use [the `@import`at-rule](https://developer.mozilla.org/docs/Web/CSS/@import) to reference
 CSS files. Angular treats these references as _external_ styles. External styles are not affected by
 emulated view encapsulation.
+
 # Accepting data with input properties
 
 TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
@@ -800,14 +849,17 @@ When you use a component, you commonly want to pass some data to it. A component
 **inputs**:
 
 ```ts
-import {Component, input} from '@angular/core';
+import { Component, input } from "@angular/core";
 
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
   // Declare an input named 'value' with a default value of zero.
   value = input(0);
 }
 ```
+
 This lets you bind to the property in a template:
 
 ```html
@@ -817,7 +869,9 @@ This lets you bind to the property in a template:
 If an input has a default value, TypeScript infers the type from the default value:
 
 ```typescript
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
   // TypeScript infers that this input is a number, returning InputSignal<number>.
   value = input(0);
@@ -829,7 +883,9 @@ You can explicitly declare a type for the input by specifying a generic paramete
 If an input without a default value is not set, its value is `undefined`:
 
 ```typescript
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
   // Produces an InputSignal<number | undefined> because `value` may not be set.
   value = input<number>();
@@ -849,9 +905,11 @@ When extending a component class, **inputs are inherited by the child class.**
 The `input` function returns an `InputSignal`. You can read the value by calling the signal:
 
 ```ts
-import {Component, input} from '@angular/core';
+import { Component, input } from "@angular/core";
 
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
   // Declare an input named 'value' with a default value of zero.
   value = input(0);
@@ -860,6 +918,7 @@ export class CustomSlider {
   label = computed(() => `The slider's value is ${this.value()}`);
 }
 ```
+
 Signals created by the `input` function are read-only.
 
 ## Required inputs
@@ -867,12 +926,15 @@ Signals created by the `input` function are read-only.
 You can declare that an input is `required` by calling `input.required` instead of `input`:
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
   // Declare a required input named value. Returns an `InputSignal<number>`.
   value = input.required<number>();
 }
 ```
+
 Angular enforces that required inputs _must_ be set when the component is used in a template. If you try to use a component without specifying all of its required inputs, Angular reports an error at build-time.
 
 Required inputs do not automatically include `undefined` in the generic parameter of the returned `InputSignal`.
@@ -887,17 +949,18 @@ You can specify a `transform` function to change the value of an input when it's
 
 ```ts
 @Component({
-  selector: 'custom-slider',
+  selector: "custom-slider",
   /*...*/
 })
 export class CustomSlider {
-  label = input('', {transform: trimString});
+  label = input("", { transform: trimString });
 }
 
 function trimString(value: string | undefined): string {
-  return value?.trim() ?? '';
+  return value?.trim() ?? "";
 }
 ```
+
 ```html
 <custom-slider [label]="systemVolume" />
 ```
@@ -915,15 +978,18 @@ The most common use-case for input transforms is to accept a wider range of valu
 When you specify an input transform, the type of the transform function's parameter determines the types of values that can be set to the input in a template.
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
-  widthPx = input('', {transform: appendPx});
+  widthPx = input("", { transform: appendPx });
 }
 
 function appendPx(value: number): string {
   return `${value}px`;
 }
 ```
+
 In the example above, the `widthPx` input accepts a `number` while the `InputSignal` property returns a `string`.
 
 #### Built-in transformations
@@ -931,14 +997,17 @@ In the example above, the `widthPx` input accepts a `number` while the `InputSig
 Angular includes two built-in transform functions for the two most common scenarios: coercing values to boolean and numbers.
 
 ```ts
-import {Component, input, booleanAttribute, numberAttribute} from '@angular/core';
+import { Component, input, booleanAttribute, numberAttribute } from "@angular/core";
 
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
-  disabled = input(false, {transform: booleanAttribute});
-  value = input(0, {transform: numberAttribute});
+  disabled = input(false, { transform: booleanAttribute });
+  value = input(0, { transform: numberAttribute });
 }
 ```
+
 `booleanAttribute` imitates the behavior of standard HTML [boolean attributes](https://developer.mozilla.org/docs/Glossary/Boolean/HTML), where the
 _presence_ of the attribute indicates a "true" value. However, Angular's `booleanAttribute` treats the literal string `"false"` as the boolean `false`.
 
@@ -949,11 +1018,14 @@ _presence_ of the attribute indicates a "true" value. However, Angular's `boolea
 You can specify the `alias` option to change the name of an input in templates.
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
-  value = input(0, {alias: 'sliderValue'});
+  value = input(0, { alias: "sliderValue" });
 }
 ```
+
 ```html
 <custom-slider [sliderValue]="50" />
 ```
@@ -971,14 +1043,16 @@ When creating a component, you can define a model input similarly to how you cre
 Both types of input allow someone to bind a value into the property. However, **model inputs allow the component author to write values into the property**. If the property is bound with a two-way binding, the new value propagates to that binding.
 
 ```typescript
-@Component({ /* ... */})
+@Component({
+  /* ... */
+})
 export class CustomSlider {
   // Define a model input named "value".
   value = model(0);
 
   increment() {
     // Update the model input with a new value, propagating the value to any bindings.
-    this.value.update(oldValue => oldValue + 10);
+    this.value.update((oldValue) => oldValue + 10);
   }
 }
 
@@ -1024,7 +1098,9 @@ In the example above, the `CustomSlider` can write values into its `value` model
 When you declare a model input in a component or directive, Angular automatically creates a corresponding [output](guide/components/outputs) for that model. The output's name is the model input's name suffixed with "Change".
 
 ```typescript
-@Directive({ /* ... */ })
+@Directive({
+  /* ... */
+})
 export class CustomCheckbox {
   // This automatically creates an output named "checkedChange".
   // Can be subscribed to using `(checkedChange)="handler()"` in the template.
@@ -1064,6 +1140,7 @@ export class CustomSlider {
   @Input() value = 0;
 }
 ```
+
 Binding to an input is the same in both signal-based and decorator-based inputs:
 
 ```html
@@ -1084,6 +1161,7 @@ export class CustomSlider {
   @Input({required: true}) value = 0;
 }
 ```
+
 If you try to use a component without specifying all of its required inputs, Angular reports an error at build-time.
 
 #### Input transforms
@@ -1101,6 +1179,7 @@ export class CustomSlider {
 
 function trimString(value: string | undefined) { return value?.trim() ?? ''; }
 ```
+
 #### Input aliases
 
 You can specify the `alias` option to change the name of an input in templates.
@@ -1111,6 +1190,7 @@ export class CustomSlider {
   @Input({alias: 'sliderValue'}) value = 0;
 }
 ```
+
 ```html
 <custom-slider [sliderValue]="50" />
 ```
@@ -1130,10 +1210,14 @@ export class CustomSlider {
     return this.internalValue;
   }
 
-set value(newValue: number) { this.internalValue = newValue; }
+  set value(newValue: number) {
+    this.internalValue = newValue;
+  }
 
-private internalValue = 0; }
+  private internalValue = 0;
+}
 ```
+
 You can even create a _write-only_ input by only defining a public setter:
 
 ```ts
@@ -1143,8 +1227,10 @@ export class CustomSlider {
     this.internalValue = newValue;
   }
 
-private internalValue = 0; }
+  private internalValue = 0;
+}
 ```
+
 **Prefer using input transforms instead of getters and setters** if possible.
 
 Avoid complex or costly getters and setters. Angular may invoke an input's setter multiple times, which may negatively impact application performance if the setter performs any costly behaviors, such as DOM manipulation.
@@ -1161,6 +1247,7 @@ In addition to the `@Input` decorator, you can also specify a component's inputs
 })
 export class CustomSlider extends BaseSlider { }
 ```
+
 You can additionally specify an input alias in the `inputs` list by putting the alias after a colon in the string:
 
 ```ts
@@ -1179,11 +1266,14 @@ TIP: This guide assumes you've already read the [Essentials Guide](essentials). 
 Angular components can define custom events by assigning a property to the `output` function:
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class ExpandablePanel {
   panelClosed = output<void>();
 }
 ```
+
 ```html
 <expandable-panel (panelClosed)="savePanelState()" />
 ```
@@ -1193,6 +1283,7 @@ The `output` function returns an `OutputEmitterRef`. You can emit an event by ca
 ```ts
 this.panelClosed.emit();
 ```
+
 Angular refers to properties initialized with the `output` function as **outputs**. You can use outputs to raise custom events, similar to native browser events like `click`.
 
 **Angular custom events do not bubble up the DOM**.
@@ -1215,8 +1306,9 @@ this.valueChanged.emit(7);
 this.thumbDropped.emit({
   pointerX: 123,
   pointerY: 456,
-})
+});
 ```
+
 When defining an event listener in a template, you can access the event data from the `$event` variable:
 
 ```html
@@ -1228,11 +1320,14 @@ When defining an event listener in a template, you can access the event data fro
 The `output` function accepts a parameter that lets you specify a different name for the event in a template:
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
-  changed = output({alias: 'valueChanged'});
+  changed = output({ alias: "valueChanged" });
 }
 ```
+
 ```html
 <custom-slider (valueChanged)="saveVolume()" />
 ```
@@ -1249,7 +1344,7 @@ from the component instance. The `OutputRef` type includes a `subscribe` method:
 ```ts
 const someComponentRef: ComponentRef<SomeComponent> = viewContainerRef.createComponent(/*...*/);
 
-someComponentRef.instance.someEventProperty.subscribe(eventData => {
+someComponentRef.instance.someEventProperty.subscribe((eventData) => {
   console.log(eventData);
 });
 ```
@@ -1257,7 +1352,7 @@ someComponentRef.instance.someEventProperty.subscribe(eventData => {
 Angular automatically cleans up event subscriptions when it destroys components with subscribers. Alternatively, you can manually unsubscribe from an event. The `subscribe` function returns an `OutputRefSubscription` with an `unsubscribe` method:
 
 ```typescript
-const eventSubscription = someComponent.someEventProperty.subscribe(eventData => {
+const eventSubscription = someComponent.someEventProperty.subscribe((eventData) => {
   console.log(eventData);
 });
 
@@ -1286,11 +1381,14 @@ original decorator-based `@Output` API remains fully supported.
 You can alternatively define custom events by assigning a property to a new `EventEmitter` and adding the `@Output` decorator:
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class ExpandablePanel {
   @Output() panelClosed = new EventEmitter<void>();
 }
 ```
+
 You can emit an event by calling the `emit` method on the `EventEmitter`.
 
 ### Aliases with the `@Output` decorator
@@ -1298,11 +1396,14 @@ You can emit an event by calling the `emit` method on the `EventEmitter`.
 The `@Output` decorator accepts a parameter that lets you specify a different name for the event in a template:
 
 ```ts
-@Component({/*...*/})
+@Component({
+  /*...*/
+})
 export class CustomSlider {
-  @Output('valueChanged') changed = new EventEmitter<number>();
+  @Output("valueChanged") changed = new EventEmitter<number>();
 }
 ```
+
 ```html
 <custom-slider (valueChanged)="saveVolume()" />
 ```
@@ -1317,17 +1418,18 @@ In addition to the `@Output` decorator, you can also specify a component's outpu
 // `CustomSlider` inherits the `valueChanged` property from `BaseSlider`.
 @Component({
   /*...*/
-  outputs: ['valueChanged'],
+  outputs: ["valueChanged"],
 })
 export class CustomSlider extends BaseSlider {}
 ```
+
 You can additionally specify an output alias in the `outputs` list by putting the alias after a colon in the string:
 
 ```ts
 // `CustomSlider` inherits the `valueChanged` property from `BaseSlider`.
 @Component({
   /*...*/
-  outputs: ['valueChanged: volumeChanged'],
+  outputs: ["valueChanged: volumeChanged"],
 })
 export class CustomSlider extends BaseSlider {}
 ```
@@ -1341,20 +1443,24 @@ example, you may want to create a custom card component:
 
 ```typescript
 @Component({
-  selector: 'custom-card',
+  selector: "custom-card",
   template: '<div class="card-shadow"> <!-- card content goes here --> </div>',
 })
-export class CustomCard {/* ... */}
+export class CustomCard {
+  /* ... */
+}
 ```
 
 **You can use the `<ng-content>` element as a placeholder to mark where content should go**:
 
 ```typescript
 @Component({
-  selector: 'custom-card',
+  selector: "custom-card",
   template: '<div class="card-shadow"> <ng-content></ng-content> </div>',
 })
-export class CustomCard {/* ... */}
+export class CustomCard {
+  /* ... */
+}
 ```
 
 TIP: `<ng-content>` works similarly
@@ -1367,14 +1473,16 @@ rendered, or **projected**, at the location of that `<ng-content>`:
 ```typescript
 // Component source
 @Component({
-  selector: 'custom-card',
+  selector: "custom-card",
   template: `
     <div class="card-shadow">
       <ng-content />
     </div>
   `,
 })
-export class CustomCard {/* ... */}
+export class CustomCard {
+  /* ... */
+}
 ```
 
 ```html
@@ -1484,7 +1592,7 @@ elements that don't match one of the component's placeholders do not render into
 
 ## Fallback content
 
-Angular can show *fallback content* for a component's `<ng-content>` placeholder if that component doesn't have any matching child content. You can specify fallback content by adding child content to the `<ng-content>` element itself.
+Angular can show _fallback content_ for a component's `<ng-content>` placeholder if that component doesn't have any matching child content. You can specify fallback content by adding child content to the `<ng-content>` element itself.
 
 ```html
 <!-- Component template -->
@@ -1550,6 +1658,7 @@ placeholder, Angular compares against the `ngProjectAs` value instead of the ele
 ```
 
 `ngProjectAs` supports only static values and cannot be bound to dynamic expressions.
+
 # Component Lifecycle
 
 TIP: This guide assumes you've already read the [Essentials Guide](essentials). Read that first if you're new to Angular.
@@ -1665,7 +1774,7 @@ has changed.
   /* ... */
 })
 export class UserProfile {
-  name = input('');
+  name = input("");
 
   ngOnChanges(changes: SimpleChanges) {
     for (const inputName in changes) {
@@ -1700,7 +1809,7 @@ of `DestroyRef`.
 export class UserProfile {
   constructor() {
     inject(DestroyRef).onDestroy(() => {
-      console.log('UserProfile destruction');
+      console.log("UserProfile destruction");
     });
   }
 }
@@ -1789,7 +1898,7 @@ See [Using DOM APIs](guide/components/dom-apis) for guidance on working with the
 
 Render callbacks do not run during server-side rendering or during build-time pre-rendering.
 
-#### after*Render phases
+#### after\*Render phases
 
 When using `afterEveryRender` or `afterNextRender`, you can optionally split the work into phases. The
 phase gives you control over the sequencing of DOM operations, letting you sequence _write_
@@ -1905,17 +2014,17 @@ Component templates aren't just static HTML— they can use data from your compo
 
 ## Showing dynamic text
 
-In Angular, a *binding* creates a dynamic connection between a component's template and its data. This connection ensures that changes to the component's data automatically update the rendered template.
+In Angular, a _binding_ creates a dynamic connection between a component's template and its data. This connection ensures that changes to the component's data automatically update the rendered template.
 
 You can create a binding to show some dynamic text in a template by using double curly-braces:
 
 ```typescript
 @Component({
-  selector: 'user-profile',
-  template: `<h1>Profile for {{userName()}}</h1>`,
+  selector: "user-profile",
+  template: `<h1>Profile for {{ userName() }}</h1>`,
 })
 export class TodoListItem {
-  userName = signal('pro_programmer_123');
+  userName = signal("pro_programmer_123");
 }
 ```
 
@@ -1929,7 +2038,7 @@ Angular automatically keeps the binding up-to-date when the value of the signal 
 the example above, if we update the value of the `userName` signal:
 
 ```typescript
-this.userName.set('cool_coder_789');
+this.userName.set("cool_coder_789");
 ```
 
 The rendered page updates to reflect the new value:
@@ -1957,7 +2066,7 @@ You can also bind to HTML _attributes_ by prefixing the attribute name with `att
 
 ```html
 <!-- Bind the `role` attribute on the `<ul>` element to value of `listRole`. -->
-<ul [attr.role]="listRole()">
+<ul [attr.role]="listRole()"></ul>
 ```
 
 Angular automatically updates DOM properties and attribute when the bound value changes.
@@ -1975,7 +2084,9 @@ Angular lets you add event listeners to an element in your template with parenth
 export class UserProfile {
   /* ... */
 
-  cancelSubscription() { /* Your event handling code goes here. */  }
+  cancelSubscription() {
+    /* Your event handling code goes here. */
+  }
 }
 ```
 
@@ -1990,7 +2101,9 @@ If you need to pass the [event](https://developer.mozilla.org/docs/Web/API/Event
 export class UserProfile {
   /* ... */
 
-  cancelSubscription(event: Event) { /* Your event handling code goes here. */  }
+  cancelSubscription(event: Event) {
+    /* Your event handling code goes here. */
+  }
 }
 ```
 
@@ -2002,8 +2115,8 @@ You can conditionally hide and show parts of a template with Angular's `@if` blo
 <h1>User profile</h1>
 
 @if (isAdmin()) {
-  <h2>Admin settings</h2>
-  <!-- ... -->
+<h2>Admin settings</h2>
+<!-- ... -->
 }
 ```
 
@@ -2013,11 +2126,11 @@ The `@if` block also supports an optional `@else` block:
 <h1>User profile</h1>
 
 @if (isAdmin()) {
-  <h2>Admin settings</h2>
-  <!-- ... -->
+<h2>Admin settings</h2>
+<!-- ... -->
 } @else {
-  <h2>User settings</h2>
-  <!-- ... -->
+<h2>User settings</h2>
+<!-- ... -->
 }
 ```
 
@@ -2028,7 +2141,7 @@ You can repeat part of a template multiple times with Angular's `@for` block:
 
 <ul class="user-badge-list">
   @for (badge of badges(); track badge.id) {
-    <li class="user-badge">{{badge.name}}</li>
+  <li class="user-badge">{{badge.name}}</li>
   }
 </ul>
 ```
@@ -2040,6 +2153,7 @@ TIP: Want to know more about Angular templates? See the [In-depth Templates guid
 ## Next Step
 
 Now that you have dynamic data and templates in the application, it's time to learn how to enhance templates by conditionally hiding or showing certain elements, looping over elements, and more.
+
 # Adding event listeners
 
 Angular supports defining event listeners on an element in your template by specifying the event name inside parentheses along with a statement that runs every time the event occurs.
@@ -2159,7 +2273,8 @@ export class AppComponent{
 }
 ```
 
-If the event handler statement evaluates to `false`, Angular automatically calls `preventDefault()`, similar to [native event handler attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes#event_handler_attributes). *Always prefer explicitly calling `preventDefault`*, as this approach makes the code's intent obvious.
+If the event handler statement evaluates to `false`, Angular automatically calls `preventDefault()`, similar to [native event handler attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes#event_handler_attributes). _Always prefer explicitly calling `preventDefault`_, as this approach makes the code's intent obvious.
+
 # Binding dynamic text, properties and attributes
 
 In Angular, a **binding** creates a dynamic connection between a component's template and its data. This connection ensures that changes to the component's data automatically update the rendered template.
@@ -2232,7 +2347,7 @@ You can bind to directive properties as well.
 
 ```html
 <!-- Bind to the `ngSrc` property of the `NgOptimizedImage` directive  -->
-<img [ngSrc]="profilePhotoUrl" alt="The current user's profile photo">
+<img [ngSrc]="profilePhotoUrl" alt="The current user's profile photo" />
 ```
 
 ### Attributes
@@ -2241,7 +2356,7 @@ When you need to set HTML attributes that do not have corresponding DOM properti
 
 ```html
 <!-- Bind the `role` attribute on the `<ul>` element to the component's `listRole` property. -->
-<ul [attr.role]="listRole">
+<ul [attr.role]="listRole"></ul>
 ```
 
 In this example, every time `listRole` changes, Angular automatically sets the `role` attribute of the `<ul>` element by calling `setAttribute`.
@@ -2254,13 +2369,13 @@ You can also use text interpolation syntax in properties and attributes by using
 
 ```html
 <!-- Binds a value to the `alt` property of the image element's DOM object. -->
-<img src="profile-photo.jpg" alt="Profile photo of {{ firstName }}" >
+<img src="profile-photo.jpg" alt="Profile photo of {{ firstName }}" />
 ```
 
 To bind to an attribute with the text interpolation syntax, prefix the attribute name with `attr.`
 
 ```html
-<button attr.aria-label="Save changes to {{ objectType }}">
+<button attr.aria-label="Save changes to {{ objectType }}"></button>
 ```
 
 ## CSS class and style property bindings
@@ -2273,7 +2388,7 @@ You can create a CSS class binding to conditionally add or remove a CSS class on
 
 ```html
 <!-- When `isExpanded` is truthy, add the `expanded` CSS class. -->
-<ul [class.expanded]="isExpanded">
+<ul [class.expanded]="isExpanded"></ul>
 ```
 
 You can also bind directly to the `class` property. Angular accepts three types of value:
@@ -2306,9 +2421,11 @@ export class UserProfile {
 The above example renders the following DOM:
 
 ```html
-<ul class="full-width outlined"> ... </ul>
-<section class="expandable elevated"> ... </section>
-<button class="highlighted"> ... </button>
+<ul class="full-width outlined">
+  ...
+</ul>
+<section class="expandable elevated">...</section>
+<button class="highlighted">...</button>
 ```
 
 Angular ignores any string values that are not valid CSS class names.
@@ -2329,7 +2446,7 @@ export class Listbox {
 In the example above, Angular renders the `ul` element with all three CSS classes.
 
 ```html
-<ul class="list box expanded">
+<ul class="list box expanded"></ul>
 ```
 
 Angular does not guarantee any specific order of CSS classes on rendered elements.
@@ -2338,20 +2455,22 @@ When binding `class` to an array or an object, Angular compares the previous val
 
 If an element has multiple bindings for the same CSS class, Angular resolves collisions by following its style precedence order.
 
+NOTE: Class bindings do not support space-separated class names in a single key. They also don't support mutations on objects as the reference of the binding remains the same. If you need one or the other, use the [ngClass](/api/common/NgClass) directive.
+
 ### CSS style properties
 
 You can also bind to CSS style properties directly on an element.
 
 ```html
 <!-- Set the CSS `display` property based on the `isExpanded` property. -->
-<section [style.display]="isExpanded ? 'block' : 'none'">
+<section [style.display]="isExpanded ? 'block' : 'none'"></section>
 ```
 
 You can further specify units for CSS properties that accept units.
 
 ```html
 <!-- Set the CSS `height` property to a pixel value based on the `sectionHeightInPixels` property. -->
-<section [style.height.px]="sectionHeightInPixels">
+<section [style.height.px]="sectionHeightInPixels"></section>
 ```
 
 You can also set multiple style values in one binding. Angular accepts the following types of value:
@@ -2381,13 +2500,16 @@ export class UserProfile {
 The above example renders the following DOM.
 
 ```html
-<ul style="display: flex; padding: 8px"> ... </ul>
-<section style="border: 1px solid black; font-weight: bold"> ... </section>
+<ul style="display: flex; padding: 8px">
+  ...
+</ul>
+<section style="border: 1px solid black; font-weight: bold">...</section>
 ```
 
 When binding `style` to an object, Angular compares the previous value to the current value with the triple-equals operator (`===`). You must create a new object instance when you modify these values in order to Angular to apply any updates.
 
 If an element has multiple bindings for the same style property, Angular resolves collisions by following its style precedence order.
+
 # Control flow
 
 Angular templates support control flow blocks that let you conditionally show, hide, and repeat elements.
@@ -2398,20 +2520,14 @@ The `@if` block conditionally displays its content when its condition expression
 
 ```html
 @if (a > b) {
-  <p>{{a}} is greater than {{b}}</p>
+<p>{{a}} is greater than {{b}}</p>
 }
 ```
 
 If you want to display alternative content, you can do so by providing any number of `@else if` blocks and a singular `@else` block.
 
 ```html
-@if (a > b) {
-  {{a}} is greater than {{b}}
-} @else if (b > a) {
-  {{a}} is less than {{b}}
-} @else {
-  {{a}} is equal to {{b}}
-}
+@if (a > b) { {{a}} is greater than {{b}} } @else if (b > a) { {{a}} is less than {{b}} } @else { {{a}} is equal to {{b}} }
 ```
 
 ### Referencing the conditional expression's result
@@ -2419,9 +2535,7 @@ If you want to display alternative content, you can do so by providing any numbe
 The `@if` conditional supports saving the result of the conditional expression into a variable for reuse inside of the block.
 
 ```html
-@if (user.profile.settings.startDate; as startDate) {
-  {{ startDate }}
-}
+@if (user.profile.settings.startDate; as startDate) { {{ startDate }} }
 ```
 
 This can be useful for referencing longer expressions that would be easier to read and maintain within the template.
@@ -2433,9 +2547,7 @@ The `@for` block loops through a collection and repeatedly renders the content o
 A typical `@for` loop looks like:
 
 ```html
-@for (item of items; track item.id) {
-  {{ item.name }}
-}
+@for (item of items; track item.id) { {{ item.name }} }
 ```
 
 Angular's `@for` block does not support flow-modifying statements like JavaScript's `continue` or `break`.
@@ -2469,7 +2581,7 @@ These variables are always available with these names, but can be aliased via a 
 
 ```html
 @for (item of items; track item.id; let idx = $index, e = $even) {
-  <p>Item #{{ idx }}: {{ item.name }}</p>
+<p>Item #{{ idx }}: {{ item.name }}</p>
 }
 ```
 
@@ -2481,9 +2593,9 @@ You can optionally include an `@empty` section immediately after the `@for` bloc
 
 ```html
 @for (item of items; track item.name) {
-  <li> {{ item.name }}</li>
+<li>{{ item.name }}</li>
 } @empty {
-  <li aria-hidden="true"> There are no items. </li>
+<li aria-hidden="true">There are no items.</li>
 }
 ```
 
@@ -2492,20 +2604,15 @@ You can optionally include an `@empty` section immediately after the `@for` bloc
 While the `@if` block is great for most scenarios, the `@switch` block provides an alternate syntax to conditionally render data. Its syntax closely resembles JavaScript's `switch` statement.
 
 ```html
-@switch (userPermissions) {
-  @case ('admin') {
-    <app-admin-dashboard />
-  }
-  @case ('reviewer') {
-    <app-reviewer-dashboard />
-  }
-  @case ('editor') {
-    <app-editor-dashboard />
-  }
-  @default {
-    <app-viewer-dashboard />
-  }
-}
+@switch (userPermissions) { @case ('admin') {
+<app-admin-dashboard />
+} @case ('reviewer') {
+<app-reviewer-dashboard />
+} @case ('editor') {
+<app-editor-dashboard />
+} @default {
+<app-viewer-dashboard />
+} }
 ```
 
 The value of the conditional expression is compared to the case expression using the triple-equals (`===`) operator.
@@ -2515,6 +2622,7 @@ The value of the conditional expression is compared to the case expression using
 You can optionally include a `@default` block. The content of the `@default` block displays if none of the preceding case expressions match the switch value.
 
 If no `@case` matches the expression and there is no `@default` block, nothing is shown.
+
 # Variables in templates
 
 Angular has two types of variable declarations in templates: local template variables and template reference variables.
@@ -2528,14 +2636,7 @@ Angular's `@let` syntax allows you to define a local variable and re-use it acro
 Use `@let` to declare a variable whose value is based on the result of a template expression. Angular automatically keeps the variable's value up-to-date with the given expression, similar to [bindings](./templates/bindings).
 
 ```html
-@let name = user.name;
-@let greeting = 'Hello, ' + name;
-@let data = data$ | async;
-@let pi = 3.1459;
-@let coordinates = {x: 50, y: 100};
-@let longExpression = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ' +
-                      'sed do eiusmod tempor incididunt ut labore et dolore magna ' +
-                      'Ut enim ad minim veniam...';
+@let name = user.name; @let greeting = 'Hello, ' + name; @let data = data$ | async; @let pi = 3.1459; @let coordinates = {x: 50, y: 100}; @let longExpression = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit ' + 'sed do eiusmod tempor incididunt ut labore et dolore magna ' + 'Ut enim ad minim veniam...';
 ```
 
 Each `@let` block can declare exactly one variable. You cannot declare multiple variables in the same block with a comma.
@@ -2545,19 +2646,17 @@ Each `@let` block can declare exactly one variable. You cannot declare multiple 
 Once you've declared a variable with `@let`, you can reuse it in the same template:
 
 ```html
-@let user = user$ | async;
+@let user = user$ | async; @if (user) {
+<h1>Hello, {{user.name}}</h1>
+<user-avatar [photo]="user.photo" />
 
-@if (user) {
-  <h1>Hello, {{user.name}}</h1>
-  <user-avatar [photo]="user.photo"/>
+<ul>
+  @for (snack of user.favoriteSnacks; track snack.id) {
+  <li>{{snack.name}}</li>
+  }
+</ul>
 
-  <ul>
-    @for (snack of user.favoriteSnacks; track snack.id) {
-      <li>{{snack.name}}</li>
-    }
-  </ul>
-
-  <button (click)="update(user)">Update profile</button>
+<button (click)="update(user)">Update profile</button>
 }
 ```
 
@@ -2581,24 +2680,20 @@ Since `@let` declarations are not hoisted, they **cannot** be accessed by parent
 ```html
 @let topLevel = value;
 
-<div>
-  @let insideDiv = value;
-</div>
+<div>@let insideDiv = value;</div>
 
-{{topLevel}} <!-- Valid -->
-{{insideDiv}} <!-- Valid -->
+{{topLevel}}
+<!-- Valid -->
+{{insideDiv}}
+<!-- Valid -->
 
-@if (condition) {
-  {{topLevel + insideDiv}} <!-- Valid -->
+@if (condition) { {{topLevel + insideDiv}}
+<!-- Valid -->
 
-  @let nested = value;
-
-  @if (condition) {
-    {{topLevel + insideDiv + nested}} <!-- Valid -->
-  }
-}
-
-{{nested}} <!-- Error, not hoisted from @if -->
+@let nested = value; @if (condition) { {{topLevel + insideDiv + nested}}
+<!-- Valid -->
+} } {{nested}}
+<!-- Error, not hoisted from @if -->
 ```
 
 ### Full syntax
@@ -2630,7 +2725,7 @@ You can declare a variable on an element in a template by adding an attribute th
 
 ```html
 <!-- Create a template reference variable named "taskInput", referring to the HTMLInputElement. -->
-<input #taskInput placeholder="Enter task name">
+<input #taskInput placeholder="Enter task name" />
 ```
 
 ### Assigning values to template reference variables
@@ -2657,7 +2752,7 @@ If you declare the variable on any other displayed element, the variable refers 
 
 ```html
 <!-- The "taskInput" variable refers to the HTMLInputElement instance. -->
-<input #taskInput placeholder="Enter task name">
+<input #taskInput placeholder="Enter task name" />
 ```
 
 #### Assigning a reference to an Angular directive
@@ -2666,17 +2761,19 @@ Angular directives may have an `exportAs` property that defines a name by which 
 
 ```typescript
 @Directive({
-  selector: '[dropZone]',
-  exportAs: 'dropZone',
+  selector: "[dropZone]",
+  exportAs: "dropZone",
 })
-export class DropZone { /* ... */ }
+export class DropZone {
+  /* ... */
+}
 ```
 
 When you declare a template variable on an element, you can assign that variable a directive instance by specifying this `exportAs` name:
 
 ```html
 <!-- The `firstZone` variable refers to the `DropZone` directive instance. -->
-<section dropZone #firstZone="dropZone"> ... </section>
+<section dropZone #firstZone="dropZone">...</section>
 ```
 
 You cannot refer to a directive that does not specify an `exportAs` name.
@@ -2688,7 +2785,7 @@ In addition to using template variables to read values from another part of the 
 When you want to query for a specific element in a template, you can declare a template variable on that element and then query for the element based on the variable name.
 
 ```html
-<input #description value="Original description">
+<input #description value="Original description" />
 ```
 
 ```typescript
@@ -2703,6 +2800,7 @@ export class AppComponent {
 ```
 
 See [Referencing children with queries](/guide/components/queries) for more information on queries.
+
 # Deferred loading with `@defer`
 
 Deferrable views, also known as `@defer` blocks, reduce the initial bundle size of your application by deferring the loading of code that is not strictly necessary for the initial rendering of a page. This often results in a faster initial load and improvement in Core Web Vitals (CWV), primarily Largest Contentful Paint (LCP) and Time to First Byte (TTFB).
@@ -2711,7 +2809,7 @@ To use this feature, you can declaratively wrap a section of your template in a 
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 }
 ```
 
@@ -2738,13 +2836,13 @@ Angular's compiler produces a [dynamic import](https://developer.mozilla.org/en-
 
 ### `@defer`
 
-This is the primary block that defines the section of content that is lazily loaded. It is not rendered initially– deferred content loads and renders once the specified [trigger](/guide/defer#triggers) occurs or the `when` condition is met.
+This is the primary block that defines the section of content that is lazily loaded. It is not rendered initially– deferred content loads and renders once the specified [trigger](/guide/templates/defer#triggers) occurs or the `when` condition is met.
 
-By default, a @defer block is triggered when the browser state becomes [idle](/guide/defer#idle).
+By default, a @defer block is triggered when the browser state becomes [idle](/guide/templates/defer#idle).
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 }
 ```
 
@@ -2756,13 +2854,13 @@ The `@placeholder` is an optional block that declares what content to show befor
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 } @placeholder {
-  <p>Placeholder content</p>
+<p>Placeholder content</p>
 }
 ```
 
-While optional, certain triggers may require the presence of either a `@placeholder` or a [template reference variable](/guide/templates/variables#template-reference-variables) to function. See the [Triggers](/guide/defer#triggers) section for more details.
+While optional, certain triggers may require the presence of either a `@placeholder` or a [template reference variable](/guide/templates/variables#template-reference-variables) to function. See the [Triggers](/guide/templates/defer#triggers) section for more details.
 
 Angular replaces placeholder content with the main content once loading is complete. You can use any content in the placeholder section including plain HTML, components, directives, and pipes. Keep in mind the _dependencies of the placeholder block are eagerly loaded_.
 
@@ -2770,9 +2868,9 @@ The `@placeholder` block accepts an optional parameter to specify the `minimum` 
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 } @placeholder (minimum 500ms) {
-  <p>Placeholder content</p>
+<p>Placeholder content</p>
 }
 ```
 
@@ -2784,11 +2882,11 @@ The `@loading` block is an optional block that allows you to declare content tha
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 } @loading {
-  <img alt="loading..." src="loading.gif" />
+<img alt="loading..." src="loading.gif" />
 } @placeholder {
-  <p>Placeholder content</p>
+<p>Placeholder content</p>
 }
 ```
 
@@ -2801,9 +2899,9 @@ The `@loading` block accepts two optional parameters to help prevent fast flicke
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 } @loading (after 100ms; minimum 1s) {
-  <img alt="loading..." src="loading.gif" />
+<img alt="loading..." src="loading.gif" />
 }
 ```
 
@@ -2815,9 +2913,9 @@ The `@error` block is an optional block that displays if deferred loading fails.
 
 ```html
 @defer {
-  <large-component />
+<large-component />
 } @error {
-  <p>Failed to load large component.</p>
+<p>Failed to load large component.</p>
 }
 ```
 
@@ -2853,9 +2951,9 @@ The `idle` trigger loads the deferred content once the browser has reached an id
 ```html
 <!-- @defer (on idle) -->
 @defer {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2867,9 +2965,9 @@ By default, the `@defer` watches for the placeholder entering the viewport. Plac
 
 ```html
 @defer (on viewport) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2878,7 +2976,7 @@ Alternatively, you can specify a [template reference variable](/guide/templates/
 ```html
 <div #greeting>Hello!</div>
 @defer (on viewport(greeting)) {
-  <greetings-cmp />
+<greetings-cmp />
 }
 ```
 
@@ -2890,9 +2988,9 @@ By default, the placeholder acts as the interaction element. Placeholders used t
 
 ```html
 @defer (on interaction) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2901,7 +2999,7 @@ Alternatively, you can specify a [template reference variable](/guide/templates/
 ```html
 <div #greeting>Hello!</div>
 @defer (on interaction(greeting)) {
-  <greetings-cmp />
+<greetings-cmp />
 }
 ```
 
@@ -2913,9 +3011,9 @@ By default, the placeholder acts as the interaction element. Placeholders used t
 
 ```html
 @defer (on hover) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2924,7 +3022,7 @@ Alternatively, you can specify a [template reference variable](/guide/templates/
 ```html
 <div #greeting>Hello!</div>
 @defer (on hover(greeting)) {
-  <greetings-cmp />
+<greetings-cmp />
 }
 ```
 
@@ -2934,9 +3032,9 @@ The `immediate` trigger loads the deferred content immediately. This means that 
 
 ```html
 @defer (on immediate) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2946,9 +3044,9 @@ The `timer` trigger loads the deferred content after a specified duration.
 
 ```html
 @defer (on timer(500ms)) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2960,9 +3058,9 @@ The `when` trigger accepts a custom conditional expression and loads the deferre
 
 ```html
 @defer (when condition) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2980,9 +3078,9 @@ In the example below, the prefetching starts when a browser becomes idle and the
 
 ```html
 @defer (on interaction; prefetch on idle) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -2991,20 +3089,16 @@ In the example below, the prefetching starts when a browser becomes idle and the
 Angular provides TestBed APIs to simplify the process of testing `@defer` blocks and triggering different states during testing. By default, `@defer` blocks in tests play through like a defer block would behave in a real application. If you want to manually step through states, you can switch the defer block behavior to `Manual` in the TestBed configuration.
 
 ```typescript
-it('should render a defer block in different states', async () => {
+it("should render a defer block in different states", async () => {
   // configures the defer block behavior to start in "paused" state for manual control.
-  TestBed.configureTestingModule({deferBlockBehavior: DeferBlockBehavior.Manual});
+  TestBed.configureTestingModule({ deferBlockBehavior: DeferBlockBehavior.Manual });
   @Component({
     // ...
     template: `
       @defer {
-        <large-component />
-      } @placeholder {
-        Placeholder
-      } @loading {
-        Loading...
-      }
-    `
+      <large-component />
+      } @placeholder { Placeholder } @loading { Loading... }
+    `,
   })
   class ComponentA {}
   // Create component fixture.
@@ -3012,13 +3106,13 @@ it('should render a defer block in different states', async () => {
   // Retrieve the list of all defer block fixtures and get the first block.
   const deferBlockFixture = (await componentFixture.getDeferBlocks())[0];
   // Renders placeholder state by default.
-  expect(componentFixture.nativeElement.innerHTML).toContain('Placeholder');
+  expect(componentFixture.nativeElement.innerHTML).toContain("Placeholder");
   // Render loading state and verify rendered output.
   await deferBlockFixture.render(DeferBlockState.Loading);
-  expect(componentFixture.nativeElement.innerHTML).toContain('Loading');
+  expect(componentFixture.nativeElement.innerHTML).toContain("Loading");
   // Render final state and verify the output.
   await deferBlockFixture.render(DeferBlockState.Complete);
-  expect(componentFixture.nativeElement.innerHTML).toContain('large works!');
+  expect(componentFixture.nativeElement.innerHTML).toContain("large works!");
 });
 ```
 
@@ -3043,6 +3137,7 @@ When you have nested `@defer` blocks, they should have different triggers in ord
 Avoid deferring components that are visible in the user’s viewport on initial load. Doing this may negatively affect Core Web Vitals by causing an increase in cumulative layout shift (CLS).
 
 In the event this is necessary, avoid `immediate`, `timer`, `viewport`, and custom `when` triggers that cause the content to load during the initial page render.
+
 # Expression Syntax
 
 Angular expressions are based on JavaScript, but differ in some key ways. This guide walks through the similarities and differences between Angular expressions and standard JavaScript.
@@ -3053,23 +3148,21 @@ Angular supports a subset of [literal values](https://developer.mozilla.org/en-U
 
 ### Supported value literals
 
-| Literal type           | Example values                  |
-| ---------------------- | ------------------------------- |
-| String                 | `'Hello'`, `"World"`            |
-| Boolean                | `true`, `false`                 |
-| Number                 | `123`, `3.14`                   |
-| Object                 | `{name: 'Alice'}`               |
-| Array                  | `['Onion', 'Cheese', 'Garlic']` |
-| null                   | `null`                          |
-| Template string        | `` `Hello ${name}` ``           |
-| Tagged template string | `` tag`Hello ${name}` ``        |
+| Literal type    | Example values                  |
+| --------------- | ------------------------------- |
+| String          | `'Hello'`, `"World"`            |
+| Boolean         | `true`, `false`                 |
+| Number          | `123`, `3.14`                   |
+| Object          | `{name: 'Alice'}`               |
+| Array           | `['Onion', 'Cheese', 'Garlic']` |
+| null            | `null`                          |
+| Template string | `` `Hello ${name}` ``           |
 
 ### Unsupported literals
 
-| Literal type           | Example value            |
-| ---------------------- | ------------------------ |
-| RegExp                 | `/\d+/`                  |
-| Tagged template string | `` tag`Hello ${name}` `` |
+| Literal type | Example value |
+| ------------ | ------------- |
+| RegExp       | `/\d+/`       |
 
 ## Globals
 
@@ -3092,33 +3185,40 @@ For example, `@for` blocks make several local variables corresponding to informa
 
 Angular supports the following operators from standard JavaScript.
 
-| Operator              | Example(s)                               |
-| --------------------- | ---------------------------------------- |
-| Add / Concatenate     | `1 + 2`                                  |
-| Subtract              | `52 - 3`                                 |
-| Multiply              | `41 * 6`                                 |
-| Divide                | `20 / 4`                                 |
-| Remainder (Modulo)    | `17 % 5`                                 |
-| Exponentiation        | `10 ** 3`                                |
-| Parenthesis           | `9 * (8 + 4)`                            |
-| Conditional (Ternary) | `a > b ? true : false`                   |
-| And (Logical)         | `&&`                                     |
-| Or (Logical)          | `\|\|`                                   |
-| Not (Logical)         | `!`                                      |
-| Nullish Coalescing    | `possiblyNullValue ?? 'default'`         |
-| Comparison Operators  | `<`, `<=`, `>`, `>=`, `==`, `===`, `!==` |
-| Unary Negation        | `-x`                                     |
-| Unary Plus            | `+y`                                     |
-| Property Accessor     | `person['name']`                         |
-| typeof                | `typeof 42`                              |
-| void                  | `void 1`                                 |
-| in                    | `'model' in car`                         |
+| Operator                      | Example(s)                               |
+| ----------------------------- | ---------------------------------------- |
+| Add / Concatenate             | `1 + 2`                                  |
+| Subtract                      | `52 - 3`                                 |
+| Multiply                      | `41 * 6`                                 |
+| Divide                        | `20 / 4`                                 |
+| Remainder (Modulo)            | `17 % 5`                                 |
+| Exponentiation                | `10 ** 3`                                |
+| Parenthesis                   | `9 * (8 + 4)`                            |
+| Conditional (Ternary)         | `a > b ? true : false`                   |
+| And (Logical)                 | `&&`                                     |
+| Or (Logical)                  | `\|\|`                                   |
+| Not (Logical)                 | `!`                                      |
+| Nullish Coalescing            | `possiblyNullValue ?? 'default'`         |
+| Comparison Operators          | `<`, `<=`, `>`, `>=`, `==`, `===`, `!==` |
+| Unary Negation                | `-x`                                     |
+| Unary Plus                    | `+y`                                     |
+| Property Accessor             | `person['name']`                         |
+| Assignment                    | `a = b`                                  |
+| Addition Assignment           | `a += b`                                 |
+| Subtraction Assignment        | `a -= b`                                 |
+| Multiplication Assignment     | `a *= b`                                 |
+| Division Assignment           | `a /= b`                                 |
+| Remainder Assignment          | `a %= b`                                 |
+| Exponentiation Assignment     | `a **= b`                                |
+| Logical AND Assignment        | `a &&= b`                                |
+| Logical OR Assignment         | `a \|\|= b`                              |
+| Nullish Coalescing Assignment | `a ??= b`                                |
 
 Angular expressions additionally also support the following non-standard operators:
 
 | Operator                        | Example(s)                     |
 | ------------------------------- | ------------------------------ |
-| [Pipe](/guide/templates/pipes) | `{{ total \| currency }}`      |
+| [Pipe](/guide/templates/pipes)  | `{{ total \| currency }}`      |
 | Optional chaining\*             | `someObj.someProp?.nestedProp` |
 | Non-null assertion (TypeScript) | `someObj!.someProp`            |
 
@@ -3129,13 +3229,9 @@ NOTE: Optional chaining behaves differently from the standard JavaScript version
 | Operator              | Example(s)                        |
 | --------------------- | --------------------------------- |
 | All bitwise operators | `&`, `&=`, `~`, `\|=`, `^=`, etc. |
-| Assignment operators  | `=`                               |
 | Object destructuring  | `const { name } = person`         |
 | Array destructuring   | `const [firstItem] = items`       |
 | Comma operator        | `x = (x++, x)`                    |
-| in                    | `'model' in car`                  |
-| typeof                | `typeof 42`                       |
-| void                  | `void 1`                          |
 | instanceof            | `car instanceof Automobile`       |
 | new                   | `new Car()`                       |
 
@@ -3162,6 +3258,7 @@ Event handlers are **statements** rather than expressions. While they support al
 
 1. Statements **do support** assignment operators (but not destructing assignments)
 1. Statements **do not support** pipes
+
 # Attribute directives
 
 Change the appearance or behavior of DOM elements and Angular components with attribute directives.
@@ -3170,11 +3267,13 @@ Change the appearance or behavior of DOM elements and Angular components with at
 
 This section walks you through creating a highlight directive that sets the background color of the host element to yellow.
 
-1. To create a directive, use the CLI command [`ng generate directive`](tools/cli/schematics).
+1.  To create a directive, use the CLI command [`ng generate directive`](tools/cli/schematics).
 
-    ```shell
-ng generate directive highlight
-```
+        ```shell
+
+    ng generate directive highlight
+
+````
     The CLI creates `src/app/highlight.directive.ts`, a corresponding test file `src/app/highlight.directive.spec.ts`.
 
     <docs-code header="src/app/highlight.directive.ts" path="adev/src/content/examples/attribute-directives/src/app/highlight.directive.0.ts"/>
@@ -3329,7 +3428,7 @@ The following is an example of using this directive directly on an `<ng-template
 <ng-template select let-data [selectFrom]="source">
   <p>The data is: {{ data }}</p>
 </ng-template>
-```
+````
 
 The structural directive can wait for the data to become available and then render its `<ng-template>`.
 
@@ -3391,27 +3490,26 @@ Angular creates the directive class and specifies the CSS selector, `[select]`, 
 Import `TemplateRef`, and `ViewContainerRef`. Inject `TemplateRef` and `ViewContainerRef` in the directive as private properties.
 
 ```ts
-import {Directive, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Directive, TemplateRef, ViewContainerRef } from "@angular/core";
 
 @Directive({
-  selector: '[select]',
+  selector: "[select]",
 })
 export class SelectDirective {
   private templateRef = inject(TemplateRef);
   private viewContainerRef = inject(ViewContainerRef);
 }
-
 ```
 
 </docs-step>
 <docs-step title="Add the 'selectFrom' input">
-Add a `selectFrom` `@Input()` property.
+Add a `selectFrom` `input()` property.
 
 ```ts
 export class SelectDirective {
   // ...
 
-  @Input({required: true}) selectFrom!: DataSource;
+  selectFrom = input.required<DataSource>();
 }
 ```
 
@@ -3446,6 +3544,7 @@ When you write your own structural directives, use the following syntax:
 ```
 *:prefix="( :let | :expression ) (';' | ',')? ( :let | :as | :keyExp )*"
 ```
+
 The following patterns describe each portion of the structural directive grammar:
 
 ```ts
@@ -3466,23 +3565,23 @@ let = "let" :local "=" :export ";"?
 
 Angular translates structural directive shorthand into the normal binding syntax as follows:
 
-| Shorthand | Translation |
-|:--- |:--- |
-| `prefix` and naked `expression` | `[prefix]="expression"` |
-| `keyExp` | `[prefixKey]="expression"` (The `prefix` is added to the `key`) |
-| `let local` | `let-local="export"` |
+| Shorthand                       | Translation                                                     |
+| :------------------------------ | :-------------------------------------------------------------- |
+| `prefix` and naked `expression` | `[prefix]="expression"`                                         |
+| `keyExp`                        | `[prefixKey]="expression"` (The `prefix` is added to the `key`) |
+| `let local`                     | `let-local="export"`                                            |
 
 ### Shorthand examples
 
 The following table provides shorthand examples:
 
-| Shorthand | How Angular interprets the syntax |
-|:--- |:--- |
-| `*myDir="let item of [1,2,3]"` | `<ng-template myDir let-item [myDirOf]="[1, 2, 3]">` |
+| Shorthand                                                             | How Angular interprets the syntax                                                                             |
+| :-------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------ |
+| `*myDir="let item of [1,2,3]"`                                        | `<ng-template myDir let-item [myDirOf]="[1, 2, 3]">`                                                          |
 | `*myDir="let item of [1,2,3] as items; trackBy: myTrack; index as i"` | `<ng-template myDir let-item [myDirOf]="[1,2,3]" let-items="myDirOf" [myDirTrackBy]="myTrack" let-i="index">` |
-| `*ngComponentOutlet="componentClass";` | `<ng-template [ngComponentOutlet]="componentClass">` |
-| `*ngComponentOutlet="componentClass; inputs: myInputs";` | `<ng-template [ngComponentOutlet]="componentClass" [ngComponentOutletInputs]="myInputs">` |
-| `*myDir="exp as value"` | `<ng-template [myDir]="exp" let-value="myDir">` |
+| `*ngComponentOutlet="componentClass";`                                | `<ng-template [ngComponentOutlet]="componentClass">`                                                          |
+| `*ngComponentOutlet="componentClass; inputs: myInputs";`              | `<ng-template [ngComponentOutlet]="componentClass" [ngComponentOutletInputs]="myInputs">`                     |
+| `*myDir="exp as value"`                                               | `<ng-template [myDir]="exp" let-value="myDir">`                                                               |
 
 ## Improving template type checking for custom directives
 
@@ -3490,8 +3589,8 @@ You can improve template type checking for custom directives by adding template 
 These guards help the Angular template type checker find mistakes in the template at compile time, which can avoid runtime errors.
 Two different types of guards are possible:
 
-* `ngTemplateGuard_(input)` lets you control how an input expression should be narrowed based on the type of a specific input.
-* `ngTemplateContextGuard` is used to determine the type of the context object for the template, based on the type of the directive itself.
+- `ngTemplateGuard_(input)` lets you control how an input expression should be narrowed based on the type of a specific input.
+- `ngTemplateContextGuard` is used to determine the type of the context object for the template, based on the type of the directive itself.
 
 This section provides examples of both kinds of guards.
 For more information, see [Template type checking](tools/cli/template-typecheck "Template type-checking guide").
@@ -3502,8 +3601,8 @@ A structural directive in a template controls whether that template is rendered 
 
 There are two narrowings which are possible with input guards:
 
-* Narrowing the input expression based on a TypeScript type assertion function.
-* Narrowing the input expression based on its truthiness.
+- Narrowing the input expression based on a TypeScript type assertion function.
+- Narrowing the input expression based on its truthiness.
 
 To narrow the input expression by defining a type assertion function:
 
@@ -3513,9 +3612,9 @@ To narrow the input expression by defining a type assertion function:
 // expression is narrowed to `User`.
 @Directive(...)
 class ActorIsUser {
-  @Input() actor: User|Robot;
+  actor = input<User | Robot>();
 
-  static ngTemplateGuard_actor(dir: ActorIsUser, expr: User|Robot): expr is User {
+  static ngTemplateGuard_actor(dir: ActorIsUser, expr: User | Robot): expr is User {
     // The return statement is unnecessary in practice, but included to
     // prevent TypeScript errors.
     return true;
@@ -3530,7 +3629,7 @@ Some directives only render their templates when an input is truthy. It's not po
 ```ts
 @Directive(...)
 class CustomIf {
-  @Input() condition!: any;
+  condition = input.required<boolean>();
 
   static ngTemplateGuard_condition: 'binding';
 }
@@ -3554,7 +3653,7 @@ export interface SelectTemplateContext<T> {
 export class SelectDirective<T> {
   // The directive's generic type `T` will be inferred from the `DataSource` type
   // passed to the input.
-  @Input({required: true}) selectFrom!: DataSource<T>;
+  selectFrom = input.required<DataSource<T>>();
 
   // Narrow the type of the context using the generic type of the directive.
   static ngTemplateContextGuard<T>(dir: SelectDirective<T>, ctx: any): ctx is SelectTemplateContext<T> {
@@ -3564,29 +3663,30 @@ export class SelectDirective<T> {
   }
 }
 ```
+
 # Directive composition API
 
 Angular directives offer a great way to encapsulate reusable behaviors— directives can apply
 attributes, CSS classes, and event listeners to an element.
 
-The *directive composition API* lets you apply directives to a component's host element from
-*within* the component TypeScript class.
+The _directive composition API_ lets you apply directives to a component's host element from
+_within_ the component TypeScript class.
 
 ## Adding directives to a component
 
 You apply directives to a component by adding a `hostDirectives` property to a component's
-decorator. We call such directives *host directives*.
+decorator. We call such directives _host directives_.
 
 In this example, we apply the directive `MenuBehavior` to the host element of `AdminMenu`. This
 works similarly to applying the `MenuBehavior` to the `<admin-menu>` element in a template.
 
 ```typescript
 @Component({
-  selector: 'admin-menu',
-  template: 'admin-menu.html',
+  selector: "admin-menu",
+  template: "admin-menu.html",
   hostDirectives: [MenuBehavior],
 })
-export class AdminMenu { }
+export class AdminMenu {}
 ```
 
 When the framework renders a component, Angular also creates an instance of each host directive. The
@@ -3609,22 +3709,24 @@ in your component's API by expanding the entry in `hostDirectives`:
 
 ```typescript
 @Component({
-  selector: 'admin-menu',
-  template: 'admin-menu.html',
-  hostDirectives: [{
-    directive: MenuBehavior,
-    inputs: ['menuId'],
-    outputs: ['menuClosed'],
-  }],
+  selector: "admin-menu",
+  template: "admin-menu.html",
+  hostDirectives: [
+    {
+      directive: MenuBehavior,
+      inputs: ["menuId"],
+      outputs: ["menuClosed"],
+    },
+  ],
 })
-export class AdminMenu { }
+export class AdminMenu {}
 ```
 
 By explicitly specifying the inputs and outputs, consumers of the component with `hostDirective` can
 bind them in a template:
 
 ```html
-<admin-menu menuId="top-menu" (menuClosed)="logMenuClosed()">
+<admin-menu menuId="top-menu" (menuClosed)="logMenuClosed()"></admin-menu>
 ```
 
 Furthermore, you can alias inputs and outputs from `hostDirective` to customize the API of your
@@ -3632,19 +3734,21 @@ component:
 
 ```typescript
 @Component({
-  selector: 'admin-menu',
-  template: 'admin-menu.html',
-  hostDirectives: [{
-    directive: MenuBehavior,
-    inputs: ['menuId: id'],
-    outputs: ['menuClosed: closed'],
-  }],
+  selector: "admin-menu",
+  template: "admin-menu.html",
+  hostDirectives: [
+    {
+      directive: MenuBehavior,
+      inputs: ["menuId: id"],
+      outputs: ["menuClosed: closed"],
+    },
+  ],
 })
-export class AdminMenu { }
+export class AdminMenu {}
 ```
 
 ```html
-<admin-menu id="top-menu" (closed)="logMenuClosed()">
+<admin-menu id="top-menu" (closed)="logMenuClosed()"></admin-menu>
 ```
 
 ## Adding directives to another directive
@@ -3691,11 +3795,11 @@ The following example shows minimal use of a host directive:
 
 ```typescript
 @Component({
-  selector: 'admin-menu',
-  template: 'admin-menu.html',
+  selector: "admin-menu",
+  template: "admin-menu.html",
   hostDirectives: [MenuBehavior],
 })
-export class AdminMenu { }
+export class AdminMenu {}
 ```
 
 The order of execution here is:
@@ -3751,24 +3855,25 @@ providers.
 If a component or directive with `hostDirectives` and those host directives both provide the same
 injection token, the providers defined by class with `hostDirectives` take precedence over providers
 defined by the host directives.
+
 # Getting started with NgOptimizedImage
 
 The `NgOptimizedImage` directive makes it easy to adopt performance best practices for loading images.
 
 The directive ensures that the loading of the [Largest Contentful Paint (LCP)](http://web.dev/lcp) image is prioritized by:
 
-* Automatically setting the `fetchpriority` attribute on the `<img>` tag
-* Lazy loading other images by default
-* Automatically generating a preconnect link tag in the document head
-* Automatically generating a `srcset` attribute
-* Generating a [preload hint](https://developer.mozilla.org/docs/Web/HTML/Link_types/preload) if app is using SSR
+- Automatically setting the `fetchpriority` attribute on the `<img>` tag
+- Lazy loading other images by default
+- Automatically generating a preconnect link tag in the document head
+- Automatically generating a `srcset` attribute
+- Generating a [preload hint](https://developer.mozilla.org/docs/Web/HTML/Link_types/preload) if app is using SSR
 
 In addition to optimizing the loading of the LCP image, `NgOptimizedImage` enforces a number of image best practices, such as:
 
-* Using [image CDN URLs to apply image optimizations](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options)
-* Preventing layout shift by requiring `width` and `height`
-* Warning if `width` or `height` have been set incorrectly
-* Warning if the image will be visually distorted when rendered
+- Using [image CDN URLs to apply image optimizations](https://web.dev/image-cdns/#how-image-cdns-use-urls-to-indicate-optimization-options)
+- Preventing layout shift by requiring `width` and `height`
+- Warning if `width` or `height` have been set incorrectly
+- Warning if the image will be visually distorted when rendered
 
 If you're using a background image in CSS, [start here](#how-to-migrate-your-background-image).
 
@@ -3781,8 +3886,9 @@ If you're using a background image in CSS, [start here](#how-to-migrate-your-bac
 Import `NgOptimizedImage` directive from `@angular/common`:
 
 ```typescript
-import { NgOptimizedImage } from '@angular/common'
+import { NgOptimizedImage } from "@angular/common";
 ```
+
 and include it into the `imports` array of a standalone component or an NgModule:
 
 ```typescript
@@ -3802,21 +3908,23 @@ A brief guide for setting up a loader can be found in the [Configuring an Image 
 To activate the `NgOptimizedImage` directive, replace your image's `src` attribute with `ngSrc`.
 
 ```html
-<img ngSrc="cat.jpg">
+<img ngSrc="cat.jpg" />
 ```
+
 If you're using a [built-in third-party loader](#built-in-loaders), make sure to omit the base URL path from `src`, as that will be prepended automatically by the loader.
 </docs-step>
 <docs-step title="Mark images as `priority`">
 Always mark the [LCP image](https://web.dev/lcp/#what-elements-are-considered) on your page as `priority` to prioritize its loading.
 
 ```html
-<img ngSrc="cat.jpg" width="400" height="200" priority>
+<img ngSrc="cat.jpg" width="400" height="200" priority />
 ```
+
 Marking an image as `priority` applies the following optimizations:
 
-* Sets `fetchpriority=high` (read more about priority hints [here](https://web.dev/priority-hints))
-* Sets `loading=eager` (read more about native lazy loading [here](https://web.dev/browser-level-image-lazy-loading))
-* Automatically generates a [preload link element](https://developer.mozilla.org/docs/Web/HTML/Link_types/preload) if [rendering on the server](guide/ssr).
+- Sets `fetchpriority=high` (read more about priority hints [here](https://web.dev/priority-hints))
+- Sets `loading=eager` (read more about native lazy loading [here](https://web.dev/browser-level-image-lazy-loading))
+- Automatically generates a [preload link element](https://developer.mozilla.org/docs/Web/HTML/Link_types/preload) if [rendering on the server](guide/ssr).
 
 Angular displays a warning during development if the LCP element is an image that does not have the `priority` attribute. A page’s LCP element can vary based on a number of factors - such as the dimensions of a user's screen, so a page may have multiple images that should be marked `priority`. See [CSS for Web Vitals](https://web.dev/css-web-vitals/#images-and-largest-contentful-paint-lcp) for more details.
 </docs-step>
@@ -3824,8 +3932,9 @@ Angular displays a warning during development if the LCP element is an image tha
 In order to prevent [image-related layout shifts](https://web.dev/css-web-vitals/#images-and-layout-shifts), NgOptimizedImage requires that you specify a height and width for your image, as follows:
 
 ```html
-<img ngSrc="cat.jpg" width="400" height="200">
+<img ngSrc="cat.jpg" width="400" height="200" />
 ```
+
 For **responsive images** (images which you've styled to grow and shrink relative to the viewport), the `width` and `height` attributes should be the intrinsic size of the image file. For responsive images it's also important to [set a value for `sizes`.](#responsive-images)
 
 For **fixed size images**, the `width` and `height` attributes should reflect the desired rendered size of the image. The aspect ratio of these attributes should always match the intrinsic aspect ratio of the image.
@@ -3841,8 +3950,9 @@ In cases where you want to have an image fill a containing element, you can use 
 When you add the `fill` attribute to your image, you do not need and should not include a `width` and `height`, as in this example:
 
 ```html
-<img ngSrc="cat.jpg" fill>
+<img ngSrc="cat.jpg" fill />
 ```
+
 You can use the [object-fit](https://developer.mozilla.org/docs/Web/CSS/object-fit) CSS property to change how the image will fill its container. If you style your image with `object-fit: "contain"`, the image will maintain its aspect ratio and be "letterboxed" to fit the element. If you set `object-fit: "cover"`, the element will retain its aspect ratio, fully fill the element, and some content may be "cropped" off.
 
 See visual examples of the above at the [MDN object-fit documentation.](https://developer.mozilla.org/docs/Web/CSS/object-fit)
@@ -3855,13 +3965,14 @@ IMPORTANT: For the "fill" image to render properly, its parent element **must** 
 
 Here's a simple step-by-step process for migrating from `background-image` to `NgOptimizedImage`. For these steps, we'll refer to the element that has an image background as the "containing element":
 
-1) Remove the `background-image` style from the containing element.
-2) Ensure that the containing element has `position: "relative"`, `position: "fixed"`, or `position: "absolute"`.
-3) Create a new image element as a child of the containing element, using `ngSrc` to enable the `NgOptimizedImage` directive.
-4) Give that element the `fill` attribute. Do not include a `height` and `width`.
-5) If you believe this image might be your [LCP element](https://web.dev/lcp/), add the `priority` attribute to the image element.
+1. Remove the `background-image` style from the containing element.
+2. Ensure that the containing element has `position: "relative"`, `position: "fixed"`, or `position: "absolute"`.
+3. Create a new image element as a child of the containing element, using `ngSrc` to enable the `NgOptimizedImage` directive.
+4. Give that element the `fill` attribute. Do not include a `height` and `width`.
+5. If you believe this image might be your [LCP element](https://web.dev/lcp/), add the `priority` attribute to the image element.
 
 You can adjust how the background image fills the container as described in the [Using fill mode](#using-fill-mode) section.
+
 ## Using placeholders
 
 ### Automatic placeholders
@@ -3871,6 +3982,7 @@ NgOptimizedImage can display an automatic low-resolution placeholder for your im
 ```
 <img ngSrc="cat.jpg" width="400" height="200" placeholder>
 ```
+
 Adding this attribute automatically requests a second, smaller version of the image using your specified image loader. This small image will be applied as a `background-image` style with a CSS blur while your image loads. If no image loader is provided, no placeholder image can be generated and an error will be thrown.
 
 The default size for generated placeholders is 30px wide. You can change this size by specifying a pixel value in the `IMAGE_CONFIG` provider, as seen below:
@@ -3885,6 +3997,7 @@ providers: [
   },
 ],
 ```
+
 If you want sharp edges around your blurred placeholder, you can wrap your image in a containing `<div>` with the `overflow: hidden` style. As long as the `<div>` is the same size as the image (such as by using the `width: fit-content` style), the "fuzzy edges" of the placeholder will be hidden.
 
 ### Data URL placeholders
@@ -3892,28 +4005,19 @@ If you want sharp edges around your blurred placeholder, you can wrap your image
 You can also specify a placeholder using a base64 [data URL](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URLs) without an image loader. The data url format is `data:image/[imagetype];[data]`, where `[imagetype]` is the image format, just as `png`, and `[data]` is a base64 encoding of the image. That encoding can be done using the command line or in JavaScript. For specific commands, see [the MDN documentation](https://developer.mozilla.org/docs/Web/HTTP/Basics_of_HTTP/Data_URLs#encoding_data_into_base64_format). An example of a data URL placeholder with truncated data is shown below:
 
 ```html
-<img
-  ngSrc="cat.jpg"
-  width="400"
-  height="200"
-  placeholder="data:image/png;base64,iVBORw0K..."
-/>
+<img ngSrc="cat.jpg" width="400" height="200" placeholder="data:image/png;base64,iVBORw0K..." />
 ```
-However, large data URLs  increase the size of your Angular bundles and slow down page load. If you cannot use an image loader, the Angular team recommends keeping base64 placeholder images smaller than 4KB and using them exclusively on critical images. In addition to decreasing placeholder dimensions, consider changing image formats or parameters used when saving images. At very low resolutions, these parameters can have a large effect on file size.
+
+However, large data URLs increase the size of your Angular bundles and slow down page load. If you cannot use an image loader, the Angular team recommends keeping base64 placeholder images smaller than 4KB and using them exclusively on critical images. In addition to decreasing placeholder dimensions, consider changing image formats or parameters used when saving images. At very low resolutions, these parameters can have a large effect on file size.
 
 ### Non-blurred placeholders
 
 By default, NgOptimizedImage applies a CSS blur effect to image placeholders. To render a placeholder without blur, provide a `placeholderConfig` argument with an object that includes the `blur` property, set to false. For example:
 
 ```html
-<img
-  ngSrc="cat.jpg"
-  width="400"
-  height="200"
-  placeholder
-  [placeholderConfig]="{blur: false}"
-/>
+<img ngSrc="cat.jpg" width="400" height="200" placeholder [placeholderConfig]="{blur: false}" />
 ```
+
 ## Adjusting image styling
 
 Depending on the image's styling, adding `width` and `height` attributes may cause the image to render differently. `NgOptimizedImage` warns you if your image styling renders the image at a distorted aspect ratio.
@@ -3935,6 +4039,7 @@ Preconnect links are automatically generated for domains provided as an argument
 ```html
 <link rel="preconnect" href="https://my.cdn.origin" />
 ```
+
 To disable preconnect warnings, inject the `PRECONNECT_CHECK_BLOCKLIST` token:
 
 ```typescript
@@ -3942,18 +4047,21 @@ providers: [
   {provide: PRECONNECT_CHECK_BLOCKLIST, useValue: 'https://your-domain.com'}
 ],
 ```
+
 See more information on automatic preconnect generation [here](#why-is-a-preconnect-element-not-being-generated-for-my-image-domain).
+
 ### Request images at the correct size with automatic `srcset`
 
 Defining a [`srcset` attribute](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/srcset) ensures that the browser requests an image at the right size for your user's viewport, so it doesn't waste time downloading an image that's too large. `NgOptimizedImage` generates an appropriate `srcset` for the image, based on the presence and value of the [`sizes` attribute](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/sizes) on the image tag.
 
 #### Fixed-size images
 
-If your image should be "fixed" in size  (i.e. the same size across devices, except for [pixel density](https://web.dev/codelab-density-descriptors/)), there is no need to set a `sizes` attribute. A `srcset` can be generated automatically from the image's width and height attributes with no further input required.
+If your image should be "fixed" in size (i.e. the same size across devices, except for [pixel density](https://web.dev/codelab-density-descriptors/)), there is no need to set a `sizes` attribute. A `srcset` can be generated automatically from the image's width and height attributes with no further input required.
 
 Example srcset generated:
+
 ```html
-<img ... srcset="image-400w.jpg 1x, image-800w.jpg 2x">
+<img ... srcset="image-400w.jpg 1x, image-800w.jpg 2x" />
 ```
 
 #### Responsive images
@@ -3982,37 +4090,43 @@ providers: [
   },
 ],
 ```
+
 If you would like to manually define a `srcset` attribute, you can provide your own using the `ngSrcset` attribute:
 
 ```html
-<img ngSrc="hero.jpg" ngSrcset="100w, 200w, 300w">
+<img ngSrc="hero.jpg" ngSrcset="100w, 200w, 300w" />
 ```
+
 If the `ngSrcset` attribute is present, `NgOptimizedImage` generates and sets the `srcset` based on the sizes included. Do not include image file names in `ngSrcset` - the directive infers this information from `ngSrc`. The directive supports both width descriptors (e.g. `100w`) and density descriptors (e.g. `1x`).
 
 ```html
-<img ngSrc="hero.jpg" ngSrcset="100w, 200w, 300w" sizes="50vw">
+<img ngSrc="hero.jpg" ngSrcset="100w, 200w, 300w" sizes="50vw" />
 ```
+
 ### Disabling automatic srcset generation
 
 To disable srcset generation for a single image, you can add the `disableOptimizedSrcset` attribute on the image:
 
 ```html
-<img ngSrc="about.jpg" disableOptimizedSrcset>
+<img ngSrc="about.jpg" disableOptimizedSrcset />
 ```
+
 ### Disabling image lazy loading
 
 By default, `NgOptimizedImage` sets `loading=lazy` for all images that are not marked `priority`. You can disable this behavior for non-priority images by setting the `loading` attribute. This attribute accepts values: `eager`, `auto`, and `lazy`. [See the documentation for the standard image `loading` attribute for details](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/loading#value).
 
 ```html
-<img ngSrc="cat.jpg" width="400" height="200" loading="eager">
+<img ngSrc="cat.jpg" width="400" height="200" loading="eager" />
 ```
+
 ### Advanced 'sizes' values
 
 You may want to have images displayed at varying widths on differently-sized screens. A common example of this pattern is a grid- or column-based layout that renders a single column on mobile devices, and two columns on larger devices. You can capture this behavior in the `sizes` attribute, using a "media query" syntax, such as the following:
 
 ```html
-<img ngSrc="cat.jpg" width="400" height="200" sizes="(max-width: 768px) 100vw, 50vw">
+<img ngSrc="cat.jpg" width="400" height="200" sizes="(max-width: 768px) 100vw, 50vw" />
 ```
+
 The `sizes` attribute in the above example says "I expect this image to be 100 percent of the screen width on devices under 768px wide. Otherwise, I expect it to be 50 percent of the screen width.
 
 For additional information about the `sizes` attribute, see [web.dev](https://web.dev/learn/design/responsive-images/#sizes) or [mdn](https://developer.mozilla.org/docs/Web/API/HTMLImageElement/sizes).
@@ -4023,21 +4137,21 @@ A "loader" is a function that generates an [image transformation URL](https://we
 
 `NgOptimizedImage` provides both a generic loader that applies no transformations, as well as loaders for various third-party image services. It also supports writing your own custom loader.
 
-| Loader type| Behavior |
-|:--- |:--- |
-| Generic loader | The URL returned by the generic loader will always match the value of `src`. In other words, this loader applies no transformations. Sites that use Angular to serve images are the primary intended use case for this loader.|
-| Loaders for third-party image services | The URL returned by the loaders for third-party image services will follow API conventions used by that particular image service. |
-| Custom loaders | A custom loader's behavior is defined by its developer. You should use a custom loader if your image service isn't supported by the loaders that come preconfigured with `NgOptimizedImage`.|
+| Loader type                            | Behavior                                                                                                                                                                                                                       |
+| :------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Generic loader                         | The URL returned by the generic loader will always match the value of `src`. In other words, this loader applies no transformations. Sites that use Angular to serve images are the primary intended use case for this loader. |
+| Loaders for third-party image services | The URL returned by the loaders for third-party image services will follow API conventions used by that particular image service.                                                                                              |
+| Custom loaders                         | A custom loader's behavior is defined by its developer. You should use a custom loader if your image service isn't supported by the loaders that come preconfigured with `NgOptimizedImage`.                                   |
 
 Based on the image services commonly used with Angular applications, `NgOptimizedImage` provides loaders preconfigured to work with the following image services:
 
-| Image Service | Angular API | Documentation |
-|:--- |:--- |:--- |
-| Cloudflare Image Resizing | `provideCloudflareLoader` | [Documentation](https://developers.cloudflare.com/images/image-resizing/) |
-| Cloudinary | `provideCloudinaryLoader` | [Documentation](https://cloudinary.com/documentation/resizing_and_cropping) |
-| ImageKit | `provideImageKitLoader` | [Documentation](https://docs.imagekit.io/) |
-| Imgix | `provideImgixLoader` | [Documentation](https://docs.imgix.com/) |
-| Netlify | `provideNetlifyLoader` | [Documentation](https://docs.netlify.com/image-cdn/overview/) |
+| Image Service             | Angular API               | Documentation                                                               |
+| :------------------------ | :------------------------ | :-------------------------------------------------------------------------- |
+| Cloudflare Image Resizing | `provideCloudflareLoader` | [Documentation](https://developers.cloudflare.com/images/image-resizing/)   |
+| Cloudinary                | `provideCloudinaryLoader` | [Documentation](https://cloudinary.com/documentation/resizing_and_cropping) |
+| ImageKit                  | `provideImageKitLoader`   | [Documentation](https://docs.imagekit.io/)                                  |
+| Imgix                     | `provideImgixLoader`      | [Documentation](https://docs.imgix.com/)                                    |
+| Netlify                   | `provideNetlifyLoader`    | [Documentation](https://docs.netlify.com/image-cdn/overview/)               |
 
 To use the **generic loader** no additional code changes are necessary. This is the default behavior.
 
@@ -4050,11 +4164,12 @@ providers: [
   provideImgixLoader('https://my.base.url/'),
 ],
 ```
+
 The base URL for your image assets should be passed to the provider factory as an argument. For most sites, this base URL should match one of the following patterns:
 
-* <https://yoursite.yourcdn.com>
-* <https://subdomain.yoursite.com>
-* <https://subdomain.yourcdn.com/yoursite>
+- <https://yoursite.yourcdn.com>
+- <https://subdomain.yoursite.com>
+- <https://subdomain.yourcdn.com/yoursite>
 
 You can learn more about the base URL structure in the docs of a corresponding CDN provider.
 
@@ -4072,6 +4187,7 @@ providers: [
   },
 ],
 ```
+
 A loader function for the `NgOptimizedImage` directive takes an object with the `ImageLoaderConfig` type (from `@angular/common`) as its argument and returns the absolute URL of the image asset. The `ImageLoaderConfig` object contains the `src` property, and optional `width` and `loaderParams` properties.
 
 NOTE: even though the `width` property may not always be present, a custom loader must use it to support requesting images at various widths in order for `ngSrcset` to work properly.
@@ -4094,16 +4210,18 @@ const myCustomLoader = (config: ImageLoaderConfig) => {
     queryParams.push(`w=${config.width}`);
   }
   if (config.loaderParams?.roundedCorners) {
-    queryParams.push('mask=corners&corner-radius=5');
+    queryParams.push("mask=corners&corner-radius=5");
   }
-  return url + queryParams.join('&');
+  return url + queryParams.join("&");
 };
 ```
+
 Note that in the above example, we've invented the 'roundedCorners' property name to control a feature of our custom loader. We could then use this feature when creating an image, as follows:
 
 ```html
-<img ngSrc="profile.jpg" width="300" height="300" [loaderParams]="{roundedCorners: true}">
+<img ngSrc="profile.jpg" width="300" height="300" [loaderParams]="{roundedCorners: true}" />
 ```
+
 ## Frequently Asked Questions
 
 ### Does NgOptimizedImage support the `background-image` css property?
@@ -4117,6 +4235,7 @@ For a step-by-step process for migration from `background-image` to `NgOptimized
 The `ngSrc` attribute was chosen as the trigger for NgOptimizedImage due to technical considerations around how images are loaded by the browser. NgOptimizedImage makes programmatic changes to the `loading` attribute -- if the browser sees the `src` attribute before those changes are made, it will begin eagerly downloading the image file, and the loading changes will be ignored.
 
 ### Why is a preconnect element not being generated for my image domain?
+
 Preconnect generation is performed based on static analysis of your application. That means that the image domain must be directly included in the loader parameter, as in the following example:
 
 ```typescript
@@ -4124,7 +4243,9 @@ providers: [
   provideImgixLoader('https://my.base.url/'),
 ],
 ```
+
 If you use a variable to pass the domain string to the loader, or you're not using a loader, the static analysis will not be able to identify the domain, and no preconnect link will be generated. In this case you should manually add a preconnect link to the document head, as [described above](#add-resource-hints).
+
 ### Can I use two different image domains in the same page?
 
 The [image loaders](#configuring-an-image-loader-for-ngoptimizedimage) provider pattern is designed to be as simple as possible for the common use case of having only a single image CDN used within a component. However, it's still very possible to manage multiple image CDNs using a single provider.
@@ -4149,42 +4270,42 @@ If you're waiting on this feature, please upvote the Github issue [here](https:/
 
 3. Once the profiling result is available, select "LCP" in the timings section.
 
-4. A summary entry should appear in the panel at the bottom. You can find the LCP element in the row for "related node".  Clicking on it will reveal the element in the Elements panel.
+4. A summary entry should appear in the panel at the bottom. You can find the LCP element in the row for "related node". Clicking on it will reveal the element in the Elements panel.
 
 <img alt="LCP in the Chrome DevTools" src="assets/images/guide/image-optimization/devtools-lcp.png">
 
 NOTE: This only identifies the LCP element within the viewport of the page you are testing. It is also recommended to use mobile emulation to identify the LCP element for smaller screens.
-In Angular, you use *signals* to create and manage state. A signal is a lightweight wrapper around a value.
+In Angular, you use _signals_ to create and manage state. A signal is a lightweight wrapper around a value.
 
 Use the `signal` function to create a signal for holding local state:
 
 ```typescript
-import {signal} from '@angular/core';
+import { signal } from "@angular/core";
 
 // Create a signal with the `signal` function.
-const firstName = signal('Morgan');
+const firstName = signal("Morgan");
 
 // Read a signal value by calling it— signals are functions.
 console.log(firstName());
 
 // Change the value of this signal by calling its `set` method with a new value.
-firstName.set('Jaime');
+firstName.set("Jaime");
 
 // You can also use the `update` method to change the value
 // based on the previous value.
-firstName.update(name => name.toUpperCase());
+firstName.update((name) => name.toUpperCase());
 ```
 
-Angular tracks where signals are read and when they're updated. The framework uses this information to do additional work, such as updating the DOM with new state. This ability to respond to changing signal values over time is known as *reactivity*.
+Angular tracks where signals are read and when they're updated. The framework uses this information to do additional work, such as updating the DOM with new state. This ability to respond to changing signal values over time is known as _reactivity_.
 
 ## Computed expressions
 
 A `computed` is a signal that produces its value based on other signals.
 
 ```typescript
-import {signal, computed} from '@angular/core';
+import { signal, computed } from "@angular/core";
 
-const firstName = signal('Morgan');
+const firstName = signal("Morgan");
 const firstNameCapitalized = computed(() => firstName().toUpperCase());
 
 console.log(firstNameCapitalized()); // MORGAN
@@ -4193,13 +4314,13 @@ console.log(firstNameCapitalized()); // MORGAN
 A `computed` signal is read-only; it does not have a `set` or an `update` method. Instead, the value of the `computed` signal automatically changes when any of the signals it reads change:
 
 ```typescript
-import {signal, computed} from '@angular/core';
+import { signal, computed } from "@angular/core";
 
-const firstName = signal('Morgan');
+const firstName = signal("Morgan");
 const firstNameCapitalized = computed(() => firstName().toUpperCase());
 console.log(firstNameCapitalized()); // MORGAN
 
-firstName.set('Jaime');
+firstName.set("Jaime");
 console.log(firstNameCapitalized()); // JAIME
 ```
 
@@ -4208,7 +4329,9 @@ console.log(firstNameCapitalized()); // JAIME
 Use `signal` and `computed` inside your components to create and manage state:
 
 ```typescript
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class UserProfile {
   isTrial = signal(false);
   isTrialExpired = signal(false);
@@ -4225,12 +4348,15 @@ TIP: Want to know more about Angular Signals? See the [In-depth Signals guide](g
 ## Next Step
 
 Now that you have learned how to declare and manage dynamic data, it's time to learn how to use that data inside of templates.
+
 # Dependent state with `linkedSignal`
 
 You can use the `signal` function to hold some state in your Angular code. Sometimes, this state depends on some _other_ state. For example, imagine a component that lets the user select a shipping method for an order:
 
 ```typescript
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class ShippingMethodPicker {
   shippingOptions: Signal<ShippingMethod[]> = getShippingOptions();
 
@@ -4248,7 +4374,9 @@ In this example, the `selectedOption` defaults to the first option, but changes 
 **The `linkedSignal` function lets you create a signal to hold some state that is intrinsically _linked_ to some other state.** Revisiting the example above, `linkedSignal` can replace `signal`:
 
 ```typescript
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class ShippingMethodPicker {
   shippingOptions: Signal<ShippingMethod[]> = getShippingOptions();
 
@@ -4266,14 +4394,14 @@ export class ShippingMethodPicker {
 The following example shows how the value of a `linkedSignal` can change based on its linked state:
 
 ```typescript
-const shippingOptions = signal(['Ground', 'Air', 'Sea']);
+const shippingOptions = signal(["Ground", "Air", "Sea"]);
 const selectedOption = linkedSignal(() => shippingOptions()[0]);
 console.log(selectedOption()); // 'Ground'
 
 selectedOption.set(shippingOptions()[2]);
 console.log(selectedOption()); // 'Sea'
 
-shippingOptions.set(['Email', 'Will Call', 'Postal service']);
+shippingOptions.set(["Email", "Will Call", "Postal service"]);
 console.log(selectedOption()); // 'Email'
 ```
 
@@ -4289,7 +4417,9 @@ interface ShippingMethod {
   name: string;
 }
 
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class ShippingMethodPicker {
   constructor() {
     this.changeShipping(2);
@@ -4298,9 +4428,9 @@ export class ShippingMethodPicker {
   }
 
   shippingOptions = signal<ShippingMethod[]>([
-    { id: 0, name: 'Ground' },
-    { id: 1, name: 'Air' },
-    { id: 2, name: 'Sea' },
+    { id: 0, name: "Ground" },
+    { id: 1, name: "Air" },
+    { id: 2, name: "Sea" },
   ]);
 
   selectedOption = linkedSignal<ShippingMethod[], ShippingMethod>({
@@ -4309,9 +4439,7 @@ export class ShippingMethodPicker {
     computation: (newOptions, previous) => {
       // If the newOptions contain the previously selected option, preserve that selection.
       // Otherwise, default to the first option.
-      return (
-        newOptions.find((opt) => opt.id === previous?.value.id) ?? newOptions[0]
-      );
+      return newOptions.find((opt) => opt.id === previous?.value.id) ?? newOptions[0];
     },
   });
 
@@ -4321,9 +4449,9 @@ export class ShippingMethodPicker {
 
   changeShippingOptions() {
     this.shippingOptions.set([
-      { id: 0, name: 'Email' },
-      { id: 1, name: 'Sea' },
-      { id: 2, name: 'Postal Service' },
+      { id: 0, name: "Email" },
+      { id: 1, name: "Sea" },
+      { id: 2, name: "Postal Service" },
     ]);
   }
 }
@@ -4342,7 +4470,7 @@ HELPFUL: When using the `previous` parameter, it is necessary to provide the gen
 `linkedSignal`, as any other signal, can be configured with a custom equality function. This function is used by downstream dependencies to determine if that value of the `linkedSignal` (result of a computation) changed:
 
 ```typescript
-const activeUser = signal({id: 123, name: 'Morgan', isAdmin: true});
+const activeUser = signal({ id: 123, name: "Morgan", isAdmin: true });
 
 const activeUserEditCopy = linkedSignal(() => activeUser(), {
   // Consider the user as the same if it's the same `id`.
@@ -4352,10 +4480,11 @@ const activeUserEditCopy = linkedSignal(() => activeUser(), {
 // Or, if separating `source` and `computation`
 const activeUserEditCopy = linkedSignal({
   source: activeUser,
-  computation: user => user,
+  computation: (user) => user,
   equal: (a, b) => a.id === b.id,
 });
 ```
+
 # Async reactivity with resources
 
 IMPORTANT: `resource` is [experimental](reference/releases#experimental). It's ready for you to try, but it might change before it is stable.
@@ -4367,18 +4496,18 @@ You can use a `Resource` to perform any kind of async operation, but the most co
 The easiest way to create a `Resource` is the `resource` function.
 
 ```typescript
-import {resource, Signal} from '@angular/core';
+import { resource, Signal } from "@angular/core";
 
 const userId: Signal<string> = getUserId();
 
 const userResource = resource({
   // Define a reactive computation.
   // The params value recomputes whenever any read signals change.
-  params: () => ({id: userId()}),
+  params: () => ({ id: userId() }),
 
   // Define an async loader that retrieves data.
   // The resource calls this function every time the `params` value changes.
-  loader: ({params}) => fetchUser(params),
+  loader: ({ params }) => fetchUser(params),
 });
 
 // Create a computed signal based on the result of the resource's loader function.
@@ -4417,11 +4546,11 @@ You can use the `abortSignal` in `ResourceLoaderParams` to respond to aborted re
 const userId: Signal<string> = getUserId();
 
 const userResource = resource({
-  params: () => ({id: userId()}),
-  loader: ({request, abortSignal}): Promise<User> => {
+  params: () => ({ id: userId() }),
+  loader: ({ params, abortSignal }): Promise<User> => {
     // fetch cancels any outstanding HTTP requests when the given `AbortSignal`
     // indicates that the request has been aborted.
-    return fetch(`users/${request.id}`, {signal: abortSignal});
+    return fetch(`users/${params.id}`, { signal: abortSignal });
   },
 });
 ```
@@ -4436,8 +4565,8 @@ You can programmatically trigger a resource's `loader` by calling the `reload` m
 const userId: Signal<string> = getUserId();
 
 const userResource = resource({
-  params: () => ({id: userId()}),
-  loader: ({params}) => fetchUser(params),
+  params: () => ({ id: userId() }),
+  loader: ({ params }) => fetchUser(params),
 });
 
 // ...
@@ -4469,7 +4598,10 @@ The `status` signal provides a specific `ResourceStatus` that describes the stat
 | `'local'`     | Locally set value | The resource's value has been set locally via `.set()` or `.update()`        |
 
 You can use this status information to conditionally display user interface elements, such loading indicators and error messages.
-# Understanding dependency injection
+
+## Reactive data fetching with `httpResource`
+
+[`httpResource`](/guide/http/http-resource) is a wrapper around `HttpClient` that gives you the request status and response as signals. It makes HTTP requests through the Angular HTTP stack, including interceptors.# Understanding dependency injection
 
 Dependency injection, or DI, is one of the fundamental concepts in Angular. DI is wired into the Angular framework and allows classes with Angular decorators, such as Components, Directives, Pipes, and Injectables, to configure dependencies that they need.
 
@@ -4489,6 +4621,7 @@ The first step is to add the `@Injectable` decorator to show that the class can 
 @Injectable()
 class HeroService {}
 ```
+
 The next step is to make it available in the DI by providing it.
 A dependency can be provided in multiple places:
 
@@ -4506,10 +4639,11 @@ You can provide a service by using `providedIn: 'root'` in the `@Injectable` dec
 
 ```typescript
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 class HeroService {}
 ```
+
 When you provide the service at the root level, Angular creates a single, shared instance of the `HeroService` and injects it into any class that asks for it.
 
 ### At the Component level
@@ -4521,12 +4655,13 @@ For example:
 
 ```typescript
 @Component({
-  selector: 'hero-list',
-  template: '...',
-  providers: [HeroService]
+  selector: "hero-list",
+  template: "...",
+  providers: [HeroService],
 })
 class HeroListComponent {}
 ```
+
 When you register a provider at the component level, you get a new instance of the service with each new instance of that component.
 
 NOTE: Declaring a service like this causes `HeroService` to always be included in your application— even if the service is unused.
@@ -4539,16 +4674,16 @@ In the example below, the `HeroService` is available to all components, directiv
 
 ```typescript
 export const appConfig: ApplicationConfig = {
-    providers: [
-      { provide: HeroService },
-    ]
+  providers: [{ provide: HeroService }],
 };
 ```
+
 Then, in `main.ts`:
 
 ```typescript
-bootstrapApplication(AppComponent, appConfig)
+bootstrapApplication(AppComponent, appConfig);
 ```
+
 NOTE: Declaring a service like this causes `HeroService` to always be included in your application— even if the service is unused.
 
 ### `NgModule` based applications
@@ -4565,9 +4700,11 @@ NOTE: Declaring a service using `providers` causes the service to be included in
 Use Angular's `inject` function to retrieve dependencies.
 
 ```ts
-import {inject, Component} from 'angular/core';
+import { inject, Component } from "angular/core";
 
-@Component({/* ... */})
+@Component({
+  /* ... */
+})
 export class UserProfile {
   // You can use the `inject` function in property initializers.
   private userClient = inject(UserClient);
@@ -4600,6 +4737,7 @@ style componentProperty text-align: left
 ```
 
 ## What's next
+
 # Creating an injectable service
 
 Service is a broad category encompassing any value, function, or feature that an application needs.
@@ -4630,6 +4768,7 @@ export class Logger {
   warn(msg: unknown) { console.warn(msg); }
 }
 ```
+
 Services can depend on other services.
 For example, here's a `HeroService` that depends on the `Logger` service, and also uses `BackendService` to get heroes.
 That service in turn might depend on the `HttpClient` service to fetch heroes asynchronously from a server:
@@ -4652,6 +4791,7 @@ export class HeroService {
   }
 }
 ```
+
 ## Creating an injectable service
 
 The Angular CLI provides a command to create a new service. In the following example, you add a new service to an existing application.
@@ -4663,6 +4803,7 @@ To generate a new `HeroService` class in the `src/app/heroes` folder, follow the
 ```sh
 ng generate service heroes/hero
 ```
+
 This command creates the following default `HeroService`:
 
 ```
@@ -4673,6 +4814,7 @@ import { Injectable } from '@angular/core';
 })
 export class HeroService {}
 ```
+
 The `@Injectable()` decorator specifies that Angular can use this class in the DI system.
 The metadata, `providedIn: 'root'`, means that the `HeroService` is provided throughout the application.
 
@@ -4693,6 +4835,7 @@ export class HeroService {
   }
 }
 ```
+
 For clarity and maintainability, it is recommended that you define components and services in separate files.
 
 ## Injecting services
@@ -4709,11 +4852,13 @@ export class HeroListComponent {
   private heroService = inject(HeroService);
 }
 ```
+
 It is also possible to inject a service into a component using the component's constructor:
 
 ```
 constructor(private heroService: HeroService)
 ```
+
 The `inject` method can be used in both classes and functions, while the constructor method can naturally only be used in a class constructor. However, in either case a dependency may only be injected in a valid [injection context](guide/di/dependency-injection-context), usually in the construction or initialization of a component.
 
 ## Injecting services in other services
@@ -4738,9 +4883,11 @@ export class HeroService {
   }
 }
 ```
+
 In this example, the `getHeroes()` method uses the `Logger` service by logging a message when fetching heroes.
 
 ## What's next
+
 # Configuring dependency providers
 
 The previous sections described how to use class instances as dependencies.
@@ -4756,6 +4903,7 @@ In the following example, the app component provides a `Logger` instance:
 ```
 providers: [Logger],
 ```
+
 You can, however, configure DI to associate the `Logger` provider token with a different class or any other value.
 So when the `Logger` is injected, the configured value is used instead.
 
@@ -4765,6 +4913,7 @@ Angular expands the `providers` value in this case into a full provider object a
 ```
 [{ provide: Logger, useClass: Logger }]
 ```
+
 The expanded provider configuration is an object literal with two properties:
 
 - The `provide` property holds the token that serves as the key for consuming the dependency value.
@@ -4788,6 +4937,7 @@ In the following example, `BetterLogger` would be instantiated when the `Logger`
 ```
 [{ provide: Logger, useClass: BetterLogger }]
 ```
+
 If the alternative class providers have their own dependencies, specify both providers in the providers metadata property of the parent module or component:
 
 ```
@@ -4796,6 +4946,7 @@ If the alternative class providers have their own dependencies, specify both pro
   { provide: Logger, useClass: EvenBetterLogger },
 ]
 ```
+
 In this example, `EvenBetterLogger` displays the user name in the log message. This logger gets the user from an injected `UserService` instance:
 
 ```
@@ -4809,6 +4960,7 @@ export class EvenBetterLogger extends Logger {
   }
 }
 ```
+
 Angular DI knows how to construct the `UserService` dependency, since it has been configured above and is available in the injector.
 
 ### Alias providers: useExisting
@@ -4826,6 +4978,7 @@ In this way, `OldLogger` is an alias for `NewLogger`.
   { provide: OldLogger, useExisting: NewLogger},
 ]
 ```
+
 NOTE: Ensure you do not alias `OldLogger` to `NewLogger` with `useClass`, as this creates two different `NewLogger` instances.
 
 ### Factory providers: useFactory
@@ -4851,6 +5004,7 @@ class HeroService {
   }
 }
 ```
+
 To implement the `isAuthorized` flag, use a factory provider to create a new logger instance for `HeroService`.
 This is necessary as we need to manually pass `Logger` when constructing the hero service:
 
@@ -4858,6 +5012,7 @@ This is necessary as we need to manually pass `Logger` when constructing the her
 const heroServiceFactory = (logger: Logger, userService: UserService) =>
   new HeroService(logger, userService.user.isAuthorized);
 ```
+
 The factory function has access to `UserService`.
 You inject both `Logger` and `UserService` into the factory provider so the injector can pass them along to the factory function:
 
@@ -4868,10 +5023,11 @@ export const heroServiceProvider = {
   deps: [Logger, UserService]
 };
 ```
+
 - The `useFactory` field specifies that the provider is a factory function whose implementation is `heroServiceFactory`.
 - The `deps` property is an array of provider tokens.
-The `Logger` and `UserService` classes serve as tokens for their own class providers.
-The injector resolves these tokens and injects the corresponding services into the matching `heroServiceFactory` factory function parameters, based on the order specified.
+  The `Logger` and `UserService` classes serve as tokens for their own class providers.
+  The injector resolves these tokens and injects the corresponding services into the matching `heroServiceFactory` factory function parameters, based on the order specified.
 
 Capturing the factory provider in the exported variable, `heroServiceProvider`, makes the factory provider reusable.
 
@@ -4898,6 +5054,7 @@ export interface AppConfig {
 
 export const APP_CONFIG = new InjectionToken<AppConfig>('app.config description');
 ```
+
 The optional type parameter, `<AppConfig>`, and the token description, `app.config description`, specify the token's purpose.
 
 Next, register the dependency provider in the component using the `InjectionToken` object of `APP_CONFIG`:
@@ -4909,6 +5066,7 @@ const MY_APP_CONFIG_VARIABLE: AppConfig = {
 
 providers: [{ provide: APP_CONFIG, useValue: MY_APP_CONFIG_VARIABLE }]
 ```
+
 Now, inject the configuration object in the constructor body with the `inject` function:
 
 ```
@@ -4919,6 +5077,7 @@ export class AppComponent {
   }
 }
 ```
+
 ### Interfaces and DI
 
 Though the TypeScript `AppConfig` interface supports typing within the class, the `AppConfig` interface plays no role in DI.
@@ -4931,6 +5090,7 @@ Because there is no interface for Angular to find at runtime, the interface cann
 // Can't use interface as provider token
 [{ provide: AppConfig, useValue: MY_APP_CONFIG_VARIABLE })]
 ```
+
 ```
 export class AppComponent {
   // Can't inject using the interface as the parameter type
@@ -4945,11 +5105,11 @@ This means that injectors can only work when code is executed in such a context.
 
 The injection context is available in these situations:
 
-* During construction (via the `constructor`) of a class being instantiated by the DI system, such as an `@Injectable` or `@Component`.
-* In the initializer for fields of such classes.
-* In the factory function specified for `useFactory` of a `Provider` or an `@Injectable`.
-* In the `factory` function specified for an `InjectionToken`.
-* Within a stack frame that runs in an injection context.
+- During construction (via the `constructor`) of a class being instantiated by the DI system, such as an `@Injectable` or `@Component`.
+- In the initializer for fields of such classes.
+- In the factory function specified for `useFactory` of a `Provider` or an `@Injectable`.
+- In the `factory` function specified for an `InjectionToken`.
+- Within a stack frame that runs in an injection context.
 
 Knowing when you are in an injection context will allow you to use the [`inject`](api/core/inject) function to inject instances.
 
@@ -4958,15 +5118,16 @@ Knowing when you are in an injection context will allow you to use the [`inject`
 Every time the DI system instantiates a class, it does so in an injection context. This is handled by the framework itself. The constructor of the class is executed in that runtime context, which also allows injection of a token using the [`inject`](api/core/inject) function.
 
 ```typescript
-class MyComponent  {
+class MyComponent {
   private service1: Service1;
   private service2: Service2 = inject(Service2); // In context
 
   constructor() {
-    this.service1 = inject(Service1) // In context
+    this.service1 = inject(Service1); // In context
   }
 }
 ```
+
 ## Stack frame in context
 
 Some APIs are designed to be run in an injection context. This is the case, for example, with router guards. This allows the use of [`inject`](api/core/inject) within the guard function to access a service.
@@ -4974,11 +5135,11 @@ Some APIs are designed to be run in an injection context. This is the case, for 
 Here is an example for `CanActivateFn`
 
 ```typescript
-const canActivateTeam: CanActivateFn =
-    (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
-      return inject(PermissionsService).canActivate(inject(UserToken), route.params.id);
-    };
+const canActivateTeam: CanActivateFn = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
+  return inject(PermissionsService).canActivate(inject(UserToken), route.params.id);
+};
 ```
+
 ## Run within an injection context
 
 When you want to run a given function in an injection context without already being in one, you can do so with `runInInjectionContext`.
@@ -4998,6 +5159,7 @@ export class HeroService {
   }
 }
 ```
+
 Note that `inject` will return an instance only if the injector can resolve the required token.
 
 ## Asserts the context
@@ -5007,6 +5169,7 @@ Angular provides the `assertInInjectionContext` helper function to assert that t
 ## Using DI outside of a context
 
 Calling [`inject`](api/core/inject) or calling `assertInInjectionContext` outside of an injection context will throw [error NG0203](/errors/NG0203).
+
 # Hierarchical injectors
 
 Injectors in Angular have rules that you can leverage to achieve the desired visibility of injectables in your applications.
@@ -5023,18 +5186,20 @@ With hierarchical dependency injection, you can isolate sections of the applicat
 
 Angular has two injector hierarchies:
 
-| Injector hierarchies        | Details |
-|:---                         |:---     |
-| `EnvironmentInjector` hierarchy | Configure an `EnvironmentInjector` in this hierarchy using `@Injectable()` or `providers` array in `ApplicationConfig`. |
-| `ElementInjector` hierarchy | Created implicitly at each DOM element. An `ElementInjector` is empty by default unless you configure it in the `providers` property on `@Directive()` or `@Component()`. |
+| Injector hierarchies            | Details                                                                                                                                                                   |
+| :------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `EnvironmentInjector` hierarchy | Configure an `EnvironmentInjector` in this hierarchy using `@Injectable()` or `providers` array in `ApplicationConfig`.                                                   |
+| `ElementInjector` hierarchy     | Created implicitly at each DOM element. An `ElementInjector` is empty by default unless you configure it in the `providers` property on `@Directive()` or `@Component()`. |
+
 For `NgModule` based applications, you can provide dependencies with the `ModuleInjector` hierarchy using an `@NgModule()` or `@Injectable()` annotation.
+
 ### `EnvironmentInjector`
 
 The `EnvironmentInjector` can be configured in one of two ways by using:
 
-* The `@Injectable()` `providedIn` property to refer to `root` or `platform`
-* The `ApplicationConfig` `providers` array
-Using the `@Injectable()` `providedIn` property is preferable to using the `ApplicationConfig` `providers` array. With `@Injectable()` `providedIn`, optimization tools can perform tree-shaking, which removes services that your application isn't using. This results in smaller bundle sizes.
+- The `@Injectable()` `providedIn` property to refer to `root` or `platform`
+- The `ApplicationConfig` `providers` array
+  Using the `@Injectable()` `providedIn` property is preferable to using the `ApplicationConfig` `providers` array. With `@Injectable()` `providedIn`, optimization tools can perform tree-shaking, which removes services that your application isn't using. This results in smaller bundle sizes.
 
 Tree-shaking is especially useful for a library because the application which uses the library may not have a need to inject it.
 `EnvironmentInjector` is configured by the `ApplicationConfig.providers`.
@@ -5042,15 +5207,16 @@ Tree-shaking is especially useful for a library because the application which us
 Provide services using `providedIn` of `@Injectable()` as follows:
 
 ```typescript
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 
 @Injectable({
-  providedIn: 'root'  // <--provides this service in the root EnvironmentInjector
+  providedIn: "root", // <--provides this service in the root EnvironmentInjector
 })
 export class ItemService {
-  name = 'telephone';
+  name = "telephone";
 }
 ```
+
 The `@Injectable()` decorator identifies a service class.
 The `providedIn` property configures a specific `EnvironmentInjector`, here `root`, which makes the service available in the `root` `EnvironmentInjector`.
 
@@ -5058,8 +5224,8 @@ The `providedIn` property configures a specific `EnvironmentInjector`, here `roo
 
 In the case of `NgModule` based applications, the ModuleInjector can be configured in one of two ways by using:
 
-* The `@Injectable()` `providedIn` property to refer to `root` or `platform`
-* The `@NgModule()` `providers` array
+- The `@Injectable()` `providedIn` property to refer to `root` or `platform`
+- The `@NgModule()` `providers` array
 
 `ModuleInjector` is configured by the `@NgModule.providers` and `NgModule.imports` property. `ModuleInjector` is a flattening of all the providers arrays that can be reached by following the `NgModule.imports` recursively.
 
@@ -5074,6 +5240,7 @@ Consider how Angular bootstraps the application with the following in `main.ts`:
 ```javascript
 bootstrapApplication(AppComponent, appConfig);
 ```
+
 The `bootstrapApplication()` method creates a child injector of the platform injector which is configured by the `ApplicationConfig` instance.
 This is the `root` `EnvironmentInjector`.
 
@@ -5109,12 +5276,11 @@ You can do this to configure a non-default provider of a service that is shared 
 Here is an example of the case where the component router configuration includes a non-default [location strategy](guide/routing#location-strategy) by listing its provider in the `providers` list of the `ApplicationConfig`.
 
 ```ts
-providers: [
-  { provide: LocationStrategy, useClass: HashLocationStrategy }
-]
+providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }];
 ```
 
 For `NgModule` based applications, configure app-wide providers in the `AppModule` `providers`.
+
 ### `ElementInjector`
 
 Angular creates `ElementInjector` hierarchies implicitly for each DOM element.
@@ -5129,6 +5295,7 @@ For example, the following `TestComponent` configures the `ElementInjector` by p
 })
 export class TestComponent
 ```
+
 HELPFUL: See the [resolution rules](#resolution-rules) section to understand the relationship between the `EnvironmentInjector` tree, the `ModuleInjector` and the `ElementInjector` tree.
 
 When you provide services in a component, that service is available by way of the `ElementInjector` at that component instance.
@@ -5173,17 +5340,17 @@ Import each of them from `@angular/core` and use each in the `inject` configurat
 
 Resolution modifiers fall into three categories:
 
-* What to do if Angular doesn't find what you're looking for, that is `optional`
-* Where to start looking, that is `skipSelf`
-* Where to stop looking, `host` and `self`
+- What to do if Angular doesn't find what you're looking for, that is `optional`
+- Where to start looking, that is `skipSelf`
+- Where to stop looking, `host` and `self`
 
 By default, Angular always starts at the current `Injector` and keeps searching all the way up.
 Modifiers allow you to change the starting, or _self_, location and the ending location.
 
 Additionally, you can combine all of the modifiers except:
 
-* `host` and `self`
-* `skipSelf` and `self`.
+- `host` and `self`
+- `skipSelf` and `self`.
 
 ### `optional`
 
@@ -5196,6 +5363,7 @@ export class OptionalComponent {
   public optional? = inject(OptionalService, {optional: true});
 }
 ```
+
 ### `self`
 
 Use `self` so that Angular will only look at the `ElementInjector` for the current component or directive.
@@ -5215,6 +5383,7 @@ export class SelfNoDataComponent {
   public leaf = inject(LeafService, {optional: true, self: true});
 }
 ```
+
 In this example, there is a parent provider and injecting the service will return the value, however, injecting the service with `self` and `optional` will return `null` because `self` tells the injector to stop searching in the current host element.
 
 Another example shows the component class with a provider for `FlowerService`.
@@ -5234,6 +5403,7 @@ export class LeafService {
   emoji = '🌿';
 }
 ```
+
 Imagine that in the child component, you had a different value, maple leaf <code>&#x1F341;</code> but you wanted to use the parent's value instead.
 This is when you'd use `skipSelf`:
 
@@ -5250,6 +5420,7 @@ export class SkipselfComponent {
   public leaf = inject(LeafService, {skipSelf: true});
 }
 ```
+
 In this case, the value you'd get for `emoji` would be fern <code>&#x1F33F;</code>, not maple leaf <code>&#x1F341;</code>.
 
 #### `skipSelf` option with `optional`
@@ -5261,9 +5432,10 @@ In the following example, the `Person` service is injected during property initi
 
 ```typescript
 class Person {
-  parent = inject(Person, {optional: true, skipSelf: true})
+  parent = inject(Person, { optional: true, skipSelf: true });
 }
 ```
+
 ### `host`
 
 <!-- TODO: Remove ambiguity between host and self. -->
@@ -5286,6 +5458,7 @@ export class HostComponent {
   flower = inject(FlowerService, {host: true, optional: true});
 }
 ```
+
 Since `HostComponent` has the `host` option , no matter what the parent of `HostComponent` might have as a `flower.emoji` value, the `HostComponent` will use tulip <code>&#x1F337;</code>.
 
 ### Modifiers with constructor injection
@@ -5299,6 +5472,7 @@ export class SelfNoDataComponent {
   constructor(@Self() @Optional() public leaf?: LeafService) { }
 }
 ```
+
 ## Logical structure of the template
 
 When you provide services in the component class, services are visible within the `ElementInjector` tree relative to where and how you provide those services.
@@ -5308,10 +5482,9 @@ Understanding the underlying logical structure of the Angular template will give
 Components are used in your templates, as in the following example:
 
 ```html
-<app-root>
-  <app-child></app-child>;
-</app-root>
+<app-root> <app-child></app-child>; </app-root>
 ```
+
 HELPFUL: Usually, you declare the components and their templates in separate files.
 For the purposes of understanding how the injection system works, it is useful to look at them from the point of view of a combined logical tree.
 The term _logical_ distinguishes it from the render tree, which is your application's DOM tree.
@@ -5330,6 +5503,7 @@ The following is an example of how the `<app-root>` and `<app-child>` view trees
   </#VIEW>
 </app-root>
 ```
+
 Understanding the idea of the `<#VIEW>` demarcation is especially significant when you configure services in the component class.
 
 ## Example: Providing services in `@Component()`
@@ -5339,8 +5513,8 @@ The following sections demonstrate `providers` and `viewProviders` along with wa
 
 A component class can provide services in two ways:
 
-| Arrays                       | Details |
-|:---                          |:---     |
+| Arrays                       | Details                                        |
+| :--------------------------- | :--------------------------------------------- |
 | With a `providers` array     | `@Component({ providers: [SomeService] })`     |
 | With a `viewProviders` array | `@Component({ viewProviders: [SomeService] })` |
 
@@ -5351,11 +5525,11 @@ For example, the logical tree will show that `<child-component>` is a direct chi
 In the logical tree, you will see special attributes: `@Provide`, `@Inject`, and `@ApplicationConfig`.
 These aren't real attributes but are here to demonstrate what is going on under the hood.
 
-| Angular service attribute                                                                                          | Details |
-|:---                                                                                                                |:---     |
-| `@Inject(Token)=>Value`     | If `Token` is injected at this location in the logical tree, its value would be `Value`.     |
-| `@Provide(Token=Value)`     | Indicates that `Token` is provided with `Value` at this location in the logical tree.        |
-| `@ApplicationConfig` | Demonstrates that a fallback `EnvironmentInjector` should be used at this location.          |
+| Angular service attribute | Details                                                                                  |
+| :------------------------ | :--------------------------------------------------------------------------------------- |
+| `@Inject(Token)=>Value`   | If `Token` is injected at this location in the logical tree, its value would be `Value`. |
+| `@Provide(Token=Value)`   | Indicates that `Token` is provided with `Value` at this location in the logical tree.    |
+| `@ApplicationConfig`      | Demonstrates that a fallback `EnvironmentInjector` should be used at this location.      |
 
 ### Example app structure
 
@@ -5369,15 +5543,17 @@ export class FlowerService {
   emoji = '🌺';
 }
 ```
+
 Consider an application with only an `AppComponent` and a `ChildComponent`.
 The most basic rendered view would look like nested HTML elements such as the following:
 
 ```html
-<app-root> <!-- AppComponent selector -->
-  <app-child> <!-- ChildComponent selector -->
-  </app-child>
+<app-root>
+  <!-- AppComponent selector -->
+  <app-child> <!-- ChildComponent selector --> </app-child>
 </app-root>
 ```
+
 However, behind the scenes, Angular uses a logical view representation as follows when resolving injection requests:
 
 ```html
@@ -5390,6 +5566,7 @@ However, behind the scenes, Angular uses a logical view representation as follow
   </#VIEW>
 </app-root>
 ```
+
 The `<#VIEW>` here represents an instance of a template.
 Notice that each component has its own `<#VIEW>`.
 
@@ -5402,16 +5579,19 @@ export class AppComponent  {
   flower = inject(FlowerService);
 }
 ```
+
 Add a binding to the `<app-root>` template to visualize the result:
 
 ```
 <p>Emoji from FlowerService: {{flower.emoji}}</p>
 ```
+
 The output in the view would be:
 
 ```shell
 Emoji from FlowerService: &#x1F33A;
 ```
+
 In the logical tree, this would be represented as follows:
 
 ```html
@@ -5426,12 +5606,13 @@ In the logical tree, this would be represented as follows:
   </#VIEW>
 </app-root>
 ```
+
 When `<app-root>` requests the `FlowerService`, it is the injector's job to resolve the `FlowerService` token.
 The resolution of the token happens in two phases:
 
 1. The injector determines the starting location in the logical tree and an ending location of the search.
-    The injector begins with the starting location and looks for the token at each view level in the logical tree.
-    If the token is found it is returned.
+   The injector begins with the starting location and looks for the token at each view level in the logical tree.
+   If the token is found it is returned.
 
 1. If the token is not found, the injector looks for the closest parent `EnvironmentInjector` to delegate the request to.
 
@@ -5439,10 +5620,10 @@ In the example case, the constraints are:
 
 1. Start with `<#VIEW>` belonging to `<app-root>` and end with `<app-root>`.
 
-    * Normally the starting point for search is at the point of injection.
-        However, in this case `<app-root>` is a component. `@Component`s are special in that they also include their own `viewProviders`, which is why the search starts at `<#VIEW>` belonging to `<app-root>`.
-        This would not be the case for a directive matched at the same location.
-    * The ending location happens to be the same as the component itself, because it is the topmost component in this application.
+   - Normally the starting point for search is at the point of injection.
+     However, in this case `<app-root>` is a component. `@Component`s are special in that they also include their own `viewProviders`, which is why the search starts at `<#VIEW>` belonging to `<app-root>`.
+     This would not be the case for a directive matched at the same location.
+   - The ending location happens to be the same as the component itself, because it is the topmost component in this application.
 
 1. The `EnvironmentInjector` provided by the `ApplicationConfig` acts as the fallback injector when the injection token can't be found in the `ElementInjector` hierarchies.
 
@@ -5463,6 +5644,7 @@ export class ChildComponent {
   flower = inject(FlowerService);
 }
 ```
+
 Now that the `FlowerService` is provided in the `@Component()` decorator, when the `<app-child>` requests the service, the injector has only to look as far as the `ElementInjector` in the `<app-child>`.
 It won't have to continue the search any further through the injector tree.
 
@@ -5471,12 +5653,14 @@ The next step is to add a binding to the `ChildComponent` template.
 ```
 <p>Emoji from FlowerService: {{flower.emoji}}</p>
 ```
+
 To render the new values, add `<app-child>` to the bottom of the `AppComponent` template so the view also displays the sunflower:
 
 ```shell
 Child Component
 Emoji from FlowerService: &#x1F33B;
 ```
+
 In the logical tree, this is represented as follows:
 
 ```html
@@ -5494,6 +5678,7 @@ In the logical tree, this is represented as follows:
   </#VIEW>
 </app-root>
 ```
+
 When `<app-child>` requests the `FlowerService`, the injector begins its search at the `<#VIEW>` belonging to `<app-child>` \(`<#VIEW>` is included because it is injected from `@Component()`\) and ends with `<app-child>`.
 In this case, the `FlowerService` is resolved in the `providers` array with sunflower <code>&#x1F33B;</code> of the `<app-child>`.
 The injector doesn't have to look any further in the injector tree.
@@ -5522,6 +5707,7 @@ export class AnimalService {
   emoji = '🐳';
 }
 ```
+
 Following the same pattern as with the `FlowerService`, inject the `AnimalService` in the `AppComponent` class:
 
 ```
@@ -5530,6 +5716,7 @@ export class AppComponent {
     public animal = inject(AnimalService);
 }
 ```
+
 HELPFUL: You can leave all the `FlowerService` related code in place as it will allow a comparison with the `AnimalService`.
 
 Add a `viewProviders` array and inject the `AnimalService` in the `<app-child>` class, too, but give `emoji` a different value.
@@ -5551,17 +5738,20 @@ export class ChildComponent {
 ...
 }
 ```
+
 Add bindings to the `ChildComponent` and the `AppComponent` templates.
 In the `ChildComponent` template, add the following binding:
 
 ```
 <p>Emoji from AnimalService: {{animal.emoji}}</p>
 ```
+
 Additionally, add the same to the `AppComponent` template:
 
 ```
 <p>Emoji from AnimalService: {{animal.emoji}}</p>s
 ```
+
 Now you should see both values in the browser:
 
 ```
@@ -5571,6 +5761,7 @@ Emoji from AnimalService: &#x1F433;
 Child Component
 Emoji from AnimalService: &#x1F436;
 ```
+
 The logic tree for this example of `viewProviders` is as follows:
 
 ```html
@@ -5587,6 +5778,7 @@ The logic tree for this example of `viewProviders` is as follows:
   </#VIEW>
 </app-root>
 ```
+
 Just as with the `FlowerService` example, the `AnimalService` is provided in the `<app-child>` `@Component()` decorator.
 This means that since the injector first looks in the `ElementInjector` of the component, it finds the `AnimalService` value of dog <code>&#x1F436;</code>.
 It doesn't need to continue searching the `ElementInjector` tree, nor does it need to search the `ModuleInjector`.
@@ -5606,6 +5798,7 @@ export class InspectorComponent {
   animal = inject(AnimalService);
 }
 ```
+
 You do not need a `providers` or `viewProviders` array.
 Next, in `inspector.component.html`, add the same markup from previous components:
 
@@ -5613,6 +5806,7 @@ Next, in `inspector.component.html`, add the same markup from previous component
 <p>Emoji from FlowerService: {{flower.emoji}}</p>
 <p>Emoji from AnimalService: {{animal.emoji}}</p>
 ```
+
 Remember to add the `InspectorComponent` to the `ChildComponent` `imports` array.
 
 ```
@@ -5621,6 +5815,7 @@ Remember to add the `InspectorComponent` to the `ChildComponent` `imports` array
   imports: [InspectorComponent]
 })
 ```
+
 Next, add the following to `child.component.html`:
 
 ```
@@ -5634,6 +5829,7 @@ Next, add the following to `child.component.html`:
 
 <app-inspector></app-inspector>
 ```
+
 `<ng-content>` allows you to project content, and `<app-inspector>` inside the `ChildComponent` template makes the `InspectorComponent` a child component of `ChildComponent`.
 
 Next, add the following to `app.component.html` to take advantage of content projection.
@@ -5643,6 +5839,7 @@ Next, add the following to `app.component.html` to take advantage of content pro
   <app-inspector></app-inspector>
 </app-child>
 ```
+
 The browser now renders the following, omitting the previous examples for brevity:
 
 ```
@@ -5655,6 +5852,7 @@ Emoji from AnimalService: &#x1F433;
 Emoji from FlowerService: &#x1F33B;
 Emoji from AnimalService: &#x1F436;
 ```
+
 These four bindings demonstrate the difference between `providers` and `viewProviders`.
 Remember that the dog emoji <code>&#x1F436;</code> is declared inside the `<#VIEW>` of `ChildComponent` and isn't visible to the projected content.
 Instead, the projected content sees the whale <code>&#x1F433;</code>.
@@ -5690,6 +5888,7 @@ The `AnimalService` in the logical tree would look like this:
   </#VIEW>
 </app-root>
 ```
+
 The projected content of `<app-inspector>` sees the whale <code>&#x1F433;</code>, not the dog <code>&#x1F436;</code>, because the dog <code>&#x1F436;</code> is inside the `<app-child>` `<#VIEW>`.
 The `<app-inspector>` can only see the dog <code>&#x1F436;</code> if it is also within the `<#VIEW>`.
 
@@ -5702,8 +5901,9 @@ To alter where the injector starts looking for `FlowerService`, add `skipSelf` t
 This invocation is a property initializer the `<app-child>` as shown in `child.component.ts`:
 
 ```typescript
-flower = inject(FlowerService, { skipSelf: true })
+flower = inject(FlowerService, { skipSelf: true });
 ```
+
 With `skipSelf`, the `<app-child>` injector doesn't look to itself for the `FlowerService`.
 Instead, the injector starts looking for the `FlowerService` at the `ElementInjector` of the `<app-root>`, where it finds nothing.
 Then, it goes back to the `<app-child>` `ModuleInjector` and finds the red hibiscus <code>&#x1F33A;</code> value, which is available because `<app-child>` and `<app-root>` share the same `ModuleInjector`.
@@ -5712,6 +5912,7 @@ The UI renders the following:
 ```
 Emoji from FlowerService: &#x1F33A;
 ```
+
 In a logical tree, this same idea might look like this:
 
 ```html
@@ -5726,6 +5927,7 @@ In a logical tree, this same idea might look like this:
   </#VIEW>
 </app-root>
 ```
+
 Though `<app-child>` provides the sunflower <code>&#x1F33B;</code>, the application renders the red hibiscus <code>&#x1F33A;</code> because `skipSelf` causes the current injector (`app-child`) to skip itself and look to its parent.
 
 If you now add `host` (in addition to the `skipSelf`), the result will be `null`.
@@ -5743,6 +5945,7 @@ Here's the idea in the logical tree:
   </#VIEW>
 </app-root>
 ```
+
 Here, the services and their values are the same, but `host` stops the injector from looking any further than the `<#VIEW>` for `FlowerService`, so it doesn't find it and returns `null`.
 
 ### `skipSelf` and `viewProviders`
@@ -5750,7 +5953,7 @@ Here, the services and their values are the same, but `host` stops the injector 
 Remember, `<app-child>` provides the `AnimalService` in the `viewProviders` array with the value of dog <code>&#x1F436;</code>.
 Because the injector has only to look at the `ElementInjector` of the `<app-child>` for the `AnimalService`, it never sees the whale <code>&#x1F433;</code>.
 
-As in the `FlowerService` example, if you add `skipSelf` to the `inject()` of `AnimalService`, the injector won't look in the  `ElementInjector` of the current `<app-child>` for the `AnimalService`.
+As in the `FlowerService` example, if you add `skipSelf` to the `inject()` of `AnimalService`, the injector won't look in the `ElementInjector` of the current `<app-child>` for the `AnimalService`.
 Instead, the injector will begin at the `<app-root>` `ElementInjector`.
 
 ```typescript
@@ -5762,6 +5965,7 @@ Instead, the injector will begin at the `<app-root>` `ElementInjector`.
   ],
 })
 ```
+
 The logical tree looks like this with `skipSelf` in `<app-child>`:
 
 ```html
@@ -5777,6 +5981,7 @@ The logical tree looks like this with `skipSelf` in `<app-child>`:
   </#VIEW>
 </app-root>
 ```
+
 With `skipSelf` in the `<app-child>`, the injector begins its search for the `AnimalService` in the `<app-root>` `ElementInjector` and finds whale <code>&#x1F433;</code>.
 
 ### `host` and `viewProviders`
@@ -5797,6 +6002,7 @@ export class ChildComponent {
   animal = inject(AnimalService, { host: true })
 }
 ```
+
 `host: true` causes the injector to look until it encounters the edge of the `<#VIEW>`.
 
 ```html
@@ -5811,6 +6017,7 @@ export class ChildComponent {
   </#VIEW>
 </app-root>
 ```
+
 Add a `viewProviders` array with a third animal, hedgehog <code>&#x1F994;</code>, to the `app.component.ts` `@Component()` metadata:
 
 ```typescript
@@ -5823,6 +6030,7 @@ Add a `viewProviders` array with a third animal, hedgehog <code>&#x1F994;</code>
   ],
 })
 ```
+
 Next, add `skipSelf` along with `host` to the `inject()` for the `AnimalService` injection in `child.component.ts`.
 Here are `host` and `skipSelf` in the `animal` property initialization:
 
@@ -5831,6 +6039,7 @@ export class ChildComponent {
   animal = inject(AnimalService, { host: true, skipSelf: true });
 }
 ```
+
 <!-- TODO: This requires a rework. It seems not well explained what `viewProviders`/`injectors` is here
   and how `host` works.
  -->
@@ -5857,6 +6066,7 @@ The logical tree representation shows why this is:
   </#VIEW>
 </app-root>
 ```
+
 `skipSelf`, causes the injector to start its search for the `AnimalService` at the `<app-root>`, not the `<app-child>`, where the request originates, and `host` stops the search at the `<app-root>` `<#VIEW>`.
 Since `AnimalService` is provided by way of the `viewProviders` array, the injector finds hedgehog <code>&#x1F994;</code> in the `<#VIEW>`.
 
@@ -5883,6 +6093,7 @@ Instead, you should provide the `VillainsService` in the `providers` metadata of
 })
 export class VillainsListComponent {}
 ```
+
 By providing `VillainsService` in the `VillainsListComponent` metadata and nowhere else, the service becomes available only in the `VillainsListComponent` and its subcomponent tree.
 
 `VillainService` is a singleton with respect to `VillainsListComponent` because that is where it is declared.
@@ -5900,9 +6111,9 @@ Each selected hero tax return opens in its own component and multiple returns ca
 
 Each tax return component has the following characteristics:
 
-* Is its own tax return editing session
-* Can change a tax return without affecting a return in another component
-* Has the ability to save the changes to its tax return or cancel them
+- Is its own tax return editing session
+- Can change a tax return without affecting a return in another component
+- Has the ability to save the changes to its tax return or cancel them
 
 Suppose that the `HeroTaxReturnComponent` had logic to manage and restore changes.
 That would be a straightforward task for a hero tax return.
@@ -5943,6 +6154,7 @@ export class HeroTaxReturnService {
   }
 }
 ```
+
 Here is the `HeroTaxReturnComponent` that makes use of `HeroTaxReturnService`.
 
 ```
@@ -5993,6 +6205,7 @@ export class HeroTaxReturnComponent {
   }
 }
 ```
+
 The _tax-return-to-edit_ arrives by way of the `input` property, which is implemented with getters and setters.
 The setter initializes the component's own instance of the `HeroTaxReturnService` with the incoming return.
 The getter always returns what that service says is the current state of the hero.
@@ -6006,6 +6219,7 @@ To prevent this, configure the component-level injector of `HeroTaxReturnCompone
 ```
 providers: [HeroTaxReturnService]
 ```
+
 The `HeroTaxReturnComponent` has its own provider of the `HeroTaxReturnService`.
 Recall that every component _instance_ has its own injector.
 Providing the service at the component level ensures that _every_ instance of the component gets a private instance of the service. This makes sure that no tax return gets overwritten.
@@ -6020,7 +6234,7 @@ For example, consider a `Car` component that includes tire service information a
 
 The root injector, marked as (A), uses _generic_ providers for details about `CarService` and `EngineService`.
 
-1. `Car` component (A).  Component (A) displays tire service data about a car and specifies generic services to provide more information about the car.
+1. `Car` component (A). Component (A) displays tire service data about a car and specifies generic services to provide more information about the car.
 
 2. Child component (B). Component (B) defines its own, _specialized_ providers for `CarService` and `EngineService` that have special capabilities suitable for what's going on in component (B).
 
@@ -6045,9 +6259,9 @@ Behind the scenes, each component sets up its own injector with zero, one, or mo
 
 When you resolve an instance of `Car` at the deepest component (C), its injector produces:
 
-* An instance of `Car` resolved by injector (C)
-* An `Engine` resolved by injector (B)
-* Its `Tires` resolved by the root injector (A).
+- An instance of `Car` resolved by injector (C)
+- An `Engine` resolved by injector (B)
+- Its `Tires` resolved by the root injector (A).
 
 ```mermaid
 graph BT;
@@ -6089,10 +6303,11 @@ style RootInjector fill:#BDD7EE,color:#000
 ```
 
 ## More on dependency injection
+
 # Optimizing client application size with lightweight injection tokens
 
 This page provides a conceptual overview of a dependency injection technique that is recommended for library developers.
-Designing your library with *lightweight injection tokens* helps optimize the bundle size of client applications that use your library.
+Designing your library with _lightweight injection tokens_ helps optimize the bundle size of client applications that use your library.
 
 You can manage the dependency structure among your components and injectable services to optimize bundle size by using tree-shakable providers.
 This normally ensures that if a provided component or service is never actually used by the application, the compiler can remove its code from the bundle.
@@ -6114,10 +6329,9 @@ To better explain the condition under which token retention occurs, consider a l
 This component contains a body and can contain an optional header:
 
 ```html
-<lib-card>;
-  <lib-header>…</lib-header>;
-</lib-card>;
+<lib-card>; <lib-header>…</lib-header>; </lib-card>;
 ```
+
 In a likely implementation, the `<lib-card>` component uses `@ContentChild()` or `@ContentChildren()` to get `<lib-header>` and `<lib-body>`, as in the following:
 
 ```typescript
@@ -6135,6 +6349,7 @@ class LibCardComponent {
   @ContentChild(LibHeaderComponent) header: LibHeaderComponent|null = null;
 }
 ```
+
 Because `<lib-header>` is optional, the element can appear in the template in its minimal form, `<lib-card></lib-card>`.
 In this case, `<lib-header>` is not used and you would expect it to be tree-shaken, but that is not what happens.
 This is because `LibCardComponent` actually contains two references to the `LibHeaderComponent`:
@@ -6142,13 +6357,14 @@ This is because `LibCardComponent` actually contains two references to the `LibH
 ```typescript
 @ContentChild(LibHeaderComponent) header: LibHeaderComponent;
 ```
-* One of these reference is in the *type position*-- that is, it specifies `LibHeaderComponent` as a type: `header: LibHeaderComponent;`.
-* The other reference is in the *value position*-- that is, LibHeaderComponent is the value of the `@ContentChild()` parameter decorator: `@ContentChild(LibHeaderComponent)`.
+
+- One of these reference is in the _type position_-- that is, it specifies `LibHeaderComponent` as a type: `header: LibHeaderComponent;`.
+- The other reference is in the _value position_-- that is, LibHeaderComponent is the value of the `@ContentChild()` parameter decorator: `@ContentChild(LibHeaderComponent)`.
 
 The compiler handles token references in these positions differently:
 
-* The compiler erases *type position* references after conversion from TypeScript, so they have no impact on tree-shaking.
-* The compiler must keep *value position* references at runtime, which **prevents** the component from being tree-shaken.
+- The compiler erases _type position_ references after conversion from TypeScript, so they have no impact on tree-shaking.
+- The compiler must keep _value position_ references at runtime, which **prevents** the component from being tree-shaken.
 
 In the example, the compiler retains the `LibHeaderComponent` token that occurs in the value position.
 This prevents the referenced component from being tree-shaken, even if the application does not actually use `<lib-header>` anywhere.
@@ -6159,8 +6375,8 @@ If `LibHeaderComponent` 's code, template, and styles combine to become too larg
 The tree-shaking problem arises when a component is used as an injection token.
 There are two cases when that can happen:
 
-* The token is used in the value position of a [content query](guide/components/queries#content-queries).
-* The token is used as a type specifier for constructor injection.
+- The token is used in the value position of a [content query](guide/components/queries#content-queries).
+- The token is used as a type specifier for constructor injection.
 
 In the following example, both uses of the `OtherComponent` token cause retention of `OtherComponent`, preventing it from being tree-shaken when it is not used:
 
@@ -6168,9 +6384,10 @@ In the following example, both uses of the `OtherComponent` token cause retentio
 class MyComponent {
   constructor(@Optional() other: OtherComponent) {}
 
-  @ContentChild(OtherComponent) other: OtherComponent|null;
+  @ContentChild(OtherComponent) other: OtherComponent | null;
 }
 ```
+
 Although tokens used only as type specifiers are removed when converted to JavaScript, all tokens used for dependency injection are needed at runtime.
 These effectively change `constructor(@Optional() other: OtherComponent)` to `constructor(@Optional() @Inject(OtherComponent) other)`.
 The token is now in a value position, which causes the tree-shaker to keep the reference.
@@ -6204,6 +6421,7 @@ class LibCardComponent {
   @ContentChild(LibHeaderToken) header: LibHeaderToken|null = null;
 }
 ```
+
 In this example, the `LibCardComponent` implementation no longer refers to `LibHeaderComponent` in either the type position or the value position.
 This lets full tree-shaking of `LibHeaderComponent` take place.
 The `LibHeaderToken` is retained, but it is only a class declaration, with no concrete implementation.
@@ -6261,6 +6479,7 @@ class LibCardComponent implement AfterContentInit {
   }
 }
 ```
+
 In this example, the parent queries the token to get the child component, and stores the resulting component reference if it is present.
 Before calling a method in the child, the parent component checks to see if the child component is present.
 If the child component has been tree-shaken, there is no runtime reference to it, and no call to its method.
@@ -6273,6 +6492,7 @@ The example "LibHeaderComponent" follows this convention.
 
 You should maintain the relationship between the component and its token while still distinguishing between them.
 The recommended style is to use the component base name with the suffix "`Token`" to name your lightweight injection tokens: "`LibHeaderToken`."
+
 # RxJS interop with Angular signals
 
 The `@angular/rxjs-interop` package offers APIs that help you integrate RxJS and Angular signals.
@@ -6282,10 +6502,10 @@ The `@angular/rxjs-interop` package offers APIs that help you integrate RxJS and
 Use the `toSignal` function to create a signal which tracks the value of an Observable. It behaves similarly to the `async` pipe in templates, but is more flexible and can be used anywhere in an application.
 
 ```ts
-import { Component } from '@angular/core';
-import { AsyncPipe } from '@angular/common';
-import { interval } from 'rxjs';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component } from "@angular/core";
+import { AsyncPipe } from "@angular/common";
+import { interval } from "rxjs";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component({
   template: `{{ counter() }}`,
@@ -6294,7 +6514,7 @@ export class Ticker {
   counterObservable = interval(1000);
 
   // Get a `Signal` representing the `counterObservable`'s value.
-  counter = toSignal(this.counterObservable, {initialValue: 0});
+  counter = toSignal(this.counterObservable, { initialValue: 0 });
 }
 ```
 
@@ -6369,7 +6589,7 @@ Unlike Observables, signals never provide a synchronous notification of changes.
 
 ```ts
 const obs$ = toObservable(mySignal);
-obs$.subscribe(value => console.log(value));
+obs$.subscribe((value) => console.log(value));
 
 mySignal.set(1);
 mySignal.set(2);
@@ -6377,6 +6597,7 @@ mySignal.set(3);
 ```
 
 Here, only the last value (3) will be logged.
+
 # RxJS interop with component and directive outputs
 
 TIP: This guide assumes you're familiar with [component and directive outputs](guide/components/outputs).
@@ -6388,10 +6609,12 @@ The `@angular/rxjs-interop` package offers two APIs related to component and dir
 The `outputFromObservable` lets you create a component or directive output that emits based on an RxJS observable:
 
 ```ts
-import {Directive} from '@angular/core';
-import {outputFromObservable} from '@angular/core/rxjs-interop';
+import { Directive } from "@angular/core";
+import { outputFromObservable } from "@angular/core/rxjs-interop";
 
-@Directive({/*...*/})
+@Directive({
+  /*...*/
+})
 class Draggable {
   pointerMoves$: Observable<PointerMovements> = listenToPointerMoves();
 
@@ -6399,6 +6622,7 @@ class Draggable {
   pointerMove = outputFromObservable(this.pointerMoves$);
 }
 ```
+
 The `outputFromObservable` function has special meaning to the Angular compiler. **You may only call `outputFromObservable` in component and directive property initializers.**
 
 When you `subscribe` to the output, Angular automatically forwards the subscription to the underlying observable. Angular stops forwarding values when the component or directive is destroyed.
@@ -6424,7 +6648,9 @@ outputToObservable(slider.valueChange) // Observable<number>
   .pipe(...)
   .subscribe(...);
 ```
+
 HELPFUL: Consider using the `subscribe` method on `OutputRef` directly if it meets your needs.
+
 # Setting up `HttpClient`
 
 Before you can use `HttpClient` in your app, you must configure it using [dependency injection](guide/di).
@@ -6435,31 +6661,30 @@ Before you can use `HttpClient` in your app, you must configure it using [depend
 
 ```ts
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(),
-  ]
+  providers: [provideHttpClient()],
 };
 ```
+
 If your app is using NgModule-based bootstrap instead, you can include `provideHttpClient` in the providers of your app's NgModule:
 
 ```ts
 @NgModule({
-  providers: [
-    provideHttpClient(),
-  ],
+  providers: [provideHttpClient()],
   // ... other application configuration
 })
 export class AppModule {}
 ```
+
 You can then inject the `HttpClient` service as a dependency of your components, services, or other classes:
 
 ```ts
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class ConfigService {
   private http = inject(HttpClient);
   // This service can now make HTTP requests via `this.http`.
 }
 ```
+
 ## Configuring features of `HttpClient`
 
 `provideHttpClient` accepts a list of optional feature configurations, to enable or configure the behavior of different aspects of the client. This section details the optional features and their usages.
@@ -6468,13 +6693,10 @@ export class ConfigService {
 
 ```ts
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(
-      withFetch(),
-    ),
-  ]
+  providers: [provideHttpClient(withFetch())],
 };
 ```
+
 By default, `HttpClient` uses the [`XMLHttpRequest`](https://developer.mozilla.org/docs/Web/API/XMLHttpRequest) API to make requests. The `withFetch` feature switches the client to use the [`fetch`](https://developer.mozilla.org/docs/Web/API/Fetch_API) API instead.
 
 `fetch` is a more modern API and is available in a few environments where `XMLHttpRequest` is not supported. It does have a few limitations, such as not producing upload progress events.
@@ -6523,6 +6745,7 @@ This table lists the NgModules available from `@angular/common/http` and how the
 | `HttpClientJsonpModule`                 | `withJsonpSupport()`                          |
 | `HttpClientXsrfModule.withOptions(...)` | `withXsrfConfiguration(...)`                  |
 | `HttpClientXsrfModule.disable()`        | `withNoXsrfProtection()`                      |
+
 When `HttpClientModule` is present in multiple injectors, the behavior of interceptors is poorly defined and depends on the exact options and provider/import ordering.
 
 Prefer `provideHttpClient` for multi-injector configurations, as it has more stable behavior. See the `withRequestsMadeViaParent` feature above.
@@ -6537,15 +6760,16 @@ Through an options object passed to the request method, various properties of th
 
 ## Fetching JSON data
 
-Fetching data from a backend often requires making a GET request using the [`HttpClient.get()`](api/common/http/HttpClient#get) method. This method takes two arguments: the string endpoint URL from which to fetch, and an *optional options* object to configure the request.
+Fetching data from a backend often requires making a GET request using the [`HttpClient.get()`](api/common/http/HttpClient#get) method. This method takes two arguments: the string endpoint URL from which to fetch, and an _optional options_ object to configure the request.
 
 For example, to fetch configuration data from a hypothetical API using the `HttpClient.get()` method:
 
 ```ts
-http.get<Config>('/api/config').subscribe(config => {
+http.get<Config>("/api/config").subscribe((config) => {
   // process the configuration.
 });
 ```
+
 Note the generic type argument which specifies that the data returned by the server will be of type `Config`. This argument is optional, and if you omit it then the returned data will have type `Object`.
 
 TIP: When dealing with data of uncertain structure and potential `undefined` or `null` values, consider using the `unknown` type instead of `Object` as the response type.
@@ -6556,23 +6780,25 @@ CRITICAL: The generic type of request methods is a type **assertion** about the 
 
 By default, `HttpClient` assumes that servers will return JSON data. When interacting with a non-JSON API, you can tell `HttpClient` what response type to expect and return when making the request. This is done with the `responseType` option.
 
-| **`responseType` value** | **Returned response type** |
-| - | - |
-| `'json'` (default) | JSON data of the given generic type |
-| `'text'` | string data |
-| `'arraybuffer'` | [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) containing the raw response bytes |
-| `'blob'` | [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob) instance |
+| **`responseType` value** | **Returned response type**                                                                                                                |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| `'json'` (default)       | JSON data of the given generic type                                                                                                       |
+| `'text'`                 | string data                                                                                                                               |
+| `'arraybuffer'`          | [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) containing the raw response bytes |
+| `'blob'`                 | [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob) instance                                                                        |
 
 For example, you can ask `HttpClient` to download the raw bytes of a `.jpeg` image into an `ArrayBuffer`:
 
 ```ts
-http.get('/images/dog.jpg', {responseType: 'arraybuffer'}).subscribe(buffer => {
-  console.log('The image is ' + buffer.byteLength + ' bytes large');
+http.get("/images/dog.jpg", { responseType: "arraybuffer" }).subscribe((buffer) => {
+  console.log("The image is " + buffer.byteLength + " bytes large");
 });
 ```
+
 Because the value of `responseType` affects the type returned by `HttpClient`, it must have a literal type and not a `string` type.
 
 This happens automatically if the options object passed to the request method is a literal object, but if you're extracting the request options out into a variable or helper method you might need to explicitly specify it as a literal, such as `responseType: 'text' as const`.
+
 ## Mutating server state
 
 Server APIs which perform mutations often require making POST requests with a request body specifying the new state or the change to be made.
@@ -6580,19 +6806,20 @@ Server APIs which perform mutations often require making POST requests with a re
 The [`HttpClient.post()`](api/common/http/HttpClient#post) method behaves similarly to `get()`, and accepts an additional `body` argument before its options:
 
 ```ts
-http.post<Config>('/api/config', newConfig).subscribe(config => {
-  console.log('Updated config:', config);
+http.post<Config>("/api/config", newConfig).subscribe((config) => {
+  console.log("Updated config:", config);
 });
 ```
+
 Many different types of values can be provided as the request's `body`, and `HttpClient` will serialize them accordingly:
 
-| **`body` type** | **Serialized as** |
-| - | - |
-| string | Plain text |
-| number, boolean, array, or plain object | JSON |
-| [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) | raw data from the buffer |
-| [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob) | raw data with the `Blob`'s content type |
-| [`FormData`](https://developer.mozilla.org/docs/Web/API/FormData) | `multipart/form-data` encoded data |
+| **`body` type**                                                                                                               | **Serialized as**                                    |
+| ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- |
+| string                                                                                                                        | Plain text                                           |
+| number, boolean, array, or plain object                                                                                       | JSON                                                 |
+| [`ArrayBuffer`](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)                       | raw data from the buffer                             |
+| [`Blob`](https://developer.mozilla.org/docs/Web/API/Blob)                                                                     | raw data with the `Blob`'s content type              |
+| [`FormData`](https://developer.mozilla.org/docs/Web/API/FormData)                                                             | `multipart/form-data` encoded data                   |
 | [`HttpParams`](api/common/http/HttpParams) or [`URLSearchParams`](https://developer.mozilla.org/docs/Web/API/URLSearchParams) | `application/x-www-form-urlencoded` formatted string |
 
 IMPORTANT: Remember to `.subscribe()` to mutation request `Observable`s in order to actually fire the request.
@@ -6604,25 +6831,31 @@ Specify request parameters that should be included in the request URL using the 
 Passing an object literal is the simplest way of configuring URL parameters:
 
 ```ts
-http.get('/api/config', {
-  params: {filter: 'all'},
-}).subscribe(config => {
-  // ...
-});
+http
+  .get("/api/config", {
+    params: { filter: "all" },
+  })
+  .subscribe((config) => {
+    // ...
+  });
 ```
+
 Alternatively, pass an instance of `HttpParams` if you need more control over the construction or serialization of the parameters.
 
 IMPORTANT: Instances of `HttpParams` are _immutable_ and cannot be directly changed. Instead, mutation methods such as `append()` return a new instance of `HttpParams` with the mutation applied.
 
 ```ts
-const baseParams = new HttpParams().set('filter', 'all');
+const baseParams = new HttpParams().set("filter", "all");
 
-http.get('/api/config', {
-  params: baseParams.set('details', 'enabled'),
-}).subscribe(config => {
-  // ...
-});
+http
+  .get("/api/config", {
+    params: baseParams.set("details", "enabled"),
+  })
+  .subscribe((config) => {
+    // ...
+  });
 ```
+
 You can instantiate `HttpParams` with a custom `HttpParameterCodec` that determines how `HttpClient` will encode the parameters into the URL.
 
 ## Setting request headers
@@ -6632,27 +6865,33 @@ Specify request headers that should be included in the request using the `header
 Passing an object literal is the simplest way of configuring request headers:
 
 ```ts
-http.get('/api/config', {
-  headers: {
-    'X-Debug-Level': 'verbose',
-  }
-}).subscribe(config => {
-  // ...
-});
+http
+  .get("/api/config", {
+    headers: {
+      "X-Debug-Level": "verbose",
+    },
+  })
+  .subscribe((config) => {
+    // ...
+  });
 ```
+
 Alternatively, pass an instance of `HttpHeaders` if you need more control over the construction of headers
 
 IMPORTANT: Instances of `HttpHeaders` are _immutable_ and cannot be directly changed. Instead, mutation methods such as `append()` return a new instance of `HttpHeaders` with the mutation applied.
 
 ```ts
-const baseHeaders = new HttpHeaders().set('X-Debug-Level', 'minimal');
+const baseHeaders = new HttpHeaders().set("X-Debug-Level", "minimal");
 
-http.get<Config>('/api/config', {
-  headers: baseHeaders.set('X-Debug-Level', 'verbose'),
-}).subscribe(config => {
-  // ...
-});
+http
+  .get<Config>("/api/config", {
+    headers: baseHeaders.set("X-Debug-Level", "verbose"),
+  })
+  .subscribe((config) => {
+    // ...
+  });
 ```
+
 ## Interacting with the server response events
 
 For convenience, `HttpClient` by default returns an `Observable` of the data returned by the server (the response body). Occasionally it's desirable to examine the actual response, for example to retrieve specific response headers.
@@ -6660,14 +6899,16 @@ For convenience, `HttpClient` by default returns an `Observable` of the data ret
 To access the entire response, set the `observe` option to `'response'`:
 
 ```ts
-http.get<Config>('/api/config', {observe: 'response'}).subscribe(res => {
-  console.log('Response status:', res.status);
-  console.log('Body:', res.body);
+http.get<Config>("/api/config", { observe: "response" }).subscribe((res) => {
+  console.log("Response status:", res.status);
+  console.log("Body:", res.body);
 });
 ```
+
 Because the value of `observe` affects the type returned by `HttpClient`, it must have a literal type and not a `string` type.
 
 This happens automatically if the options object passed to the request method is a literal object, but if you're extracting the request options out into a variable or helper method you might need to explicitly specify it as a literal, such as `observe: 'response' as const`.
+
 ## Receiving raw progress events
 
 In addition to the response body or response object, `HttpClient` can also return a stream of raw _events_ corresponding to specific moments in the request lifecycle. These events include when the request is sent, when the response header is returned, and when the body is complete. These events can also include _progress events_ which report upload and download status for large request or response bodies.
@@ -6679,48 +6920,316 @@ NOTE: The optional `fetch` implementation of `HttpClient` does not report _uploa
 To observe the event stream, set the `observe` option to `'events'`:
 
 ```ts
-http.post('/api/upload', myData, {
-  reportProgress: true,
-  observe: 'events',
-}).subscribe(event => {
-  switch (event.type) {
-    case HttpEventType.UploadProgress:
-      console.log('Uploaded ' + event.loaded + ' out of ' + event.total + ' bytes');
-      break;
-    case HttpEventType.Response:
-      console.log('Finished uploading!');
-      break;
-  }
-});
+http
+  .post("/api/upload", myData, {
+    reportProgress: true,
+    observe: "events",
+  })
+  .subscribe((event) => {
+    switch (event.type) {
+      case HttpEventType.UploadProgress:
+        console.log("Uploaded " + event.loaded + " out of " + event.total + " bytes");
+        break;
+      case HttpEventType.Response:
+        console.log("Finished uploading!");
+        break;
+    }
+  });
 ```
+
 Because the value of `observe` affects the type returned by `HttpClient`, it must have a literal type and not a `string` type.
 
 This happens automatically if the options object passed to the request method is a literal object, but if you're extracting the request options out into a variable or helper method you might need to explicitly specify it as a literal, such as `observe: 'events' as const`.
 Each `HttpEvent` reported in the event stream has a `type` which distinguishes what the event represents:
 
-| **`type` value** | **Event meaning** |
-| - | - |
-| `HttpEventType.Sent` | The request has been dispatched to the server |
-| `HttpEventType.UploadProgress` | An `HttpUploadProgressEvent` reporting progress on uploading the request body |
-| `HttpEventType.ResponseHeader` | The head of the response has been received, including status and headers |
+| **`type` value**                 | **Event meaning**                                                                  |
+| -------------------------------- | ---------------------------------------------------------------------------------- |
+| `HttpEventType.Sent`             | The request has been dispatched to the server                                      |
+| `HttpEventType.UploadProgress`   | An `HttpUploadProgressEvent` reporting progress on uploading the request body      |
+| `HttpEventType.ResponseHeader`   | The head of the response has been received, including status and headers           |
 | `HttpEventType.DownloadProgress` | An `HttpDownloadProgressEvent` reporting progress on downloading the response body |
-| `HttpEventType.Response` | The entire response has been received, including the response body |
-| `HttpEventType.User` | A custom event from an Http interceptor.
+| `HttpEventType.Response`         | The entire response has been received, including the response body                 |
+| `HttpEventType.User`             | A custom event from an Http interceptor.                                           |
 
 ## Handling request failure
 
-There are two ways an HTTP request can fail:
+There are three ways an HTTP request can fail:
 
-* A network or connection error can prevent the request from reaching the backend server.
-* The backend can receive the request but fail to process it, and return an error response.
+- A network or connection error can prevent the request from reaching the backend server.
+- A request didn't respond in time when the timeout option was set.
+- The backend can receive the request but fail to process it, and return an error response.
 
-`HttpClient` captures both kinds of errors in an `HttpErrorResponse` which it returns through the `Observable`'s error channel. Network errors have a `status` code of `0` and an `error` which is an instance of [`ProgressEvent`](https://developer.mozilla.org/docs/Web/API/ProgressEvent). Backend errors have the failing `status` code returned by the backend, and the error response as the `error`. Inspect the response to identify the error's cause and the appropriate action to handle the error.
+`HttpClient` captures all of the above kinds of errors in an `HttpErrorResponse` which it returns through the `Observable`'s error channel. Network and timeout errors have a `status` code of `0` and an `error` which is an instance of [`ProgressEvent`](https://developer.mozilla.org/docs/Web/API/ProgressEvent). Backend errors have the failing `status` code returned by the backend, and the error response as the `error`. Inspect the response to identify the error's cause and the appropriate action to handle the error.
 
 The [RxJS library](https://rxjs.dev/) offers several operators which can be useful for error handling.
 
 You can use the `catchError` operator to transform an error response into a value for the UI. This value can tell the UI to display an error page or value, and capture the error's cause if necessary.
 
-Sometimes transient errors such as network interruptions can cause a request to fail unexpectedly, and simply retrying the request will allow it to succeed. RxJS provides several *retry* operators which automatically re-subscribe to a failed `Observable` under certain conditions. For example, the `retry()` operator will automatically attempt to re-subscribe a specified number of times.
+Sometimes transient errors such as network interruptions can cause a request to fail unexpectedly, and simply retrying the request will allow it to succeed. RxJS provides several _retry_ operators which automatically re-subscribe to a failed `Observable` under certain conditions. For example, the `retry()` operator will automatically attempt to re-subscribe a specified number of times.
+
+### Timeouts
+
+To set a timeout for a request, you can set the `timeout` option to a number of milliseconds along other request options. If the backend request does not complete within the specified time, the request will be aborted and an error will be emitted.
+
+NOTE: The timeout will only apply to the backend HTTP request itself. It is not a timeout for the entire request handling chain. Therefore, this option is not affected by any delay introduced by interceptors.
+
+```ts
+http
+  .get("/api/config", {
+    timeout: 3000,
+  })
+  .subscribe({
+    next: (config) => {
+      console.log("Config fetched successfully:", config);
+    },
+    error: (err) => {
+      // If the request times out, an error will have been emitted.
+    },
+  });
+```
+
+## Advanced fetch options
+
+When using the `withFetch()` provider, Angular's `HttpClient` provides access to advanced fetch API options that can improve performance and user experience. These options are only available when using the fetch backend.
+
+### Fetch options
+
+The following options provide fine-grained control over request behavior when using the fetch backend.
+
+#### Keep-alive connections
+
+The `keepalive` option allows a request to outlive the page that initiated it. This is particularly useful for analytics or logging requests that need to complete even if the user navigates away from the page.
+
+```ts
+http
+  .post("/api/analytics", analyticsData, {
+    keepalive: true,
+  })
+  .subscribe();
+```
+
+#### HTTP caching control
+
+The `cache` option controls how the request interacts with the browser's HTTP cache, which can significantly improve performance for repeated requests.
+
+```ts
+//  Use cached response regardless of freshness
+http
+  .get("/api/config", {
+    cache: "force-cache",
+  })
+  .subscribe((config) => {
+    // ...
+  });
+
+// Always fetch from network, bypass cache
+http
+  .get("/api/live-data", {
+    cache: "no-cache",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// Use cached response only, fail if not in cache
+http
+  .get("/api/static-data", {
+    cache: "only-if-cached",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+```
+
+#### Request priority for Core Web Vitals
+
+The `priority` option allows you to indicate the relative importance of a request, helping browsers optimize resource loading for better Core Web Vitals scores.
+
+```ts
+// High priority for critical resources
+http
+  .get("/api/user-profile", {
+    priority: "high",
+  })
+  .subscribe((profile) => {
+    // ...
+  });
+
+// Low priority for non-critical resources
+http
+  .get("/api/recommendations", {
+    priority: "low",
+  })
+  .subscribe((recommendations) => {
+    // ...
+  });
+
+// Auto priority (default) lets the browser decide
+http
+  .get("/api/settings", {
+    priority: "auto",
+  })
+  .subscribe((settings) => {
+    // ...
+  });
+```
+
+Available `priority` values:
+
+- `'high'`: High priority, loaded early (e.g., critical user data, above-the-fold content)
+- `'low'`: Low priority, loaded when resources are available (e.g., analytics, prefetch data)
+- `'auto'`: Browser determines priority based on request context (default)
+
+TIP: Use `priority: 'high'` for requests that affect Largest Contentful Paint (LCP) and `priority: 'low'` for requests that don't impact initial user experience.
+
+#### Request mode
+
+The `mode` option controls how the request handles cross-origin requests and determines the response type.
+
+```ts
+// Same-origin requests only
+http
+  .get("/api/local-data", {
+    mode: "same-origin",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// CORS-enabled cross-origin requests
+http
+  .get("https://api.external.com/data", {
+    mode: "cors",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// No-CORS mode for simple cross-origin requests
+http
+  .get("https://external-api.com/public-data", {
+    mode: "no-cors",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+```
+
+Available `mode` values:
+
+- `'same-origin'`: Only allow same-origin requests, fail for cross-origin requests
+- `'cors'`: Allow cross-origin requests with CORS (default)
+- `'no-cors'`: Allow simple cross-origin requests without CORS, response is opaque
+
+TIP: Use `mode: 'same-origin'` for sensitive requests that should never go cross-origin.
+
+#### Redirect handling
+
+The `redirect` option specifies how to handle redirect responses from the server.
+
+```ts
+// Follow redirects automatically (default behavior)
+http
+  .get("/api/resource", {
+    redirect: "follow",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// Prevent automatic redirects
+http
+  .get("/api/resource", {
+    redirect: "manual",
+  })
+  .subscribe((response) => {
+    // Handle redirect manually
+  });
+
+// Treat redirects as errors
+http
+  .get("/api/resource", {
+    redirect: "error",
+  })
+  .subscribe({
+    next: (data) => {
+      // Success response
+    },
+    error: (err) => {
+      // Redirect responses will trigger this error handler
+    },
+  });
+```
+
+Available `redirect` values:
+
+- `'follow'`: Automatically follow redirects (default)
+- `'error'`: Treat redirects as errors
+- `'manual'`: Don't follow redirects automatically, return redirect response
+
+TIP: Use `redirect: 'manual'` when you need to handle redirects with custom logic.
+
+#### Credentials handling
+
+The `credentials` option controls whether cookies, authorization headers, and other credentials are sent with cross-origin requests. This is particularly important for authentication scenarios.
+
+```ts
+// Include credentials for cross-origin requests
+http
+  .get("https://api.example.com/protected-data", {
+    credentials: "include",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// Never send credentials (default for cross-origin)
+http
+  .get("https://api.example.com/public-data", {
+    credentials: "omit",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// Send credentials only for same-origin requests
+http
+  .get("/api/user-data", {
+    credentials: "same-origin",
+  })
+  .subscribe((data) => {
+    // ...
+  });
+
+// withCredentials overrides credentials setting
+http
+  .get("https://api.example.com/data", {
+    credentials: "omit", // This will be ignored
+    withCredentials: true, // This forces credentials: 'include'
+  })
+  .subscribe((data) => {
+    // Request will include credentials despite credentials: 'omit'
+  });
+
+// Legacy approach (still supported)
+http
+  .get("https://api.example.com/data", {
+    withCredentials: true,
+  })
+  .subscribe((data) => {
+    // Equivalent to credentials: 'include'
+  });
+```
+
+IMPORTANT: The `withCredentials` option takes precedence over the `credentials` option. If both are specified, `withCredentials: true` will always result in `credentials: 'include'`, regardless of the explicit `credentials` value.
+
+Available `credentials` values:
+
+- `'omit'`: Never send credentials
+- `'same-origin'`: Send credentials only for same-origin requests (default)
+- `'include'`: Always send credentials, even for cross-origin requests
+
+TIP: Use `credentials: 'include'` when you need to send authentication cookies or headers to a different domain that supports CORS. Avoid mixing `credentials` and `withCredentials` options to prevent confusion.
 
 ## Http `Observable`s
 
@@ -6743,7 +7252,7 @@ TIP: Using the `async` pipe or the `toSignal` operation to subscribe to `Observa
 While `HttpClient` can be injected and used directly from components, generally we recommend you create reusable, injectable services which isolate and encapsulate data access logic. For example, this `UserService` encapsulates the logic to request data for a user by their id:
 
 ```ts
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: "root" })
 export class UserService {
   private http = inject(HttpClient);
 
@@ -6752,16 +7261,17 @@ export class UserService {
   }
 }
 ```
+
 Within a component, you can combine `@if` with the `async` pipe to render the UI for the data only after it's finished loading:
 
 ```ts
-import { AsyncPipe } from '@angular/common';
+import { AsyncPipe } from "@angular/common";
 @Component({
   imports: [AsyncPipe],
   template: `
     @if (user$ | async; as user) {
-      <p>Name: {{ user.name }}</p>
-      <p>Biography: {{ user.biography }}</p>
+    <p>Name: {{ user.name }}</p>
+    <p>Biography: {{ user.biography }}</p>
     }
   `,
 })
@@ -6772,7 +7282,9 @@ export class UserProfileComponent {
   private userService = inject(UserService);
 
   constructor(): void {
-    this.user$ = this.userService.getUser(this.userId());
+    effect(() => {
+      this.user$ = this.userService.getUser(this.userId());
+    });
   }
 }
 ```
@@ -6791,15 +7303,15 @@ Interceptors are generally functions which you can run for each request, and hav
 
 You can use interceptors to implement a variety of common patterns, such as:
 
-* Adding authentication headers to outgoing requests to a particular API.
-* Retrying failed requests with exponential backoff.
-* Caching responses for a period of time, or until invalidated by mutations.
-* Customizing the parsing of responses.
-* Measuring server response times and log them.
-* Driving UI elements such as a loading spinner while network operations are in progress.
-* Collecting and batch requests made within a certain timeframe.
-* Automatically failing requests after a configurable deadline or timeout.
-* Regularly polling the server and refreshing results.
+- Adding authentication headers to outgoing requests to a particular API.
+- Retrying failed requests with exponential backoff.
+- Caching responses for a period of time, or until invalidated by mutations.
+- Customizing the parsing of responses.
+- Measuring server response times and log them.
+- Driving UI elements such as a loading spinner while network operations are in progress.
+- Collecting and batch requests made within a certain timeframe.
+- Automatically failing requests after a configurable deadline or timeout.
+- Regularly polling the server and refreshing results.
 
 ## Defining an interceptor
 
@@ -6813,6 +7325,7 @@ export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
   return next(req);
 }
 ```
+
 In order for this interceptor to actually intercept requests, you must configure `HttpClient` to use it.
 
 ## Configuring interceptors
@@ -6820,12 +7333,9 @@ In order for this interceptor to actually intercept requests, you must configure
 You declare the set of interceptors to use when configuring `HttpClient` through dependency injection, by using the `withInterceptors` feature:
 
 ```ts
-bootstrapApplication(AppComponent, {providers: [
-  provideHttpClient(
-    withInterceptors([loggingInterceptor, cachingInterceptor]),
-  )
-]});
+bootstrapApplication(AppComponent, { providers: [provideHttpClient(withInterceptors([loggingInterceptor, cachingInterceptor]))] });
 ```
+
 The interceptors you configure are chained together in the order that you've listed them in the providers. In the above example, the `loggingInterceptor` would process the request and then forward it to the `cachingInterceptor`.
 
 ### Intercepting response events
@@ -6834,13 +7344,16 @@ An interceptor may transform the `Observable` stream of `HttpEvent`s returned by
 
 ```ts
 export function loggingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {
-  return next(req).pipe(tap(event => {
-    if (event.type === HttpEventType.Response) {
-      console.log(req.url, 'returned a response with status', event.status);
-    }
-  }));
+  return next(req).pipe(
+    tap((event) => {
+      if (event.type === HttpEventType.Response) {
+        console.log(req.url, "returned a response with status", event.status);
+      }
+    })
+  );
 }
 ```
+
 TIP: Interceptors naturally associate responses with their outgoing requests, because they transform the response stream in a closure that captures the request object.
 
 ## Modifying requests
@@ -6851,16 +7364,17 @@ For example, to add a header to a request:
 
 ```ts
 const reqWithHeader = req.clone({
-  headers: req.headers.set('X-New-Header', 'new header value'),
+  headers: req.headers.set("X-New-Header", "new header value"),
 });
 ```
+
 This immutability allows most interceptors to be idempotent if the same `HttpRequest` is submitted to the interceptor chain multiple times. This can happen for a few reasons, including when a request is retried after failure.
 
 CRITICAL: The body of a request or response is **not** protected from deep mutations. If an interceptor must mutate the body, take care to handle running multiple times on the same request.
 
 ## Dependency injection in interceptors
 
-Interceptors are run in the _injection context_ of the injector which registered them, and can use  Angular's `inject` API to retrieve dependencies.
+Interceptors are run in the _injection context_ of the injector which registered them, and can use Angular's `inject` API to retrieve dependencies.
 
 For example, suppose an application has a service called `AuthService`, which creates authentication tokens for outgoing requests. An interceptor can inject and use this service:
 
@@ -6871,11 +7385,12 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
 
   // Clone the request to add the authentication header.
   const newReq = req.clone({
-    headers: req.headers.append('X-Authentication-Token', authToken),
+    headers: req.headers.append("X-Authentication-Token", authToken),
   });
   return next(newReq);
 }
 ```
+
 ## Request and response metadata
 
 Often it's useful to include information in a request that's not sent to the backend, but is specifically meant for interceptors. `HttpRequest`s have a `.context` object which stores this kind of metadata as an instance of `HttpContext`. This object functions as a typed map, with keys of type `HttpContextToken`.
@@ -6889,6 +7404,7 @@ To store whether the caching interceptor should cache a particular request in th
 ```ts
 export const CACHING_ENABLED = new HttpContextToken<boolean>(() => true);
 ```
+
 The provided function creates the default value for the token for requests that haven't explicitly set a value for it. Using a function ensures that if the token's value is an object or array, each request gets its own instance.
 
 ### Reading the token in an interceptor
@@ -6906,15 +7422,17 @@ export function cachingInterceptor(req: HttpRequest<unknown>, next: HttpHandlerF
   }
 }
 ```
+
 ### Setting context tokens when making a request
 
 When making a request via the `HttpClient` API, you can provide values for `HttpContextToken`s:
 
 ```ts
-const data$ = http.get('/sensitive/data', {
+const data$ = http.get("/sensitive/data", {
   context: new HttpContext().set(CACHING_ENABLED, false),
 });
 ```
+
 Interceptors can read these values from the `HttpContext` of the request.
 
 ### The request context is mutable
@@ -6931,9 +7449,10 @@ Constructing a response is possible using the `HttpResponse` constructor:
 
 ```ts
 const resp = new HttpResponse({
-  body: 'response body',
+  body: "response body",
 });
 ```
+
 ## DI-based interceptors
 
 `HttpClient` also supports interceptors which are defined as injectable classes and configured through the DI system. The capabilities of DI-based interceptors are identical to those of functional interceptors, but the configuration mechanism is different.
@@ -6944,24 +7463,29 @@ A DI-based interceptor is an injectable class which implements the `HttpIntercep
 @Injectable()
 export class LoggingInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, handler: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('Request URL: ' + req.url);
+    console.log("Request URL: " + req.url);
     return handler.handle(req);
   }
 }
 ```
+
 DI-based interceptors are configured through a dependency injection multi-provider:
 
 ```ts
-bootstrapApplication(AppComponent, {providers: [
-  provideHttpClient(
-    // DI-based interceptors must be explicitly enabled.
-    withInterceptorsFromDi(),
-  ),
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideHttpClient(
+      // DI-based interceptors must be explicitly enabled.
+      withInterceptorsFromDi()
+    ),
 
-  {provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true},
-]});
+    { provide: HTTP_INTERCEPTORS, useClass: LoggingInterceptor, multi: true },
+  ],
+});
 ```
+
 DI-based interceptors run in the order that their providers are registered. In an app with an extensive and hierarchical DI configuration, this order can be very hard to predict.
+
 # Test requests
 
 As for any external dependency, you must mock the HTTP backend so your tests can simulate interaction with a remote server. The `@angular/common/http/testing` library provides tools to capture requests made by the application, make assertions about them, and mock the responses to emulate your backend's behavior.
@@ -6987,6 +7511,7 @@ TestBed.configureTestingModule({
 
 const httpTesting = TestBed.inject(HttpTestingController);
 ```
+
 Now when your tests make requests, they will hit the testing backend instead of the normal one. You can use `httpTesting` to make assertions about those requests.
 
 ## Expecting and answering requests
@@ -6995,11 +7520,7 @@ For example, you can write a test that expects a GET request to occur and provid
 
 ```ts
 TestBed.configureTestingModule({
-  providers: [
-    ConfigService,
-    provideHttpClient(),
-    provideHttpClientTesting(),
-  ],
+  providers: [ConfigService, provideHttpClient(), provideHttpClientTesting()],
 });
 
 const httpTesting = TestBed.inject(HttpTestingController);
@@ -7014,10 +7535,10 @@ const configPromise = firstValueFrom(config$);
 
 // At this point, the request is pending, and we can assert it was made
 // via the `HttpTestingController`:
-const req = httpTesting.expectOne('/api/config', 'Request to load the configuration');
+const req = httpTesting.expectOne("/api/config", "Request to load the configuration");
 
 // We can assert various properties of the request if desired.
-expect(req.request.method).toBe('GET');
+expect(req.request.method).toBe("GET");
 
 // Flushing the request causes it to complete, delivering the result.
 req.flush(DEFAULT_CONFIG);
@@ -7028,16 +7549,21 @@ expect(await configPromise).toEqual(DEFAULT_CONFIG);
 // Finally, we can assert that no other requests were made.
 httpTesting.verify();
 ```
+
 NOTE: `expectOne` will fail if the test has made more than one request which matches the given criteria.
 
 As an alternative to asserting on `req.method`, you could instead use an expanded form of `expectOne` to also match the request method:
 
 ```ts
-const req = httpTesting.expectOne({
-  method: 'GET',
-  url: '/api/config',
-}, 'Request to load the configuration');
+const req = httpTesting.expectOne(
+  {
+    method: "GET",
+    url: "/api/config",
+  },
+  "Request to load the configuration"
+);
 ```
+
 HELPFUL: The expectation APIs match against the full URL of requests, including any query parameters.
 
 The last step, verifying that no requests remain outstanding, is common enough for you to move it into an `afterEach()` step:
@@ -7048,30 +7574,34 @@ afterEach(() => {
   TestBed.inject(HttpTestingController).verify();
 });
 ```
+
 ## Handling more than one request at once
 
 If you need to respond to duplicate requests in your test, use the `match()` API instead of `expectOne()`. It takes the same arguments but returns an array of matching requests. Once returned, these requests are removed from future matching and you are responsible for flushing and verifying them.
 
 ```ts
-const allGetRequests = httpTesting.match({method: 'GET'});
+const allGetRequests = httpTesting.match({ method: "GET" });
 for (const req of allGetRequests) {
   // Handle responding to each request.
 }
 ```
+
 ## Advanced matching
 
 All matching functions accept a predicate function for custom matching logic:
 
 ```ts
 // Look for one request that has a request body.
-const requestsWithBody = httpTesting.expectOne(req => req.body !== null);
+const requestsWithBody = httpTesting.expectOne((req) => req.body !== null);
 ```
+
 The `expectNone` function asserts that no requests match the given criteria.
 
 ```ts
 // Assert that no mutation requests have been issued.
-httpTesting.expectNone(req => req.method !== 'GET');
+httpTesting.expectNone((req) => req.method !== "GET");
 ```
+
 ## Testing error handling
 
 You should test your app's responses when HTTP requests fail.
@@ -7081,21 +7611,23 @@ You should test your app's responses when HTTP requests fail.
 To test handling of backend errors (when the server returns a non-successful status code), flush requests with an error response that emulates what your backend would return when a request fails.
 
 ```ts
-const req = httpTesting.expectOne('/api/config');
-req.flush('Failed!', {status: 500, statusText: 'Internal Server Error'});
+const req = httpTesting.expectOne("/api/config");
+req.flush("Failed!", { status: 500, statusText: "Internal Server Error" });
 
 // Assert that the application successfully handled the backend error.
 ```
+
 ### Network errors
 
 Requests can also fail due to network errors, which surface as `ProgressEvent` errors. These can be delivered with the `error()` method:
 
 ```ts
-const req = httpTesting.expectOne('/api/config');
-req.error(new ProgressEvent('network error!'));
+const req = httpTesting.expectOne("/api/config");
+req.error(new ProgressEvent("network error!"));
 
 // Assert that the application successfully handled the network error.
 ```
+
 ## Testing an Interceptor
 
 You should test that your interceptors work under the desired circumstances.
@@ -7108,11 +7640,12 @@ export function authInterceptor(request: HttpRequest<unknown>, next: HttpHandler
   const authService = inject(AuthService);
 
   const clonedRequest = request.clone({
-    headers: request.headers.append('X-Authentication-Token', authService.getAuthToken()),
+    headers: request.headers.append("X-Authentication-Token", authService.getAuthToken()),
   });
   return next(clonedRequest);
 }
 ```
+
 The `TestBed` configuration for this interceptor should rely on the `withInterceptors` feature.
 
 ```ts
@@ -7125,14 +7658,16 @@ TestBed.configureTestingModule({
   ],
 });
 ```
+
 The `HttpTestingController` can retrieve the request instance which can then be inspected to ensure that the request was modified.
 
 ```ts
 const service = TestBed.inject(AuthService);
-const req = httpTesting.expectOne('/api/config');
+const req = httpTesting.expectOne("/api/config");
 
-expect(req.request.headers.get('X-Authentication-Token')).toEqual(service.getAuthToken());
+expect(req.request.headers.get("X-Authentication-Token")).toEqual(service.getAuthToken());
 ```
+
 A similar interceptor could be implemented with class based interceptors:
 
 ```ts
@@ -7142,12 +7677,13 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const clonedRequest = request.clone({
-      headers: request.headers.append('X-Authentication-Token', this.authService.getAuthToken()),
+      headers: request.headers.append("X-Authentication-Token", this.authService.getAuthToken()),
     });
     return next.handle(clonedRequest);
   }
 }
 ```
+
 In order to test it, the `TestBed` configuration should instead be:
 
 ```ts
@@ -7281,6 +7817,7 @@ Generate a `ProfileEditor` component and import the `FormGroup` and `FormControl
 <docs-code language="shell">
 ng generate component ProfileEditor
 ```
+
 <docs-code header="src/app/profile-editor/profile-editor.component.ts (imports)" path="adev/src/content/examples/reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" visibleRegion="imports"/>
 
 To add a form group to this component, take the following steps.
@@ -7549,7 +8086,7 @@ Initially, the form contains one `Alias` field. To add another field, click the 
 ## Reactive forms API summary
 
 The following table lists the base classes and services used to create and manage reactive form controls.
-For complete syntax details, see the API reference documentation for the [Forms package](api#forms 'API reference').
+For complete syntax details, see the API reference documentation for the [Forms package](api#forms "API reference").
 
 ### Classes
 
@@ -7571,6 +8108,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 | `FormGroupDirective`   | Syncs an existing `FormGroup` instance to a DOM element.                                   |
 | `FormGroupName`        | Syncs a nested `FormGroup` instance to a DOM element.                                      |
 | `FormArrayName`        | Syncs a nested `FormArray` instance to a DOM element.                                      |
+
 # Typed Forms
 
 As of Angular 14, reactive forms are strictly typed by default.
@@ -7581,12 +8119,12 @@ As background for this guide, you should already be familiar with [Angular React
 
 <docs-video src="https://www.youtube.com/embed/L-odCf4MfJc" alt="Typed Forms in Angular" />
 
-With Angular reactive forms, you explicitly specify a *form model*. As a simple example, consider this basic user login form:
+With Angular reactive forms, you explicitly specify a _form model_. As a simple example, consider this basic user login form:
 
 ```ts
 const login = new FormGroup({
-  email: new FormControl(''),
-  password: new FormControl(''),
+  email: new FormControl(""),
+  password: new FormControl(""),
 });
 ```
 
@@ -7602,7 +8140,7 @@ With strictly typed reactive forms, the above code does not compile, because the
 
 In addition to the added safety, the types enable a variety of other improvements, such as better autocomplete in IDEs, and an explicit way to specify form structure.
 
-These improvements currently apply only to *reactive* forms (not [*template-driven* forms](guide/forms/template-driven-forms)).
+These improvements currently apply only to _reactive_ forms (not [_template-driven_ forms](guide/forms/template-driven-forms)).
 
 ## Untyped Forms
 
@@ -7610,8 +8148,8 @@ Non-typed forms are still supported, and will continue to work as before. To use
 
 ```ts
 const login = new UntypedFormGroup({
-  email: new UntypedFormControl(''),
-  password: new UntypedFormControl(''),
+  email: new UntypedFormControl(""),
+  password: new UntypedFormControl(""),
 });
 ```
 
@@ -7622,17 +8160,17 @@ Each `Untyped` symbol has exactly the same semantics as in previous Angular vers
 The simplest possible form consists of a single control:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com');
+const email = new FormControl("angularrox@gmail.com");
 ```
 
 This control will be automatically inferred to have the type `FormControl<string|null>`. TypeScript will automatically enforce this type throughout the [`FormControl` API](api/forms/FormControl), such as `email.value`, `email.valueChanges`, `email.setValue(...)`, etc.
 
 ### Nullability
 
-You might wonder: why does the type of this control include `null`?  This is because the control can become `null` at any time, by calling reset:
+You might wonder: why does the type of this control include `null`? This is because the control can become `null` at any time, by calling reset:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com');
+const email = new FormControl("angularrox@gmail.com");
 email.reset();
 console.log(email.value); // null
 ```
@@ -7640,7 +8178,7 @@ console.log(email.value); // null
 TypeScript will enforce that you always handle the possibility that the control has become `null`. If you want to make this control non-nullable, you may use the `nonNullable` option. This will cause the control to reset to its initial value, instead of `null`:
 
 ```ts
-const email = new FormControl('angularrox@gmail.com', {nonNullable: true});
+const email = new FormControl("angularrox@gmail.com", { nonNullable: true });
 email.reset();
 console.log(email.value); // angularrox@gmail.com
 ```
@@ -7653,14 +8191,14 @@ It is possible to specify the type, instead of relying on inference. Consider a 
 
 ```ts
 const email = new FormControl(null);
-email.setValue('angularrox@gmail.com'); // Error!
+email.setValue("angularrox@gmail.com"); // Error!
 ```
 
 To prevent this, we explicitly specify the type as `string|null`:
 
 ```ts
-const email = new FormControl<string|null>(null);
-email.setValue('angularrox@gmail.com');
+const email = new FormControl<string | null>(null);
+email.setValue("angularrox@gmail.com");
 ```
 
 ## `FormArray`: Dynamic, Homogenous Collections
@@ -7668,8 +8206,8 @@ email.setValue('angularrox@gmail.com');
 A `FormArray` contains an open-ended list of controls. The type parameter corresponds to the type of each inner control:
 
 ```ts
-const names = new FormArray([new FormControl('Alex')]);
-names.push(new FormControl('Jess'));
+const names = new FormArray([new FormControl("Alex")]);
+names.push(new FormControl("Jess"));
 ```
 
 This `FormArray` will have the inner controls type `FormControl<string|null>`.
@@ -7686,8 +8224,8 @@ Consider again a login form:
 
 ```ts
 const login = new FormGroup({
-    email: new FormControl('', {nonNullable: true}),
-    password: new FormControl('', {nonNullable: true}),
+  email: new FormControl("", { nonNullable: true }),
+  password: new FormControl("", { nonNullable: true }),
 });
 ```
 
@@ -7697,11 +8235,11 @@ As a consequence, the type of `login.value` is `Partial<{email: string, password
 
 More specifically, the type of `login.value.email` is `string|undefined`, and TypeScript will enforce that you handle the possibly `undefined` value (if you have `strictNullChecks` enabled).
 
-If you want to access the value *including* disabled controls, and thus bypass possible `undefined` fields, you can use `login.getRawValue()`.
+If you want to access the value _including_ disabled controls, and thus bypass possible `undefined` fields, you can use `login.getRawValue()`.
 
 ### Optional Controls and Dynamic Groups
 
-Some forms have controls that may or may not be present, which can be added and removed at runtime. You can represent these controls using *optional fields*:
+Some forms have controls that may or may not be present, which can be added and removed at runtime. You can represent these controls using _optional fields_:
 
 ```ts
 interface LoginForm {
@@ -7710,11 +8248,11 @@ interface LoginForm {
 }
 
 const login = new FormGroup<LoginForm>({
-  email: new FormControl('', {nonNullable: true}),
-  password: new FormControl('', {nonNullable: true}),
+  email: new FormControl("", { nonNullable: true }),
+  password: new FormControl("", { nonNullable: true }),
 });
 
-login.removeControl('password');
+login.removeControl("password");
 ```
 
 In this form, we explicitly specify the type, which allows us to make the `password` control optional. TypeScript will enforce that only optional controls can be added or removed.
@@ -7724,8 +8262,8 @@ In this form, we explicitly specify the type, which allows us to make the `passw
 Some `FormGroup` usages do not fit the above pattern because the keys are not known ahead of time. The `FormRecord` class is designed for that case:
 
 ```ts
-const addresses = new FormRecord<FormControl<string|null>>({});
-addresses.addControl('Andrew', new FormControl('2340 Folsom St'));
+const addresses = new FormRecord<FormControl<string | null>>({});
+addresses.addControl("Andrew", new FormControl("2340 Folsom St"));
 ```
 
 Any control of type `string|null` can be added to this `FormRecord`.
@@ -7735,7 +8273,7 @@ If you need a `FormGroup` that is both dynamic (open-ended) and heterogeneous (t
 A `FormRecord` can also be built with the `FormBuilder`:
 
 ```ts
-const addresses = fb.record({'Andrew': '2340 Folsom St'});
+const addresses = fb.record({ Andrew: "2340 Folsom St" });
 ```
 
 ## `FormBuilder` and `NonNullableFormBuilder`
@@ -7747,14 +8285,15 @@ Additionally, an additional builder is available: `NonNullableFormBuilder`. This
 ```ts
 const fb = new FormBuilder();
 const login = fb.nonNullable.group({
-  email: '',
-  password: '',
+  email: "",
+  password: "",
 });
 ```
 
 On the above example, both inner controls will be non-nullable (i.e. `nonNullable` will be set).
 
 You can also inject it using the name `NonNullableFormBuilder`.
+
 # Building a template-driven form
 
 This tutorial shows you how to create a template-driven form. The control elements in the form are bound to data properties that have input validation. The input validation helps maintain data integrity and styling to improve the user experience.
@@ -7954,6 +8493,7 @@ To see how the classes are added and removed by the framework, open the browser'
    <docs-code language="html">
 
    <input class="form-control ng-untouched ng-pristine ng-valid">;
+
 ```
 1. Take the following actions on the **Name** `<input>` box, and observe which classes appear.
 
@@ -8161,25 +8701,26 @@ You can then inspect the control's state by exporting `ngModel` to a local templ
 The following example exports `NgModel` into a variable called `name`:
 
 ```
+
 Notice the following features illustrated by the example.
 
-* The `<input>` element carries the HTML validation attributes: `required` and `minlength`.
-    It also carries a custom validator directive, `forbiddenName`.
-    For more information, see the [Custom validators](#defining-custom-validators) section.
+- The `<input>` element carries the HTML validation attributes: `required` and `minlength`.
+  It also carries a custom validator directive, `forbiddenName`.
+  For more information, see the [Custom validators](#defining-custom-validators) section.
 
-* `#name="ngModel"` exports `NgModel` into a local variable called `name`.
-    `NgModel` mirrors many of the properties of its underlying `FormControl` instance, so you can use this in the template to check for control states such as `valid` and `dirty`.
-    For a full list of control properties, see the [AbstractControl](api/forms/AbstractControl) API reference.
+- `#name="ngModel"` exports `NgModel` into a local variable called `name`.
+  `NgModel` mirrors many of the properties of its underlying `FormControl` instance, so you can use this in the template to check for control states such as `valid` and `dirty`.
+  For a full list of control properties, see the [AbstractControl](api/forms/AbstractControl) API reference.
 
-  * The outermost `@if` reveals a set of nested messages but only if the `name` is invalid and the control is either `dirty` or `touched`.
+  - The outermost `@if` reveals a set of nested messages but only if the `name` is invalid and the control is either `dirty` or `touched`.
 
-  * Each nested `@if` can present a custom message for one of the possible validation errors.
-        There are messages for `required`, `minlength`, and `forbiddenName`.
+  - Each nested `@if` can present a custom message for one of the possible validation errors.
+    There are messages for `required`, `minlength`, and `forbiddenName`.
 
 HELPFUL: To prevent the validator from displaying errors before the user has a chance to edit the form, you should check for either the `dirty` or `touched` states in a control.
 
-* When the user changes the value in the watched field, the control is marked as "dirty"
-* When the user blurs the form control element, the control is marked as "touched"
+- When the user changes the value in the watched field, the control is marked as "dirty"
+- When the user blurs the form control element, the control is marked as "touched"
 
 ## Validating input in reactive forms
 
@@ -8191,8 +8732,8 @@ Angular then calls these functions whenever the value of the control changes.
 
 Validator functions can be either synchronous or asynchronous.
 
-| Validator type   | Details |
-|:---              |:---     |
+| Validator type   | Details                                                                                                                                                                                                                 |
+| :--------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Sync validators  | Synchronous functions that take a control instance and immediately return either a set of validation errors or `null`. Pass these in as the second argument when you instantiate a `FormControl`.                       |
 | Async validators | Asynchronous functions that take a control instance and return a Promise or Observable that later emits a set of validation errors or `null`. Pass these in as the third argument when you instantiate a `FormControl`. |
 
@@ -8223,7 +8764,7 @@ If you look at the template for the `name` input again, it is fairly similar to 
 
 <docs-code header="reactive/actor-form-reactive.component.html (name with error msg)" path="adev/src/content/examples/form-validation/src/app/reactive/actor-form-reactive.component.html" visibleRegion="name-with-error-msg"/>
 
-This form differs from the template-driven version in that it no longer exports any directives. Instead, it uses the `name` getter defined in  the component class.
+This form differs from the template-driven version in that it no longer exports any directives. Instead, it uses the `name` getter defined in the component class.
 
 Notice that the `required` attribute is still present in the template. Although it's not necessary for validation, it should be retained for accessibility purposes.
 
@@ -8236,13 +8777,13 @@ Here's what the definition of that function looks like.
 
 <docs-code header="shared/forbidden-name.directive.ts (forbiddenNameValidator)" path="adev/src/content/examples/form-validation/src/app/shared/forbidden-name.directive.ts" visibleRegion="custom-validator"/>
 
-The function is a factory that takes a regular expression to detect a *specific* forbidden name and returns a validator function.
+The function is a factory that takes a regular expression to detect a _specific_ forbidden name and returns a validator function.
 
 In this sample, the forbidden name is "bob", so the validator rejects any actor name containing "bob".
 Elsewhere it could reject "alice" or any name that the configuring regular expression matches.
 
 The `forbiddenNameValidator` factory returns the configured validator function.
-That function takes an Angular control object and returns *either* null if the control value is valid *or* a validation error object.
+That function takes an Angular control object and returns _either_ null if the control value is valid _or_ a validation error object.
 The validation error object typically has a property whose name is the validation key, `'forbiddenName'`, and whose value is an arbitrary dictionary of values that you could insert into an error message, `{name}`.
 
 Custom async validators are similar to sync validators, but they must instead return a Promise or observable that later emits null or a validation error object.
@@ -8275,7 +8816,7 @@ For example:
 <docs-code header="template/actor-form-template.component.html (forbidden-name-input)" path="adev/src/content/examples/form-validation/src/app/template/actor-form-template.component.html" visibleRegion="name-input"/>
 
 HELPFUL: Notice that the custom validation directive is instantiated with `useExisting` rather than `useClass`.
-The registered validator must be *this instance* of the `ForbiddenValidatorDirective` —the instance in the form with its `forbiddenName` property bound to "bob".
+The registered validator must be _this instance_ of the `ForbiddenValidatorDirective` —the instance in the form with its `forbiddenName` property bound to "bob".
 
 If you were to replace `useExisting` with `useClass`, then you'd be registering a new class instance, one that doesn't have a `forbiddenName`.
 
@@ -8285,14 +8826,14 @@ Angular automatically mirrors many control properties onto the form control elem
 Use these classes to style form control elements according to the state of the form.
 The following classes are currently supported.
 
-* `.ng-valid`
-* `.ng-invalid`
-* `.ng-pending`
-* `.ng-pristine`
-* `.ng-dirty`
-* `.ng-untouched`
-* `.ng-touched`
-* `.ng-submitted` \(enclosing form element only\)
+- `.ng-valid`
+- `.ng-invalid`
+- `.ng-pending`
+- `.ng-pristine`
+- `.ng-dirty`
+- `.ng-untouched`
+- `.ng-touched`
+- `.ng-submitted` \(enclosing form element only\)
 
 In the following example, the actor form uses the `.ng-valid` and `.ng-invalid` classes to
 set the color of each form control's border.
@@ -8307,8 +8848,8 @@ Some field values might also depend on others; a user might be allowed to choose
 
 The following cross validation examples show how to do the following:
 
-* Validate reactive or template-based form input based on the values of two sibling controls,
-* Show a descriptive error message after the user interacted with the form and the validation failed.
+- Validate reactive or template-based form input based on the values of two sibling controls,
+- Show a descriptive error message after the user interacted with the form and the validation failed.
 
 The examples use cross-validation to ensure that actors do not reuse the same name in their role by filling out the Actor Form.
 The validators do this by checking that the actor names and roles do not match.
@@ -8320,11 +8861,12 @@ The form has the following structure:
 <docs-code language="javascript">
 
 const actorForm = new FormGroup({
-  'name': new FormControl(),
-  'role': new FormControl(),
-  'skill': new FormControl()
+'name': new FormControl(),
+'role': new FormControl(),
+'skill': new FormControl()
 });
-```
+
+````
 Notice that the `name` and `role` are sibling controls.
 To evaluate both controls in a single custom validator, you must perform the validation in a common ancestor control: the `FormGroup`.
 You query the `FormGroup` for its child controls so that you can compare their values.
@@ -8337,7 +8879,8 @@ const actorForm = new FormGroup({
   'role': new FormControl(),
   'skill': new FormControl()
 }, { validators: unambiguousRoleValidator });
-```
+````
+
 The validator code is as follows.
 
 ```
@@ -8398,6 +8941,7 @@ The following example shows how to achieve this in a template-driven form.
   <app-spinner />
 }
 ```
+
 ### Implementing a custom async validator
 
 In the following example, an async validator ensures that actors are cast for a role that is not already taken.
@@ -8414,6 +8958,7 @@ interface ActorsService {
   isRoleTaken: (role: string) => Observable<boolean>;
 }
 ```
+
 In a real world application, the `ActorsService` would be responsible for making an HTTP request to the actor database to check if the role is available.
 From the validator's point of view, the actual implementation of the service is not important, so the example can just code against the `ActorsService` interface.
 
@@ -8470,16 +9015,19 @@ With template-driven forms, set the property in the template.
 <docs-code language="html">
 <input [(ngModel)]="name" [ngModelOptions]="{updateOn: 'blur'}">
 ```
+
 With reactive forms, set the property in the `FormControl` instance.
 
 ```typescript
-new FormControl('', {updateOn: 'blur'});
+new FormControl("", { updateOn: "blur" });
 ```
+
 ## Interaction with native HTML form validation
 
 By default, Angular disables [native HTML form validation](https://developer.mozilla.org/docs/Web/Guide/HTML/Constraint_validation) by adding the `novalidate` attribute on the enclosing `<form>` and uses directives to match these attributes with validator functions in the framework.
 If you want to use native validation **in combination** with Angular-based validation, you can re-enable it with the `ngNativeValidate` directive.
 See the [API docs](api/forms/NgForm#native-dom-validation-ui) for details.
+
 # Building dynamic forms
 
 Many forms, such as questionnaires, can be very similar to one another in format and intent.
@@ -8513,6 +9061,7 @@ The basic version can evolve to support a richer variety of questions, more grac
 Dynamic forms are based on reactive forms.
 
 To give the application access reactive forms directives, import `ReactiveFormsModule` from the `@angular/forms` library into the necessary components.
+
 ## Create a form object model
 
 A dynamic form requires an object model that can describe all scenarios needed by the form functionality.
@@ -8577,6 +9126,7 @@ The `QuestionService` supplies a set of questions in the form of an array bound 
 The `DynamicFormComponent` component is the entry point and the main container for the form, which is represented using the `<app-dynamic-form>` in a template.
 
 The `DynamicFormComponent` component presents a list of questions by binding each one to an `<app-question>` element that matches the `DynamicFormQuestionComponent`.
+
 ### Display the form
 
 To display an instance of the dynamic form, the `AppComponent` shell template passes the `questions` array returned by the `QuestionService` to the form container component, `<app-dynamic-form>`.
@@ -8598,6 +9148,7 @@ The following figure shows the final form.
 <img alt="Dynamic-Form" src="assets/images/guide/dynamic-form/dynamic-form.png">
 
 ## Next steps
+
 Angular Router (`@angular/router`) is the official library for managing navigation in Angular applications and a core part of the framework. It is included by default in all projects created by Angular CLI.
 
 ## Installation
@@ -8644,6 +9195,7 @@ In addition, the Angular Routing library offers additional functionality such as
 ## Next steps
 
 Learn about how you can [define routes using Angular router](/guide/routing/define-routes).
+
 # Define routes
 
 Routes serve as the fundamental building blocks for navigation within an Angular app.
@@ -8655,12 +9207,12 @@ In Angular, a **route** is an object that defines which component should render 
 Here is a basic example of a route:
 
 ```typescript
-import { AdminPage } from './app-admin/app-admin.component';
+import { AdminPage } from "./app-admin/app-admin.component";
 
 const adminPage = {
-  path: 'admin',
-  component: AdminPage
-}
+  path: "admin",
+  component: AdminPage,
+};
 ```
 
 For this route, when a user visits the `/admin` path, the app will display the `AdminPage` component.
@@ -8672,17 +9224,17 @@ Most projects define routes in a separate file that contains `routes` in the fil
 A collection of routes looks like this:
 
 ```typescript
-import { Routes } from '@angular/router';
-import { HomePage } from './home-page/home-page.component';
-import { AdminPage } from './about-page/admin-page.component';
+import { Routes } from "@angular/router";
+import { HomePage } from "./home-page/home-page.component";
+import { AdminPage } from "./about-page/admin-page.component";
 
 export const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: HomePage,
   },
   {
-    path: 'admin',
+    path: "admin",
     component: AdminPage,
   },
 ];
@@ -8697,16 +9249,16 @@ When bootstrapping an Angular application without the Angular CLI, you can pass 
 Inside of the `providers` array, you can add the Angular router to your application by adding a `provideRouter` function call with your routes.
 
 ```typescript
-import { ApplicationConfig } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { ApplicationConfig } from "@angular/core";
+import { provideRouter } from "@angular/router";
 
-import { routes } from './app.routes';
+import { routes } from "./app.routes";
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     // ...
-  ]
+  ],
 };
 ```
 
@@ -8754,13 +9306,13 @@ Valid route parameter names must start with a letter (a-z, A-Z) and can only con
 You can also define paths with multiple parameters:
 
 ```typescript
-import { Routes } from '@angular/router';
-import { UserProfile } from './user-profile/user-profile.component';
-import { SocialMediaFeed } from './user-profile/social–media-feed.component';
+import { Routes } from "@angular/router";
+import { UserProfile } from "./user-profile/user-profile.component";
+import { SocialMediaFeed } from "./user-profile/social–media-feed.component";
 
 const routes: Routes = [
-  { path: 'user/:id/:social-media', component: SocialMediaFeed },
-  { path: 'user/:id/', component: UserProfile },
+  { path: "user/:id/:social-media", component: SocialMediaFeed },
+  { path: "user/:id/", component: UserProfile },
 ];
 ```
 
@@ -8775,14 +9327,14 @@ When you need to catch all routes for a specific path, the solution is a wildcar
 A common example is defining a Page Not Found component.
 
 ```typescript
-import { Home } from './home/home.component';
-import { UserProfile } from './user-profile/user-profile.component';
-import { NotFound } from './not-found/not-found.component';
+import { Home } from "./home/home.component";
+import { UserProfile } from "./user-profile/user-profile.component";
+import { NotFound } from "./not-found/not-found.component";
 
 const routes: Routes = [
-  { path: 'home', component: Home },
-  { path: 'user/:id', component: UserProfile },
-  { path: '**', component: NotFound }
+  { path: "home", component: Home },
+  { path: "user/:id", component: UserProfile },
+  { path: "**", component: NotFound },
 ];
 ```
 
@@ -8798,11 +9350,11 @@ The following example shows routes defined from most-specific to least specific:
 
 ```typescript
 const routes: Routes = [
-  { path: '', component: HomeComponent },              // Empty path
-  { path: 'users/new', component: NewUserComponent },  // Static, most specific
-  { path: 'users/:id', component: UserDetailComponent }, // Dynamic
-  { path: 'users', component: UsersComponent },        // Static, less specific
-  { path: '**', component: NotFoundComponent }         // Wildcard - always last
+  { path: "", component: HomeComponent }, // Empty path
+  { path: "users/new", component: NewUserComponent }, // Static, most specific
+  { path: "users/:id", component: UserDetailComponent }, // Dynamic
+  { path: "users", component: UsersComponent }, // Static, less specific
+  { path: "**", component: NotFoundComponent }, // Wildcard - always last
 ];
 ```
 
@@ -8829,21 +9381,21 @@ When you define a route with the `component` property, the referenced component 
 
 ```typescript
 import { Routes } from "@angular/router";
-import { HomePage } from "./components/home/home-page"
-import { LoginPage } from "./components/auth/login-page"
+import { HomePage } from "./components/home/home-page";
+import { LoginPage } from "./components/auth/login-page";
 
 export const routes: Routes = [
   // HomePage and LoginPage are both directly referenced in this config,
   // so their code is eagerly included in the same JavaScript bundle as this file.
   {
     path: "",
-    component: HomePage
+    component: HomePage,
   },
   {
     path: "login",
-    component: LoginPage
-  }
-]
+    component: LoginPage,
+  },
+];
 ```
 
 Eagerly loading route components like this means that the browser has to download and parse all of the JavaScript for these components as part of your initial page load, but the components are available to Angular immediately.
@@ -8861,14 +9413,14 @@ export const routes: Routes = [
   // The HomePage and LoginPage components are loaded lazily at the point at which
   // their corresponding routes become active.
   {
-    path: 'login',
-    loadComponent: () => import('./components/auth/login-page')
+    path: "login",
+    loadComponent: () => import("./components/auth/login-page").then((m) => m.LoginPage),
   },
   {
-    path: '',
-    loadComponent: () => import('./components/home/home-page')
-  }
-]
+    path: "",
+    loadComponent: () => import("./components/home/home-page").then((m) => m.HomePage),
+  },
+];
 ```
 
 The `loadComponent` property accepts a loader function that returns a Promise that resolves to an Angular component. In most cases, this function uses the standard [JavaScript dynamic import API](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import). You can, however, use any arbitrary async loader function.
@@ -8888,16 +9440,16 @@ Note: While lazy routes have the upfront performance benefit of reducing the amo
 You can define a route that redirects to another route instead of rendering a component:
 
 ```typescript
-import { BlogComponent } from './home/blog.component';
+import { BlogComponent } from "./home/blog.component";
 
 const routes: Routes = [
   {
-    path: 'articles',
-    redirectTo: '/blog',
+    path: "articles",
+    redirectTo: "/blog",
   },
   {
-    path: 'blog',
-    component: BlogComponent
+    path: "blog",
+    component: BlogComponent,
   },
 ];
 ```
@@ -8909,27 +9461,27 @@ If you modify or remove a route, some users may still click on out-of-date links
 You can associate a **title** with each route. Angular automatically updates the [page title](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/title) when a route activates. Always define appropriate page titles for your application, as these titles are necessary to create an accessible experience.
 
 ```typescript
-import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ProductsComponent } from './products/products.component';
+import { Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { AboutComponent } from "./about/about.component";
+import { ProductsComponent } from "./products/products.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: HomeComponent,
-    title: 'Home Page'
+    title: "Home Page",
   },
   {
-    path: 'about',
+    path: "about",
     component: AboutComponent,
-    title: 'About Us'
+    title: "About Us",
   },
   {
-    path: 'products',
+    path: "products",
     component: ProductsComponent,
-    title: 'Our Products'
-  }
+    title: "Our Products",
+  },
 ];
 ```
 
@@ -8942,14 +9494,11 @@ Common scenarios where this can be helpful include applications that have differ
 ```typescript
 export const ROUTES: Route[] = [
   {
-    path: 'admin',
-    providers: [
-      AdminService,
-      {provide: ADMIN_API_KEY, useValue: '12345'},
-    ],
+    path: "admin",
+    providers: [AdminService, { provide: ADMIN_API_KEY, useValue: "12345" }],
     children: [
-      {path: 'users', component: AdminUsersComponent},
-      {path: 'teams', component: AdminTeamsComponent},
+      { path: "users", component: AdminUsersComponent },
+      { path: "teams", component: AdminTeamsComponent },
     ],
   },
   // ... other application routes that don't
@@ -8957,7 +9506,7 @@ export const ROUTES: Route[] = [
 ];
 ```
 
-In this code sample, the `admin` path contains a protected data property of `ADMIN_API_KEY` that is only available to children within its section. As a result, no other paths will be able to access the data provided via `ADMIN_AP
+In this code sample, the `admin` path contains a protected data property of `ADMIN_API_KEY` that is only available to children within its section. As a result, no other paths will be able to access the data provided via `ADMIN_API_KEY`.
 
 See the [Dependency injection guide](/guide/di) for more information about providers and injection in Angular.
 
@@ -8972,22 +9521,22 @@ There are two ways to work with route data: static data that remains constant, a
 You can associate arbitrary static data with a route via the `data` property in order to centralize things like route-specific metadata (e.g., analytics tracking, permissions, etc.):
 
 ```typescript
-import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { AboutComponent } from './about/about.component';
-import { ProductsComponent } from './products/products.component';
+import { Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { AboutComponent } from "./about/about.component";
+import { ProductsComponent } from "./products/products.component";
 
 const routes: Routes = [
   {
-    path: 'about',
+    path: "about",
     component: AboutComponent,
-    data: { analyticsId: '456' }
+    data: { analyticsId: "456" },
   },
   {
-    path: '',
+    path: "",
     component: HomeComponent,
-    data: { analyticsId: '123' }
-  }
+    data: { analyticsId: "123" },
+  },
 ];
 ```
 
@@ -8997,7 +9546,7 @@ You can read this static data by injecting the `ActivatedRoute`. See [Reading ro
 
 ### Dynamic data with data resolvers
 
-When you need to provide dynamic data to a route, check out the [guide on route data resolvers](/guide/router/route-data-resolvers).
+When you need to provide dynamic data to a route, check out the [guide on route data resolvers](/guide/routing/data-resolvers).
 
 ## Nested Routes
 
@@ -9009,19 +9558,21 @@ You can add child routes to any route definition with the `children` property:
 
 ```typescript
 const routes: Routes = [
-  path: 'product/:id',
-  component: 'ProductComponent',
-  children: [
-    {
-      path: 'info',
-      component: ProductInfoComponent
-    },
-    {
-      path: 'reviews',
-      component: ProductReviewsComponent
-    }
-  ]
-]
+  {
+    path: "product/:id",
+    component: ProductComponent,
+    children: [
+      {
+        path: "info",
+        component: ProductInfoComponent,
+      },
+      {
+        path: "reviews",
+        component: ProductReviewsComponent,
+      },
+    ],
+  },
+];
 ```
 
 The above example defines a route for a product page that allows a user to change whether the product info or reviews are displayed based on the url.
@@ -9043,25 +9594,26 @@ After adding child routes to the configuration and adding a `<router-outlet>` to
 ## Next steps
 
 Learn how to [display the contents of your routes with Outlets](/guide/routing/show-routes-with-outlets).
+
 # Show routes with outlets
 
 The `RouterOutlet` directive is a placeholder that marks the location where the router should render the component for the current URL.
 
 ```html
-<app-header />
-<router-outlet />  <!-- Angular inserts your route content here -->
+<app-header /> <router-outlet />
+<!-- Angular inserts your route content here -->
 <app-footer />
 ```
 
 ```typescript
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from "@angular/core";
+import { RouterOutlet } from "@angular/router";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  templateUrl: "./app.component.html",
+  styleUrl: "./app.component.css",
 })
 export class AppComponent {}
 ```
@@ -9069,38 +9621,38 @@ export class AppComponent {}
 In this example, if an application has the following routes defined:
 
 ```typescript
-import { Routes } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { ProductsComponent } from './products/products.component';
+import { Routes } from "@angular/router";
+import { HomeComponent } from "./home/home.component";
+import { ProductsComponent } from "./products/products.component";
 
 const routes: Routes = [
   {
-    path: '',
+    path: "",
     component: HomeComponent,
-    title: 'Home Page'
+    title: "Home Page",
   },
   {
-    path: 'products',
+    path: "products",
     component: ProductsComponent,
-    title: 'Our Products'
-  }
+    title: "Our Products",
+  },
 ];
 ```
 
 When a user visits `/products`, Angular renders the following:
 
 ```html
-<app-header></app-header>
-<app-products></app-products>
-<app-footer></app-footer>
+<app-header />
+<app-products />
+<app-footer />
 ```
 
 If the user goes back to the home page, then Angular renders:
 
 ```html
-<app-header></app-header>
-<app-home></app-home>
-<app-footer></app-footer>
+<app-header />
+<app-home />
+<app-footer />
 ```
 
 When displaying a route, the `<router-outlet>` element remains present in the DOM as a reference point for future navigations. Angular inserts routed content just after the outlet element as a sibling.
@@ -9144,15 +9696,15 @@ A child route is like any other route, in that it needs both a `path` and a `com
 ```typescript
 const routes: Routes = [
   {
-    path: 'settings-component',
+    path: "settings-component",
     component: SettingsComponent, // this is the component with the <router-outlet> in the template
     children: [
       {
-        path: 'profile', // child route path
+        path: "profile", // child route path
         component: ProfileComponent, // child route component that the router renders
       },
       {
-        path: 'security',
+        path: "security",
         component: SecurityComponent, // another child route component that the router renders
       },
     ],
@@ -9169,8 +9721,8 @@ Pages may have multiple outlets— you can assign a name to each outlet to speci
 ```html
 <app-header />
 <router-outlet />
-<router-outlet name='read-more' />
-<router-outlet name='additional-actions' />
+<router-outlet name="read-more" />
+<router-outlet name="additional-actions" />
 <app-footer />
 ```
 
@@ -9200,12 +9752,7 @@ There are four lifecycle events that a router outlet can emit:
 You can add event listeners with the standard event binding syntax:
 
 ```html
-<router-outlet
-  (activate)='onActivate($event)'
-  (deactivate)='onDeactivate($event)'
-  (attach)='onAttach($event)'
-  (detach)='onDetach($event)'
-/>
+<router-outlet (activate)="onActivate($event)" (deactivate)="onDeactivate($event)" (attach)="onAttach($event)" (detach)="onDetach($event)" />
 ```
 
 Check out the [API docs for RouterOutlet](/api/router/RouterOutlet?tab=api) if you’d like to learn more.
@@ -9213,6 +9760,7 @@ Check out the [API docs for RouterOutlet](/api/router/RouterOutlet?tab=api) if y
 ## Next steps
 
 Learn how to [navigate to routes](/guide/routing/navigate-to-routes) with Angular Router.
+
 # Navigate to routes
 
 The RouterLink directive is Angular's declarative approach to navigation. It allows you to use standard anchor elements (`<a>`) that seamlessly integrate with Angular's routing system.
@@ -9221,11 +9769,19 @@ The RouterLink directive is Angular's declarative approach to navigation. It all
 
 Instead of using regular anchor elements `<a>` with an `href` attribute, you add a RouterLink directive with the appropriate path in order to leverage Angular routing.
 
-```html
-<nav>
-  <a routerLink="/user-profile">User profile</a>
-  <a routerLink="/settings">Settings</a>
-</nav>
+```typescript
+import {RouterLink} from '@angular/router';
+@Component({
+  template: `
+    <nav>
+      <a routerLink="/user-profile">User profile</a>
+      <a routerLink="/settings">Settings</a>
+    </nav>
+  `
+  imports: [RouterLink],
+  ...
+})
+export class App {}
 ```
 
 ### Using absolute or relative links
@@ -9285,27 +9841,25 @@ While `RouterLink` handles declarative navigation in templates, Angular provides
 You can use the `router.navigate()` method to programmatically navigate between routes by specifying a URL path array.
 
 ```typescript
-import { Router } from '@angular/router';
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-dashboard',
-  template: `
-    <button (click)="navigateToProfile()">View Profile</button>
-  `
+  selector: "app-dashboard",
+  template: ` <button (click)="navigateToProfile()">View Profile</button> `,
 })
 export class AppDashboard {
   private router = inject(Router);
 
   navigateToProfile() {
     // Standard navigation
-    this.router.navigate(['/profile']);
+    this.router.navigate(["/profile"]);
 
     // With route parameters
-    this.router.navigate(['/users', userId]);
+    this.router.navigate(["/users", userId]);
 
     // With query parameters
-    this.router.navigate(['/search'], {
-      queryParams: { category: 'books', sort: 'price' }
+    this.router.navigate(["/search"], {
+      queryParams: { category: "books", sort: "price" },
     });
   }
 }
@@ -9316,14 +9870,14 @@ export class AppDashboard {
 You can also build dynamic navigation paths relative to your component’s location in the routing tree using the `relativeTo` option.
 
 ```typescript
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-user-detail',
+  selector: "app-user-detail",
   template: `
     <button (click)="navigateToEdit()">Edit User</button>
     <button (click)="navigateToParent()">Back to List</button>
-  `
+  `,
 })
 export class UserDetailComponent {
   private route = inject(ActivatedRoute);
@@ -9335,14 +9889,14 @@ export class UserDetailComponent {
   navigateToEdit() {
     // From: /users/123
     // To:   /users/123/edit
-    this.router.navigate(['edit'], { relativeTo: this.route });
+    this.router.navigate(["edit"], { relativeTo: this.route });
   }
 
   // Navigate to parent
   navigateToParent() {
     // From: /users/123
     // To:   /users
-    this.router.navigate(['..'], { relativeTo: this.route });
+    this.router.navigate([".."], { relativeTo: this.route });
   }
 }
 ```
@@ -9369,14 +9923,15 @@ In the event you need to replace the current URL in history, `navigateByUrl` als
 
 ```typescript
 // Replace current URL in history
-router.navigateByUrl('/checkout', {
-  replaceUrl: true
+router.navigateByUrl("/checkout", {
+  replaceUrl: true,
 });
 ```
 
 ## Next steps
 
 Learn how to [read route state](/guide/routing/read-route-state) to create responsive and context-aware components.
+
 # Read route state
 
 Angular Router allows you to read and use information associated with a route to create responsive and context-aware components.
@@ -9386,11 +9941,11 @@ Angular Router allows you to read and use information associated with a route to
 `ActivatedRoute` is a service from `@angular/router` that provides all the information associated with the current route.
 
 ```typescript
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-product',
+  selector: "app-product",
 })
 export class ProductComponent {
   private activatedRoute = inject(ActivatedRoute);
@@ -9426,7 +9981,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 @Component({ ... })
 export class UserProfileComponent {
   readonly userId: string;
-  private activatedRoute = inject(ActivatedRoute);
+  private route = inject(ActivatedRoute);
 
   constructor() {
     // Example URL: https://www.angular.dev/users/123?role=admin&status=active#contact
@@ -9460,32 +10015,30 @@ Route parameters allow you to pass data to a component through the URL. This is 
 You can [define route parameters](/guide/routing/define-routes#define-url-paths-with-route-parameters) by prefixing the parameter name with a colon (`:`).
 
 ```typescript
-import { Routes } from '@angular/router';
-import { ProductComponent } from './product/product.component';
+import { Routes } from "@angular/router";
+import { ProductComponent } from "./product/product.component";
 
-const routes: Routes = [
-  { path: 'product/:id', component: ProductComponent }
-];
+const routes: Routes = [{ path: "product/:id", component: ProductComponent }];
 ```
 
 You can access parameters by subscribing to `route.params`.
 
 ```typescript
-import { Component, inject, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, inject, signal } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-product-detail',
+  selector: "app-product-detail",
   template: `<h1>Product Details: {{ productId() }}</h1>`,
 })
 export class ProductDetailComponent {
-  productId = signal('');
+  productId = signal("");
   private activatedRoute = inject(ActivatedRoute);
 
   constructor() {
     // Access route parameters
     this.activatedRoute.params.subscribe((params) => {
-      this.productId.set(params['id']);
+      this.productId.set(params["id"]);
     });
   }
 }
@@ -9498,18 +10051,18 @@ export class ProductDetailComponent {
 ```typescript
 // Single parameter structure
 // /products?category=electronics
-router.navigate(['/products'], {
-  queryParams: { category: 'electronics' }
+router.navigate(["/products"], {
+  queryParams: { category: "electronics" },
 });
 
 // Multiple parameters
 // /products?category=electronics&sort=price&page=1
-router.navigate(['/products'], {
+router.navigate(["/products"], {
   queryParams: {
-    category: 'electronics',
-    sort: 'price',
-    page: 1
-  }
+    category: "electronics",
+    sort: "price",
+    page: 1,
+  },
 });
 ```
 
@@ -9518,10 +10071,10 @@ You can access query parameters with `route.queryParams`.
 Here is an example of a `ProductListComponent` that updates the query parameters that affect how it displays a list of products:
 
 ```typescript
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-product-list',
+  selector: "app-product-list",
   template: `
     <div>
       <select (change)="updateSort($event)">
@@ -9530,7 +10083,7 @@ import { ActivatedRoute, Router } from '@angular/router';
       </select>
       <!-- Products list -->
     </div>
-  `
+  `,
 })
 export class ProductListComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -9538,9 +10091,9 @@ export class ProductListComponent implements OnInit {
 
   constructor() {
     // Access query parameters reactively
-    this.route.queryParams.subscribe(params => {
-      const sort = params['sort'] || 'price';
-      const page = Number(params['page']) || 1;
+    this.route.queryParams.subscribe((params) => {
+      const sort = params["sort"] || "price";
+      const page = Number(params["page"]) || 1;
       this.loadProducts(sort, page);
     });
   }
@@ -9550,7 +10103,7 @@ export class ProductListComponent implements OnInit {
     // Update URL with new query parameter
     this.router.navigate([], {
       queryParams: { sort },
-      queryParamsHandling: 'merge' // Preserve other query parameters
+      queryParamsHandling: "merge", // Preserve other query parameters
     });
   }
 }
@@ -9566,18 +10119,8 @@ You can use the `RouterLinkActive` directive to dynamically style navigation ele
 
 ```html
 <nav>
-  <a class="button"
-     routerLink="/about"
-     routerLinkActive="active-button"
-     ariaCurrentWhenActive="page">
-    About
-  </a> |
-  <a class="button"
-     routerLink="/settings"
-     routerLinkActive="active-button"
-     ariaCurrentWhenActive="page">
-    Settings
-  </a>
+  <a class="button" routerLink="/about" routerLinkActive="active-button" ariaCurrentWhenActive="page"> About </a> |
+  <a class="button" routerLink="/settings" routerLinkActive="active-button" ariaCurrentWhenActive="page"> Settings </a>
 </nav>
 ```
 
@@ -9602,12 +10145,7 @@ If you want to define a different value for aria, you’ll need to explicitly se
 By default, `RouterLinkActive` considers any ancestors in the route a match.
 
 ```html
-<a [routerLink]="['/user/jane']" routerLinkActive="active-link">
-  User
-</a>
-<a [routerLink]="['/user/jane/role/admin']" routerLinkActive="active-link">
-  Role
-</a>
+<a [routerLink]="['/user/jane']" routerLinkActive="active-link"> User </a> <a [routerLink]="['/user/jane/role/admin']" routerLinkActive="active-link"> Role </a>
 ```
 
 When the user visits `/user/jane/role/admin`, both links would have the `active-link` class.
@@ -9617,18 +10155,7 @@ When the user visits `/user/jane/role/admin`, both links would have the `active-
 If you only want to apply the class on an exact match, you need to provide the `routerLinkActiveOptions` directive with a configuration object that contains the value `exact: true`.
 
 ```html
-<a [routerLink]="['/user/jane']"
-  routerLinkActive="active-link"
-  [routerLinkActiveOptions]="{exact: true}"
->
-  User
-</a>
-<a [routerLink]="['/user/jane/role/admin']"
-  routerLinkActive="active-link"
-  [routerLinkActiveOptions]="{exact: true}"
->
-  Role
-</a>
+<a [routerLink]="['/user/jane']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"> User </a> <a [routerLink]="['/user/jane/role/admin']" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact: true}"> Role </a>
 ```
 
 If you want to be more precise in how a route is matched, it’s worth noting that `exact: true` is actually syntactic sugar for the full set of matching options:
@@ -9665,6 +10192,7 @@ The RouterLinkActive directive can also be applied to an ancestor element in ord
 ```
 
 For more information, check out the [API docs for RouterLinkActive](/api/router/RouterLinkActive).
+
 # Other common Routing Tasks
 
 This guide covers some other common tasks associated with using Angular router in your application.
@@ -9678,7 +10206,7 @@ To edit an item, users click an Edit button, which opens an `EditGroceryItem` co
 You want that component to retrieve the `id` for the grocery item so it can display the right information to the user.
 
 Use a route to pass this type of information to your application components.
-To do so, you use the [withComponentInputBinding](api/router/withComponentInputBinding) feature with `provideRouter` or the `bindToComponentInputs` option of `RouterModule.forRoot`.
+To do so, you use the [`withComponentInputBinding`](api/router/withComponentInputBinding) feature with `provideRouter` or the `bindToComponentInputs` option of `RouterModule.forRoot`.
 
 To get information from a route:
 
@@ -9689,29 +10217,43 @@ To get information from a route:
 Add the `withComponentInputBinding` feature to the `provideRouter` method.
 
 ```ts
-providers: [
-  provideRouter(appRoutes, withComponentInputBinding()),
-]
+providers: [provideRouter(appRoutes, withComponentInputBinding())];
 ```
 
 </docs-step>
 
-<docs-step title="Add an `Input` to the component">
+<docs-step title="Add an `input` to the component">
 
 Update the component to have an `input()` property matching the name of the parameter.
 
 ```ts
-id = input.required<string>()
-hero = computed(() => this.service.getHero(heroId));
+id = input.required<string>();
+hero = computed(() => this.service.getHero(id));
 ```
+
+</docs-step>
+<docs-step title="Optional: Use a default value">
+The router assigns values to all inputs based on the current route when `withComponentInputBinding` is enabled.
+The router assigns `undefined` if no route data matches the input key, such as when an optional query parameter is missing.
+You should include `undefined` in the `input`'s type when there's a possibility that an input might not be matched by the route.
+
+Provide a default value by either using the `transform` option on the input or managing a local state with a `linkedSignal`.
+
+```ts
+id = input.required({
+  transform: (maybeUndefined: string | undefined) => maybeUndefined ?? "0",
+});
+// or
+id = input<string | undefined>();
+internalId = linkedSignal(() => this.id() ?? getDefaultId());
+```
+
+</docs-step>
+</docs-workflow>
 
 NOTE: You can bind all route data with key, value pairs to component inputs: static or resolved route data, path parameters, matrix parameters, and query parameters.
 If you want to use the parent components route info you will need to set the router `paramsInheritanceStrategy` option:
 `withRouterConfig({paramsInheritanceStrategy: 'always'})`
-
-</docs-step>
-
-</docs-workflow>
 
 ## Displaying a 404 page
 
@@ -9719,49 +10261,14 @@ To display a 404 page, set up a [wildcard route](guide/routing/common-router-tas
 
 ```ts
 const routes: Routes = [
-  { path: 'first-component', component: FirstComponent },
-  { path: 'second-component', component: SecondComponent },
-  { path: '**', component: PageNotFoundComponent },  // Wildcard route for a 404 page
+  { path: "first-component", component: FirstComponent },
+  { path: "second-component", component: SecondComponent },
+  { path: "**", component: PageNotFoundComponent }, // Wildcard route for a 404 page
 ];
 ```
 
 The last route with the `path` of `**` is a wildcard route.
 The router selects this route if the requested URL doesn't match any of the paths earlier in the list and sends the user to the `PageNotFoundComponent`.
-
-## Preventing unauthorized access with route guards
-
-Use route guards to prevent users from navigating to parts of an application without authorization.
-The following route guards are available in Angular:
-To use route guards, consider using [component-less routes](api/router/Route#componentless-routes) as this facilitates guarding child routes.
-
-Create a file for your guard:
-
-```bash
-ng generate guard your-guard
-```
-
-In your guard file, add the guard functions you want to use.
-The following example uses `canActivateFn` to guard the route.
-
-```ts
-export const yourGuardFunction: CanActivateFn = (
-  next: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  // your  logic goes here
-}
-```
-
-In your routing module, use the appropriate property in your `routes` configuration.
-Here, `canActivate` tells the router to mediate navigation to this particular route.
-
-```ts
-{
-  path: '/your-path',
-  component: YourComponent,
-  canActivate: [yourGuardFunction],
-}
-```
 
 ## Link parameters array
 
@@ -9779,9 +10286,7 @@ Bind the `RouterLink` directive to such an array like this:
 The following is a two-element array when specifying a route parameter:
 
 ```html
-<a [routerLink]="['/hero', hero.id]">
-  <span class="badge">{{ hero.id }}</span>{{ hero.name }}
-</a>
+<a [routerLink]="['/hero', hero.id]"> <span class="badge">{{ hero.id }}</span>{{ hero.name }} </a>
 ```
 
 Provide optional route parameters in an object, as in `{ foo: 'foo' }`:
@@ -9831,7 +10336,7 @@ You could also redefine the `AppComponent` template with Crisis Center routes ex
       <a [routerLink]="['/crisis-center/2']">Shark Crisis</a>
     </nav>
     <router-outlet />
-  `
+  `,
 })
 export class AppComponent {}
 ```
@@ -9843,7 +10348,7 @@ The link parameters array affords the flexibility to represent any routing depth
 
 When the router navigates to a new component view, it updates the browser's location and history with a URL for that view.
 
-Modern HTML5 browsers support [history.pushState](https://developer.mozilla.org/docs/Web/API/History_API/Working_with_the_History_API#adding_and_modifying_history_entries 'HTML5 browser history push-state'), a technique that changes a browser's location and history without triggering a server page request.
+Modern HTML5 browsers support [history.pushState](https://developer.mozilla.org/docs/Web/API/History_API/Working_with_the_History_API#adding_and_modifying_history_entries "HTML5 browser history push-state"), a technique that changes a browser's location and history without triggering a server page request.
 The router can compose a "natural" URL that is indistinguishable from one that would otherwise require a page load.
 
 Here's the Crisis Center URL in this "HTML5 pushState" style:
@@ -9871,6 +10376,7 @@ The `RouterModule.forRoot()` function sets the `LocationStrategy` to the `PathLo
 You also have the option of switching to the `HashLocationStrategy` with an override during the bootstrapping process.
 
 HELPFUL: For more information on providers and the bootstrap process, see [Dependency Injection](guide/di/dependency-injection-providers).
+
 # Using Angular routes in a single-page application
 
 This tutorial describes how to build a single-page application, SPA that uses multiple Angular routes.
@@ -9885,25 +10391,27 @@ You can also configure routes to guard against unexpected or unauthorized behavi
 
 ## Objectives
 
-* Organize a sample application's features into modules.
-* Define how to navigate to a component.
-* Pass information to a component using a parameter.
-* Structure routes by nesting several routes.
-* Check whether users can access a route.
-* Control whether the application can discard unsaved changes.
-* Improve performance by pre-fetching route data and lazy loading feature modules.
-* Require specific criteria to load components.
+- Organize a sample application's features into modules.
+- Define how to navigate to a component.
+- Pass information to a component using a parameter.
+- Structure routes by nesting several routes.
+- Check whether users can access a route.
+- Control whether the application can discard unsaved changes.
+- Improve performance by pre-fetching route data and lazy loading feature modules.
+- Require specific criteria to load components.
 
 ## Create a sample application
 
-Using the Angular CLI, create a new application, *angular-router-sample*.
-This application will have two components: *crisis-list* and *heroes-list*.
+Using the Angular CLI, create a new application, _angular-router-sample_.
+This application will have two components: _crisis-list_ and _heroes-list_.
 
-1. Create a new Angular project, *angular-router-sample*.
+1.  Create a new Angular project, _angular-router-sample_.
 
-    ```shell
-ng new angular-router-sample
-```
+        ```shell
+
+    ng new angular-router-sample
+
+````
     When prompted with `Would you like to add Angular routing?`, select `N`.
 
     When prompted with `Which stylesheet format would you like to use?`, select `CSS`.
@@ -9915,15 +10423,20 @@ ng new angular-router-sample
 
     ```shell
 ng generate component crisis-list
-```
+````
+
 1. In your code editor, locate the file, `crisis-list.component.html` and replace the placeholder content with the following HTML.
 
-    ```
-1. Create a second component, *heroes-list*.
+   ```
 
-    <docs-code language="shell">
-    ng generate component heroes-list
-```
+   ```
+
+1. Create a second component, _heroes-list_.
+
+<docs-code language="shell">
+ng generate component heroes-list
+
+````
 1. In your code editor, locate the file, `heroes-list.component.html` and replace the placeholder content with the following HTML.
 
     ```
@@ -9935,36 +10448,39 @@ ng generate component crisis-list
 
     <docs-code language="shell">
     ng serve
-```
+````
+
 1. Open a browser to `http://localhost:4200`.
 
-    You should see a single web page, consisting of a title and the HTML of your two components.
+   You should see a single web page, consisting of a title and the HTML of your two components.
 
 ## Define your routes
 
 In this section, you'll define two routes:
 
-* The route `/crisis-center` opens the `crisis-center` component.
-* The route `/heroes-list` opens the `heroes-list` component.
+- The route `/crisis-center` opens the `crisis-center` component.
+- The route `/heroes-list` opens the `heroes-list` component.
 
 A route definition is a JavaScript object.
 Each route typically has two properties.
 The first property, `path`, is a string that specifies the URL path for the route.
 The second property, `component`, is a string that specifies what component your application should display for that path.
 
-1. From your code editor, create and open the `app.routes.ts` file.
-1. Create and export a routes list for your application:
+1.  From your code editor, create and open the `app.routes.ts` file.
+1.  Create and export a routes list for your application:
 
-    ```ts
-import {Routes} from '@angular/router';
+        ```ts
 
-    export const routes = [];
-    ```
+    import {Routes} from '@angular/router';
 
-1. Add two routes for your first two components:
+        export const routes = [];
+        ```
 
-    ```ts
-{path: 'crisis-list', component: CrisisListComponent},
+1.  Add two routes for your first two components:
+
+        ```ts
+
+    {path: 'crisis-list', component: CrisisListComponent},
     {path: 'heroes-list', component: HeroesListComponent},
     ```
 
@@ -9976,18 +10492,20 @@ Routing lets you display specific views of your application depending on the URL
 To add this functionality to your sample application, you need to update the `app.config.ts` file to use the router providers function, `provideRouter`.
 You import this provider function from `@angular/router`.
 
-1. From your code editor, open the `app.config.ts` file.
-1. Add the following import statements:
+1.  From your code editor, open the `app.config.ts` file.
+1.  Add the following import statements:
 
-    ```ts
-import { provideRouter } from '@angular/router';
+        ```ts
+
+    import { provideRouter } from '@angular/router';
     import { routes } from './app.routes';
     ```
 
-1. Update the providers in the `appConfig`:
+1.  Update the providers in the `appConfig`:
 
-    ```ts
-providers: [provideRouter(routes)]
+        ```ts
+
+    providers: [provideRouter(routes)]
     ```
 
 For `NgModule` based applications, put the `provideRouter` in the `providers` list of the `AppModule`, or whichever module is passed to `bootstrapModule` in the application.
@@ -10000,18 +10518,22 @@ For your routes to work, you need to update your template to dynamically load a 
 
 To implement this functionality, you add the `router-outlet` directive to your template file.
 
-1. From your code editor, open the `app.component.html` file.
-1. Delete the following lines.
+1.  From your code editor, open the `app.component.html` file.
+1.  Delete the following lines.
 
     ```
-1. Add the `router-outlet` directive.
 
-    <docs-code header="src/app/app.component.html" path="adev/src/content/examples/router-tutorial/src/app/app.component.html" visibleRegion="router-outlet"/>
+    ```
 
-1. Add `RouterOutlet` to the imports of the `AppComponent` in `app.component.ts`
+1.  Add the `router-outlet` directive.
 
-    ```ts
-imports: [RouterOutlet],
+<docs-code header="src/app/app.component.html" path="adev/src/content/examples/router-tutorial/src/app/app.component.html" visibleRegion="router-outlet"/>
+
+1.  Add `RouterOutlet` to the imports of the `AppComponent` in `app.component.ts`
+
+        ```ts
+
+    imports: [RouterOutlet],
     ```
 
 View your updated application in your browser.
@@ -10029,6 +10551,7 @@ You can load the `heroes-list` component the same way:
 ```http
 http://localhost:4200/heroes-list
 ```
+
 ## Control navigation with UI elements
 
 Currently, your application supports two routes.
@@ -10038,17 +10561,18 @@ You'll also add some CSS styles.
 While these styles are not required, they make it easier to identify the link for the currently-displayed component.
 You'll add that functionality in the next section.
 
-1. Open the `app.component.html` file and add the following HTML below the title.
+1.  Open the `app.component.html` file and add the following HTML below the title.
 
-    ```
-This HTML uses an Angular directive, `routerLink`.
+        ```
+
+    This HTML uses an Angular directive, `routerLink`.
     This directive connects the routes you defined to your template files.
 
-1. Add the `RouterLink` directive to the imports list of `AppComponent` in `app.component.ts`.
+1.  Add the `RouterLink` directive to the imports list of `AppComponent` in `app.component.ts`.
 
-1. Open the `app.component.css` file and add the following styles.
+1.  Open the `app.component.css` file and add the following styles.
 
-    <docs-code header="src/app/app.component.css" path="adev/src/content/examples/router-tutorial/src/app/app.component.css"/>
+<docs-code header="src/app/app.component.css" path="adev/src/content/examples/router-tutorial/src/app/app.component.css"/>
 
 If you view your application in the browser, you should see these two links.
 When you click on a link, the corresponding component appears.
@@ -10061,7 +10585,8 @@ Add this functionality using Angular's `routerLinkActive` directive.
 1. From your code editor, open the `app.component.html` file.
 1. Update the anchor tags to include the `routerLinkActive` directive.
 
-    <docs-code header="src/app/app.component.html" path="adev/src/content/examples/router-tutorial/src/app/app.component.html" visibleRegion="routeractivelink"/>
+<docs-code header="src/app/app.component.html" path="adev/src/content/examples/router-tutorial/src/app/app.component.html" visibleRegion="routeractivelink"/>
+
 1. Add the `RouterLinkActive` directive to the `imports` list of `AppComponent` in `app.component.ts`.
 
 View your application again.
@@ -10075,20 +10600,21 @@ Note that we are also specifying a value for the `routerLinkActive`'s `ariaCurre
 
 In this step of the tutorial, you add a route that redirects the user to display the `/heroes-list` component.
 
-1. From your code editor, open the `app.routes.ts` file.
-1. Update the `routes` section as follows.
+1.  From your code editor, open the `app.routes.ts` file.
+1.  Update the `routes` section as follows.
 
-    ```ts
-{path: '', redirectTo: '/heroes-list', pathMatch: 'full'},
+        ```ts
+
+    {path: '', redirectTo: '/heroes-list', pathMatch: 'full'},
     ```
 
-    Notice that this new route uses an empty string as its path.
-    In addition, it replaces the `component` property with two new ones:
+        Notice that this new route uses an empty string as its path.
+        In addition, it replaces the `component` property with two new ones:
 
-    | Properties   | Details |
-    |:---        |:---    |
-    | `redirectTo` | This property instructs Angular to redirect from an empty path to the `heroes-list` path.                                                                                                                                                       |
-    | `pathMatch`  | This property instructs Angular on how much of the URL to match. For this tutorial, you should set this property to `full`. This strategy is recommended when you have an empty string for a path. For more information about this property, see the [Route API documentation](api/router/Route). |
+        | Properties   | Details |
+        |:---        |:---    |
+        | `redirectTo` | This property instructs Angular to redirect from an empty path to the `heroes-list` path.                                                                                                                                                       |
+        | `pathMatch`  | This property instructs Angular on how much of the URL to match. For this tutorial, you should set this property to `full`. This strategy is recommended when you have an empty string for a path. For more information about this property, see the [Route API documentation](api/router/Route). |
 
 Now when you open your application, it displays the `heroes-list` component by default.
 
@@ -10100,9 +10626,10 @@ In this section, you'll create a 404 page and update your route configuration to
 
 1. From the terminal, create a new component, `PageNotFound`.
 
-    <docs-code language="shell">
-    ng generate component page-not-found
-```
+<docs-code language="shell">
+ng generate component page-not-found
+
+````
 1. From your code editor, open the `page-not-found.component.html` file and replace its contents with the following HTML.
 
     <docs-code header="src/app/page-not-found/page-not-found.component.html" path="adev/src/content/examples/router-tutorial/src/app/page-not-found/page-not-found.component.html"/>
@@ -10214,7 +10741,7 @@ in `provideRouter`. This allows the `Router` to bind information directly to the
 
 ```ts
 @Input() username!: string;
-```
+````
 
 ## Test your custom URL matcher
 
@@ -10222,9 +10749,10 @@ With your code in place, you can now test your custom URL matcher.
 
 1. From a terminal window, run the `ng serve` command.
 
-    <docs-code language="shell">
-    ng serve
-```
+<docs-code language="shell">
+ng serve
+
+````
 1. Open a browser to `http://localhost:4200`.
 
     You should see a single web page, consisting of a sentence that reads `Navigate to my profile`.
@@ -10252,7 +10780,7 @@ You can create a **new** project with hybrid rendering by using the server-side 
 
 ```shell
 ng new --ssr
-```
+````
 
 You can also enable hybrid rendering by adding server-side rendering to an existing project with the `ng add` command:
 
@@ -10266,67 +10794,64 @@ NOTE: By default, Angular prerenders your entire application and generates a ser
 
 ### Configuring server routes
 
-You can create a server route config by declaring an array of [`ServerRoute`](api/ssr/ServerRoute 'API reference') objects. This configuration typically lives in a file named `app.routes.server.ts`.
+You can create a server route config by declaring an array of [`ServerRoute`](api/ssr/ServerRoute "API reference") objects. This configuration typically lives in a file named `app.routes.server.ts`.
 
 ```typescript
 // app.routes.server.ts
-import { RenderMode, ServerRoute } from '@angular/ssr';
+import { RenderMode, ServerRoute } from "@angular/ssr";
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: '', // This renders the "/" route on the client (CSR)
+    path: "", // This renders the "/" route on the client (CSR)
     renderMode: RenderMode.Client,
   },
   {
-    path: 'about', // This page is static, so we prerender it (SSG)
+    path: "about", // This page is static, so we prerender it (SSG)
     renderMode: RenderMode.Prerender,
   },
   {
-    path: 'profile', // This page requires user-specific data, so we use SSR
+    path: "profile", // This page requires user-specific data, so we use SSR
     renderMode: RenderMode.Server,
   },
   {
-    path: '**', // All other routes will be rendered on the server (SSR)
+    path: "**", // All other routes will be rendered on the server (SSR)
     renderMode: RenderMode.Server,
   },
 ];
 ```
 
-You can add this config to your application with [`provideServerRendering`](api/ssr/provideServerRendering 'API reference') using the [`withRoutes`](api/ssr/withRoutes 'API reference') function:
+You can add this config to your application with [`provideServerRendering`](api/ssr/provideServerRendering "API reference") using the [`withRoutes`](api/ssr/withRoutes "API reference") function:
 
 ```typescript
-import { provideServerRendering, withRoutes } from '@angular/ssr';
-import { serverRoutes } from './app.routes.server';
+import { provideServerRendering, withRoutes } from "@angular/ssr";
+import { serverRoutes } from "./app.routes.server";
 
 // app.config.server.ts
 const serverConfig: ApplicationConfig = {
   providers: [
     provideServerRendering(withRoutes(serverRoutes)),
     // ... other providers ...
-  ]
+  ],
 };
 ```
 
-When using the [App shell pattern](ecosystem/service-workers/app-shell), you must specify the component to be used as the app shell for client-side rendered routes. To do this, use the [`withAppShell`](api/ssr/withAppShell 'API reference') feature:
+When using the [App shell pattern](ecosystem/service-workers/app-shell), you must specify the component to be used as the app shell for client-side rendered routes. To do this, use the [`withAppShell`](api/ssr/withAppShell "API reference") feature:
 
 ```typescript
-import { provideServerRendering, withRoutes, withAppShell } from '@angular/ssr';
-import { AppShellComponent } from './app-shell/app-shell.component';
+import { provideServerRendering, withRoutes, withAppShell } from "@angular/ssr";
+import { AppShellComponent } from "./app-shell/app-shell.component";
 
 const serverConfig: ApplicationConfig = {
   providers: [
-    provideServerRendering(
-      withRoutes(serverRoutes),
-      withAppShell(AppShellComponent),
-    ),
+    provideServerRendering(withRoutes(serverRoutes), withAppShell(AppShellComponent)),
     // ... other providers ...
-  ]
+  ],
 };
 ```
 
 ### Rendering modes
 
-The server routing configuration lets you specify how each route in your application should render by setting a [`RenderMode`](api/ssr/RenderMode 'API reference'):
+The server routing configuration lets you specify how each route in your application should render by setting a [`RenderMode`](api/ssr/RenderMode "API reference"):
 
 | Rendering mode      | Description                                                                                                 |
 | ------------------- | ----------------------------------------------------------------------------------------------------------- |
@@ -10366,7 +10891,7 @@ Prerendering offers faster page loads than both client-side rendering and server
 
 Prerendering requires that all information necessary to render a page is available at _build-time_. This means that prerendered pages cannot include any data to the specific user loading the page. Prerendering is primarily useful for pages that are the same for all users of your application.
 
-Because prerendering occurs at build-time, it may add significant time to your production builds. Using [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams 'API reference') to produce a large number of HTML documents may affect the total file size of your deployments, and thus lead to slower deployments.
+Because prerendering occurs at build-time, it may add significant time to your production builds. Using [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams "API reference") to produce a large number of HTML documents may affect the total file size of your deployments, and thus lead to slower deployments.
 
 Prerendering generally has excellent search engine optimization (SEO), as search crawlers receive a fully rendered HTML document.
 
@@ -10382,14 +10907,14 @@ You can set custom headers and status codes for individual server routes using t
 
 ```typescript
 // app.routes.server.ts
-import { RenderMode, ServerRoute } from '@angular/ssr';
+import { RenderMode, ServerRoute } from "@angular/ssr";
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'profile',
+    path: "profile",
     renderMode: RenderMode.Server,
     headers: {
-      'X-My-Custom-Header': 'some-value',
+      "X-My-Custom-Header": "some-value",
     },
     status: 201,
   },
@@ -10399,7 +10924,7 @@ export const serverRoutes: ServerRoute[] = [
 
 ### Redirects
 
-Angular handles redirects specified by the [`redirectTo`](api/router/Route#redirectTo 'API reference') property in route configurations, differently on the server-side.
+Angular handles redirects specified by the [`redirectTo`](api/router/Route#redirectTo "API reference") property in route configurations, differently on the server-side.
 
 **Server-Side Rendering (SSR)**
 Redirects are performed using standard HTTP redirects (e.g., 301, 302) within the server-side rendering process.
@@ -10409,53 +10934,53 @@ Redirects are implemented as "soft redirects" using [`<meta http-equiv="refresh"
 
 ### Customizing build-time prerendering (SSG)
 
-When using [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender 'API reference'), you can specify several configuration options to customize the prerendering and serving process.
+When using [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender "API reference"), you can specify several configuration options to customize the prerendering and serving process.
 
 #### Parameterized routes
 
-For each route with [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender 'API reference'), you can specify a [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams 'API reference') function. This function lets you control which specific parameters produce separate prerendered documents.
+For each route with [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender "API reference"), you can specify a [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams "API reference") function. This function lets you control which specific parameters produce separate prerendered documents.
 
-The [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams 'API reference') function returns a `Promise` that resolves to an array of objects. Each object is a key-value map of route parameter name to value. For example, if you define a route like `post/:id`, `getPrerenderParams ` could return the array `[{id: 123}, {id: 456}]`, and thus render separate documents for `post/123` and `post/456`.
+The [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams "API reference") function returns a `Promise` that resolves to an array of objects. Each object is a key-value map of route parameter name to value. For example, if you define a route like `post/:id`, `getPrerenderParams ` could return the array `[{id: 123}, {id: 456}]`, and thus render separate documents for `post/123` and `post/456`.
 
-The body of [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams 'API reference') can use Angular's [`inject`](api/core/inject 'API reference') function to inject dependencies and perform any work to determine which routes to prerender. This typically includes making requests to fetch data to construct the array of parameter values.
+The body of [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams "API reference") can use Angular's [`inject`](api/core/inject "API reference") function to inject dependencies and perform any work to determine which routes to prerender. This typically includes making requests to fetch data to construct the array of parameter values.
 
 You can also use this function with catch-all routes (e.g., `/**`), where the parameter name will be `"**"` and the return value will be the segments of the path, such as `foo/bar`. These can be combined with other parameters (e.g., `/post/:id/**`) to handle more complex route configuration.
 
 ```ts
 // app.routes.server.ts
-import { RenderMode, ServerRoute } from '@angular/ssr';
+import { RenderMode, ServerRoute } from "@angular/ssr";
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'post/:id',
+    path: "post/:id",
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       const dataService = inject(PostService);
       const ids = await dataService.getIds(); // Assuming this returns ['1', '2', '3']
 
-      return ids.map(id => ({ id })); // Generates paths like: /post/1, /post/2, /post/3
+      return ids.map((id) => ({ id })); // Generates paths like: /post/1, /post/2, /post/3
     },
   },
   {
-    path: 'post/:id/**',
+    path: "post/:id/**",
     renderMode: RenderMode.Prerender,
     async getPrerenderParams() {
       return [
-        { id: '1', '**': 'foo/3' },
-        { id: '2', '**': 'bar/4' },
+        { id: "1", "**": "foo/3" },
+        { id: "2", "**": "bar/4" },
       ]; // Generates paths like: /post/1/foo/3, /post/2/bar/4
     },
   },
 ];
 ```
 
-Because [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams 'API reference') exclusively applies to [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender 'API reference'), this function always runs at _build-time_. `getPrerenderParams` must not rely on any browser-specific or server-specific APIs for data.
+Because [`getPrerenderParams`](api/ssr/ServerRoutePrerenderWithParams#getPrerenderParams "API reference") exclusively applies to [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender "API reference"), this function always runs at _build-time_. `getPrerenderParams` must not rely on any browser-specific or server-specific APIs for data.
 
-IMPORTANT: When using [`inject`](api/core/inject 'API reference') inside `getPrerenderParams`, please remember that `inject` must be used synchronously. It cannot be invoked within asynchronous callbacks or following any `await` statements. For more information, refer to [`runInInjectionContext`](api/core/runInInjectionContext).
+IMPORTANT: When using [`inject`](api/core/inject "API reference") inside `getPrerenderParams`, please remember that `inject` must be used synchronously. It cannot be invoked within asynchronous callbacks or following any `await` statements. For more information, refer to [`runInInjectionContext`](api/core/runInInjectionContext).
 
 #### Fallback strategies
 
-When using [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender 'API reference') mode, you can specify a fallback strategy to handle requests for paths that haven't been prerendered.
+When using [`RenderMode.Prerender`](api/ssr/RenderMode#Prerender "API reference") mode, you can specify a fallback strategy to handle requests for paths that haven't been prerendered.
 
 The available fallback strategies are:
 
@@ -10465,11 +10990,11 @@ The available fallback strategies are:
 
 ```typescript
 // app.routes.server.ts
-import { RenderMode, PrerenderFallback, ServerRoute } from '@angular/ssr';
+import { RenderMode, PrerenderFallback, ServerRoute } from "@angular/ssr";
 
 export const serverRoutes: ServerRoute[] = [
   {
-    path: 'post/:id',
+    path: "post/:id",
     renderMode: RenderMode.Prerender,
     fallback: PrerenderFallback.Client, // Fallback to CSR if not prerendered
     async getPrerenderParams() {
@@ -10489,19 +11014,19 @@ Some common browser APIs and capabilities might not be available on the server. 
 In general, code which relies on browser-specific symbols should only be executed in the browser, not on the server. This can be enforced through the [`afterEveryRender`](api/core/afterEveryRender) and [`afterNextRender`](api/core/afterNextRender) lifecycle hooks. These are only executed on the browser and skipped on the server.
 
 ```typescript
-import { Component, ViewChild, afterNextRender } from '@angular/core';
+import { Component, ViewChild, afterNextRender } from "@angular/core";
 
 @Component({
-  selector: 'my-cmp',
+  selector: "my-cmp",
   template: `<span #content>{{ ... }}</span>`,
 })
 export class MyComponent {
-  @ViewChild('content') contentRef: ElementRef;
+  @ViewChild("content") contentRef: ElementRef;
 
   constructor() {
     afterNextRender(() => {
       // Safe to check `scrollHeight` because this will only run in the browser, not the server.
-      console.log('content height: ' + this.contentRef.nativeElement.scrollHeight);
+      console.log("content height: " + this.contentRef.nativeElement.scrollHeight);
     });
   }
 }
@@ -10511,15 +11036,15 @@ export class MyComponent {
 
 The `@angular/core` package provides several tokens for interacting with the server-side rendering environment. These tokens give you access to crucial information and objects within your Angular application during SSR.
 
-- **[`REQUEST`](api/core/REQUEST 'API reference'):** Provides access to the current request object, which is of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) from the Web API. This allows you to access headers, cookies, and other request information.
-- **[`RESPONSE_INIT`](api/core/RESPONSE_INIT 'API reference'):** Provides access to the response initialization options, which is of type [`ResponseInit`](https://developer.mozilla.org/en-US/docs/Web/API/Response/Response#parameters) from the Web API. This allows you to set headers and the status code for the response dynamically. Use this token to set headers or status codes that need to be determined at runtime.
-- **[`REQUEST_CONTEXT`](api/core/REQUEST_CONTEXT 'API reference'):** Provides access to additional context related to the current request. This context can be passed as the second parameter of the [`handle`](api/ssr/AngularAppEngine#handle 'API reference') function. Typically, this is used to provide additional request-related information that is not part of the standard Web API.
+- **[`REQUEST`](api/core/REQUEST "API reference"):** Provides access to the current request object, which is of type [`Request`](https://developer.mozilla.org/en-US/docs/Web/API/Request) from the Web API. This allows you to access headers, cookies, and other request information.
+- **[`RESPONSE_INIT`](api/core/RESPONSE_INIT "API reference"):** Provides access to the response initialization options, which is of type [`ResponseInit`](https://developer.mozilla.org/en-US/docs/Web/API/Response/Response#parameters) from the Web API. This allows you to set headers and the status code for the response dynamically. Use this token to set headers or status codes that need to be determined at runtime.
+- **[`REQUEST_CONTEXT`](api/core/REQUEST_CONTEXT "API reference"):** Provides access to additional context related to the current request. This context can be passed as the second parameter of the [`handle`](api/ssr/AngularAppEngine#handle "API reference") function. Typically, this is used to provide additional request-related information that is not part of the standard Web API.
 
 ```typescript
-import { inject, REQUEST } from '@angular/core';
+import { inject, REQUEST } from "@angular/core";
 
 @Component({
-  selector: 'app-my-component',
+  selector: "app-my-component",
   template: `<h1>My Component</h1>`,
 })
 export class MyComponent {
@@ -10570,10 +11095,12 @@ By default, `HttpClient` caches all `HEAD` and `GET` requests which don't contai
 ```typescript
 bootstrapApplication(AppComponent, {
   providers: [
-    provideClientHydration(withHttpTransferCacheOptions({
-      includePostRequests: true
-    }))
-  ]
+    provideClientHydration(
+      withHttpTransferCacheOptions({
+        includePostRequests: true,
+      })
+    ),
+  ],
 });
 ```
 
@@ -10585,16 +11112,16 @@ The `@angular/ssr/node` extends `@angular/ssr` specifically for Node.js environm
 
 ```typescript
 // server.ts
-import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResponse } from '@angular/ssr/node';
-import express from 'express';
+import { AngularNodeAppEngine, createNodeRequestHandler, writeResponseToNodeResponse } from "@angular/ssr/node";
+import express from "express";
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
 
-app.use('*', (req, res, next) => {
+app.use("*", (req, res, next) => {
   angularApp
     .handle(req)
-    .then(response => {
+    .then((response) => {
       if (response) {
         writeResponseToNodeResponse(response, res);
       } else {
@@ -10616,7 +11143,7 @@ The `@angular/ssr` provides essential APIs for server-side rendering your Angula
 
 ```typescript
 // server.ts
-import { AngularAppEngine, createRequestHandler } from '@angular/ssr';
+import { AngularAppEngine, createRequestHandler } from "@angular/ssr";
 
 const angularApp = new AngularAppEngine();
 
@@ -10624,11 +11151,12 @@ const angularApp = new AngularAppEngine();
  * This is a request handler used by the Angular CLI (dev-server and during build).
  */
 export const reqHandler = createRequestHandler(async (req: Request) => {
-  const res: Response|null = await angularApp.render(req);
+  const res: Response | null = await angularApp.render(req);
 
   // ...
 });
 ```
+
 # Hydration
 
 ## What is hydration
@@ -10668,8 +11196,8 @@ bootstrapApplication(AppComponent, {
 Alternatively if you are using NgModules, you would add `provideClientHydration` to your root app module's provider list.
 
 ```typescript
-import {provideClientHydration} from '@angular/platform-browser';
-import {NgModule} from '@angular/core';
+import { provideClientHydration } from "@angular/platform-browser";
+import { NgModule } from "@angular/core";
 
 @NgModule({
   declarations: [AppComponent],
@@ -10697,28 +11225,27 @@ You can also use [Angular DevTools browser extension](tools/devtools) to see hyd
 When an application is rendered on the server, it is visible in a browser as soon as produced HTML loads. Users may assume that they can interact with the page, but event listeners are not attached until hydration completes. Starting from v18, you can enable the Event Replay feature that allows to capture all events that happen before hydration and replay those events once hydration has completed. You can enable it using the `withEventReplay()` function, for example:
 
 ```typescript
-import {provideClientHydration, withEventReplay} from '@angular/platform-browser';
+import { provideClientHydration, withEventReplay } from "@angular/platform-browser";
 
 bootstrapApplication(App, {
-  providers: [
-    provideClientHydration(withEventReplay())
-  ]
+  providers: [provideClientHydration(withEventReplay())],
 });
 ```
 
 ### How event replay works
+
 Event Replay is a feature that improves user experience by capturing user events that were triggered before the hydration process is complete. Then those events are replayed, ensuring none of that interaction was lost.
 
 The Event Replay is divided into three main phases:
 
 - **Capturing user interactions**<br>
-Prior to **Hydration**, Event Replay captures and stores all interactions that the user may perform, such as clicks and other browser native events.
+  Prior to **Hydration**, Event Replay captures and stores all interactions that the user may perform, such as clicks and other browser native events.
 
 - **Storing events**<br>
-The **Event Contract** keeps in memory all the interactions recorded in the previous step, ensuring that they are not lost for later replay.
+  The **Event Contract** keeps in memory all the interactions recorded in the previous step, ensuring that they are not lost for later replay.
 
 - **Relaunch of events**<br>
-Once **Hydration** is complete, Angular re-invokes the captured events.
+  Once **Hydration** is complete, Angular re-invokes the captured events.
 
 Event replay supports _native browser events_, for example `click`, `mouseover`, and `focusin`. If you'd like to learn more about JSAction, the library that powers event replay, you can read more [on the readme](https://github.com/angular/angular/tree/main/packages/core/primitives/event-dispatch#readme).
 
@@ -10808,7 +11335,7 @@ Application stability is an important part of the hydration process. Hydration a
 
 ## I18N
 
-HELPFUL: Support for internationalization with hydration is currently in [developer preview](/reference/releases#developer-preview). By default, Angular will skip hydration for components that use i18n blocks, effectively re-rendering those components from scratch.
+HELPFUL: By default, Angular will skip hydration for components that use i18n blocks, effectively re-rendering those components from scratch.
 
 To enable hydration for i18n blocks, you can add [`withI18nSupport`](/api/platform-browser/withI18nSupport) to your `provideClientHydration` call.
 
@@ -10826,6 +11353,7 @@ bootstrapApplication(AppComponent, {
 ```
 
 ## Consistent rendering across server-side and client-side
+
 Avoid introducing `@if` blocks and other conditionals that display different content when server-side rendering than client-side rendering, such as using an `@if` block with Angular's `isPlatformBrowser` function. These rendering differences cause layout shifts, negatively impacting end-user experience and core web vitals.
 
 ## Third Party Libraries with DOM Manipulation
@@ -10839,6 +11367,7 @@ Many third party scripts, such as ad trackers and analytics, modify the DOM befo
 ## Incremental Hydration
 
 Incremental hydration is an advanced form of hydration that allows for more granular control over when hydration happens. See the [incremental hydration guide](guide/incremental-hydration) for more information.
+
 # Incremental Hydration
 
 **Incremental hydration** is an advanced type of [hydration](guide/hydration) that can leave sections of your application dehydrated and _incrementally_ trigger hydration of those sections as they are needed.
@@ -10903,9 +11432,9 @@ The `hydrate on idle` trigger loads the deferrable view's dependencies and hydra
 
 ```html
 @defer (hydrate on idle) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10916,9 +11445,9 @@ The `hydrate on viewport` trigger loads the deferrable view's dependencies and h
 
 ```html
 @defer (hydrate on viewport) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10929,9 +11458,9 @@ The `hydrate on interaction` trigger loads the deferrable view's dependencies an
 
 ```html
 @defer (hydrate on interaction) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10942,9 +11471,9 @@ The `hydrate on hover` trigger loads the deferrable view's dependencies and hydr
 
 ```html
 @defer (hydrate on hover) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10955,9 +11484,9 @@ as all other non-deferred content has finished rendering.
 
 ```html
 @defer (hydrate on immediate) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10967,9 +11496,9 @@ The `hydrate on timer` trigger loads the deferrable view's dependencies and hydr
 
 ```html
 @defer (hydrate on timer(500ms)) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -10982,9 +11511,9 @@ condition becomes truthy.
 
 ```html
 @defer (hydrate when condition) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -11001,9 +11530,9 @@ renders would load the `@defer` block dependencies on viewport.
 
 ```html
 @defer (on viewport; hydrate never) {
-  <large-cmp />
+<large-cmp />
 } @placeholder {
-  <div>Large component placeholder</div>
+<div>Large component placeholder</div>
 }
 ```
 
@@ -11015,9 +11544,9 @@ Hydrate triggers are additional triggers that are used alongside regular trigger
 
 ```html
 @defer (on idle; hydrate on interaction) {
-  <example-cmp />
+<example-cmp />
 } @placeholder{
-  <div>Example Placeholder</div>
+<div>Example Placeholder</div>
 }
 ```
 
@@ -11029,14 +11558,13 @@ Angular's component and dependency system is hierarchical, which means hydrating
 
 ```html
 @defer (hydrate on interaction) {
-  <parent-block-cmp />
-  @defer (hydrate on hover) {
-    <child-block-cmp />
-  } @placeholder {
-    <div>Child placeholder</div>
-  }
-} @placeholder{
-  <div>Parent Placeholder</div>
+<parent-block-cmp />
+@defer (hydrate on hover) {
+<child-block-cmp />
+} @placeholder {
+<div>Child placeholder</div>
+} } @placeholder{
+<div>Parent Placeholder</div>
 }
 ```
 
@@ -11049,6 +11577,7 @@ Incremental hydration has the same constraints as full-application hydration, in
 ## Do I still need to specify `@placeholder` blocks?
 
 Yes. `@placeholder` block content is not used for incremental hydration, but a `@placeholder` is still necessary for subsequent client-side rendering cases. If your content was not on the route that was part of the initial load, then any navigation to the route that has your `@defer` block content renders like a regular `@defer` block. So the `@placeholder` is rendered in those client-side rendering cases.
+
 # Testing
 
 Testing your Angular application helps you check that your application is working as you expect.
@@ -11063,7 +11592,8 @@ Just run the [`ng test`](cli/test) CLI command:
 ```shell
 ng test
 ```
-The `ng test` command builds the application in *watch mode*,
+
+The `ng test` command builds the application in _watch mode_,
 and launches the [Karma test runner](https://karma-runner.github.io).
 
 The console output looks like below:
@@ -11076,6 +11606,7 @@ The console output looks like below:
 Chrome: Executed 3 of 3 SUCCESS (0.193 secs / 0.172 secs)
 TOTAL: 3 SUCCESS
 ```
+
 The last line of the log shows that Karma ran three tests that all passed.
 
 The test output is displayed in the browser using [Karma Jasmine HTML Reporter](https://github.com/dfederm/karma-jasmine-html-reporter).
@@ -11098,6 +11629,7 @@ If you want to customize Karma, you can create a `karma.conf.js` by running the 
 ```shell
 ng generate config karma
 ```
+
 HELPFUL: Read more about Karma configuration in the [Karma configuration guide](http://karma-runner.github.io/6.4/config/configuration-file.html).
 
 ### Other test frameworks
@@ -11109,23 +11641,23 @@ Each library and runner has its own distinctive installation procedures, configu
 
 Inside the `src/app` folder the Angular CLI generated a test file for the `AppComponent` named `app.component.spec.ts`.
 
-IMPORTANT: The test file extension **must be `.spec.ts`** so that tooling can identify it as a file with tests \(also known as a *spec* file\).
+IMPORTANT: The test file extension **must be `.spec.ts`** so that tooling can identify it as a file with tests \(also known as a _spec_ file\).
 
 The `app.component.ts` and `app.component.spec.ts` files are siblings in the same folder.
 The root file names \(`app.component`\) are the same for both files.
 
-Adopt these two conventions in your own projects for *every kind* of test file.
+Adopt these two conventions in your own projects for _every kind_ of test file.
 
 #### Place your spec file next to the file it tests
 
 It's a good idea to put unit test spec files in the same folder
 as the application source code files that they test:
 
-* Such tests are painless to find
-* You see at a glance if a part of your application lacks tests
-* Nearby tests can reveal how a part works in context
-* When you move the source \(inevitable\), you remember to move the test
-* When you rename the source file \(inevitable\), you remember to rename the test file
+- Such tests are painless to find
+- You see at a glance if a part of your application lacks tests
+- Nearby tests can reveal how a part works in context
+- When you move the source \(inevitable\), you remember to move the test
+- When you rename the source file \(inevitable\), you remember to rename the test file
 
 #### Place your spec files in a test folder
 
@@ -11150,19 +11682,20 @@ To test your Angular CLI application in Continuous integration \(CI\) run the fo
 ```shell
 ng test --no-watch --no-progress --browsers=ChromeHeadless
 ```
+
 ## More information on testing
 
 After you've set up your application for testing, you might find the following testing guides useful.
 
-|                                                                    | Details |
-|:---                                                                |:---     |
+|                                                                    | Details                                                                           |
+| :----------------------------------------------------------------- | :-------------------------------------------------------------------------------- |
 | [Code coverage](guide/testing/code-coverage)                       | How much of your app your tests are covering and how to specify required amounts. |
 | [Testing services](guide/testing/services)                         | How to test the services your application uses.                                   |
 | [Basics of testing components](guide/testing/components-basics)    | Basics of testing Angular components.                                             |
 | [Component testing scenarios](guide/testing/components-scenarios)  | Various kinds of component testing scenarios and use cases.                       |
 | [Testing attribute directives](guide/testing/attribute-directives) | How to test your attribute directives.                                            |
 | [Testing pipes](guide/testing/pipes)                               | How to test pipes.                                                                |
-| [Debugging tests](guide/testing/debugging)                            | Common testing bugs.                                                              |
+| [Debugging tests](guide/testing/debugging)                         | Common testing bugs.                                                              |
 | [Testing utility APIs](guide/testing/utility-apis)                 | Angular testing features.                                                         |
 
 # Find out how much code you're testing
@@ -11175,6 +11708,7 @@ To generate a coverage report run the following command in the root of your proj
 ```shell
 ng test --no-watch --code-coverage
 ```
+
 When the tests are complete, the command creates a new `/coverage` directory in the project.
 Open the `index.html` file to see a report with your source code and code coverage values.
 
@@ -11187,6 +11721,7 @@ If you want to create code-coverage reports every time you test, set the followi
   }
 }
 ```
+
 ## Code coverage enforcement
 
 The code coverage percentages let you estimate how much of your code is tested.
@@ -11213,11 +11748,13 @@ coverageReporter: {
   }
 }
 ```
+
 HELPFUL: Read more about creating and fine tuning Karma configuration in the [testing guide](guide/testing#configuration).
 
 The `check` property causes the tool to enforce a minimum of 80% code coverage when the unit tests are run in the project.
 
 Read more on coverage configuration options in the [karma coverage documentation](https://github.com/karma-runner/karma-coverage/blob/master/docs/configuration.md).
+
 # Testing services
 
 To check that your services are working as you intend, you can write tests specifically for them.
@@ -11287,6 +11824,7 @@ Or inside the `beforeEach()` if you prefer to inject the service as part of your
 
 <docs-code path="adev/src/content/examples/testing/src/app/demo/demo.testbed.spec.ts" visibleRegion="value-service-inject-before-each">
 ```
+
 When testing a service with a dependency, provide the mock in the `providers` array.
 
 In the following example, the mock is a spy object.
@@ -11305,24 +11843,24 @@ There's another school of testing that never calls `beforeEach()` and prefers to
 
 Here's how you might rewrite one of the `MasterService` tests in that style.
 
-Begin by putting re-usable, preparatory code in a *setup* function instead of `beforeEach()`.
+Begin by putting re-usable, preparatory code in a _setup_ function instead of `beforeEach()`.
 
 <docs-code header="app/demo/demo.spec.ts (setup)" path="adev/src/content/examples/testing/src/app/demo/demo.spec.ts" visibleRegion="no-before-each-setup"/>
 
 The `setup()` function returns an object literal with the variables, such as `masterService`, that a test might reference.
-You don't define *semi-global* variables \(for example, `let masterService: MasterService`\) in the body of the `describe()`.
+You don't define _semi-global_ variables \(for example, `let masterService: MasterService`\) in the body of the `describe()`.
 
 Then each test invokes `setup()` in its first line, before continuing with steps that manipulate the test subject and assert expectations.
 
 <docs-code path="adev/src/content/examples/testing/src/app/demo/demo.spec.ts" visibleRegion="no-before-each-test"/>
 
-Notice how the test uses [*destructuring assignment*](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) to extract the setup variables that it needs.
+Notice how the test uses [_destructuring assignment_](https://developer.mozilla.org/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment) to extract the setup variables that it needs.
 
 <docs-code path="adev/src/content/examples/testing/src/app/demo/demo.spec.ts" visibleRegion="no-before-each-setup-call"/>
 
 Many developers feel this approach is cleaner and more explicit than the traditional `beforeEach()` style.
 
-Although this testing guide follows the traditional style and the default [CLI schematics](https://github.com/angular/angular-cli) generate test files with `beforeEach()` and `TestBed`, feel free to adopt *this alternative approach* in your own projects.
+Although this testing guide follows the traditional style and the default [CLI schematics](https://github.com/angular/angular-cli) generate test files with `beforeEach()` and `TestBed`, feel free to adopt _this alternative approach_ in your own projects.
 
 ## Testing HTTP services
 
@@ -11333,10 +11871,10 @@ You can test a data service with an injected `HttpClient` spy as you would test 
 <docs-code header="app/model/hero.service.spec.ts (tests with spies)" path="adev/src/content/examples/testing/src/app/model/hero.service.spec.ts" visibleRegion="test-with-spies"/>
 
 IMPORTANT: The `HeroService` methods return `Observables`.
-You must *subscribe* to an observable to \(a\) cause it to execute and \(b\) assert that the method succeeds or fails.
+You must _subscribe_ to an observable to \(a\) cause it to execute and \(b\) assert that the method succeeds or fails.
 
 The `subscribe()` method takes a success \(`next`\) and fail \(`error`\) callback.
-Make sure you provide *both* callbacks so that you capture errors.
+Make sure you provide _both_ callbacks so that you capture errors.
 Neglecting to do so produces an asynchronous uncaught observable error that the test runner will likely attribute to a completely different test.
 
 ## `HttpClientTestingModule`
@@ -11345,17 +11883,18 @@ Extended interactions between a data service and the `HttpClient` can be complex
 
 The `HttpClientTestingModule` can make these testing scenarios more manageable.
 
-While the *code sample* accompanying this guide demonstrates `HttpClientTestingModule`, this page defers to the [Http guide](guide/http/testing), which covers testing with the `HttpClientTestingModule` in detail.
+While the _code sample_ accompanying this guide demonstrates `HttpClientTestingModule`, this page defers to the [Http guide](guide/http/testing), which covers testing with the `HttpClientTestingModule` in detail.
+
 # Basics of testing components
 
 A component, unlike all other parts of an Angular application, combines an HTML template and a TypeScript class.
-The component truly is the template and the class *working together*.
+The component truly is the template and the class _working together_.
 To adequately test a component, you should test that they work together as intended.
 
 Such tests require creating the component's host element in the browser DOM, as Angular does, and investigating the component class's interaction with the DOM as described by its template.
 
 The Angular `TestBed` facilitates this kind of testing as you'll see in the following sections.
-But in many cases, *testing the component class alone*, without DOM involvement, can validate much of the component's behavior in a straightforward, more obvious way.
+But in many cases, _testing the component class alone_, without DOM involvement, can validate much of the component's behavior in a straightforward, more obvious way.
 
 ## Component DOM testing
 
@@ -11363,11 +11902,11 @@ A component is more than just its class.
 A component interacts with the DOM and with other components.
 Classes alone cannot tell you if the component is going to render properly, respond to user input and gestures, or integrate with its parent and child components.
 
-* Is `Lightswitch.clicked()` bound to anything such that the user can invoke it?
-* Is the `Lightswitch.message` displayed?
-* Can the user actually select the hero displayed by `DashboardHeroComponent`?
-* Is the hero name displayed as expected \(such as uppercase\)?
-* Is the welcome message displayed by the template of `WelcomeComponent`?
+- Is `Lightswitch.clicked()` bound to anything such that the user can invoke it?
+- Is the `Lightswitch.message` displayed?
+- Can the user actually select the hero displayed by `DashboardHeroComponent`?
+- Is the hero name displayed as expected \(such as uppercase\)?
+- Is the welcome message displayed by the template of `WelcomeComponent`?
 
 These might not be troubling questions for the preceding simple components illustrated.
 But many components have complex interactions with the DOM elements described in their templates, causing HTML to appear and disappear as the component state changes.
@@ -11385,6 +11924,7 @@ For example, the following CLI command generates a `BannerComponent` in the `app
 ```shell
 ng generate component banner --inline-template --inline-style --module app
 ```
+
 It also generates an initial test file for the component, `banner-external.component.spec.ts`, that looks like this:
 
 <docs-code header="app/banner/banner-external.component.spec.ts (initial)" path="adev/src/content/examples/testing/src/app/banner/banner-initial.component.spec.ts" visibleRegion="v1"/>
@@ -11397,7 +11937,7 @@ Refer to the [waitForAsync](guide/testing/components-scenarios#waitForAsync) sec
 
 Only the last three lines of this file actually test the component and all they do is assert that Angular can create the component.
 
-The rest of the file is boilerplate setup code anticipating more advanced tests that *might* become necessary if the component evolves into something substantial.
+The rest of the file is boilerplate setup code anticipating more advanced tests that _might_ become necessary if the component evolves into something substantial.
 
 You'll learn about these advanced test features in the following sections.
 For now, you can radically reduce this test file to a more manageable size:
@@ -11454,7 +11994,7 @@ The value of `ComponentFixture.nativeElement` has the `any` type.
 Later you'll encounter the `DebugElement.nativeElement` and it too has the `any` type.
 
 Angular can't know at compile time what kind of HTML element the `nativeElement` is or if it even is an HTML element.
-The application might be running on a *non-browser platform*, such as the server or a [Web Worker](https://developer.mozilla.org/docs/Web/API/Web_Workers_API), where the element might have a diminished API or not exist at all.
+The application might be running on a _non-browser platform_, such as the server or a [Web Worker](https://developer.mozilla.org/docs/Web/API/Web_Workers_API), where the element might have a diminished API or not exist at all.
 
 The tests in this guide are designed to run in a browser so a `nativeElement` value will always be an `HTMLElement` or one of its derived classes.
 
@@ -11466,7 +12006,7 @@ Here's another test that calls `HTMLElement.querySelector` to get the paragraph 
 
 ### `DebugElement`
 
-The Angular *fixture* provides the component's element directly through the `fixture.nativeElement`.
+The Angular _fixture_ provides the component's element directly through the `fixture.nativeElement`.
 
 <docs-code path="adev/src/content/examples/testing/src/app/banner/banner-initial.component.spec.ts" visibleRegion="nativeElement"/>
 
@@ -11477,10 +12017,10 @@ This is actually a convenience method, implemented as `fixture.debugElement.nati
 There's a good reason for this circuitous path to the element.
 
 The properties of the `nativeElement` depend upon the runtime environment.
-You could be running these tests on a *non-browser* platform that doesn't have a DOM or whose DOM-emulation doesn't support the full `HTMLElement` API.
+You could be running these tests on a _non-browser_ platform that doesn't have a DOM or whose DOM-emulation doesn't support the full `HTMLElement` API.
 
-Angular relies on the `DebugElement` abstraction to work safely across *all supported platforms*.
-Instead of creating an HTML element tree, Angular creates a `DebugElement` tree that wraps the *native elements* for the runtime platform.
+Angular relies on the `DebugElement` abstraction to work safely across _all supported platforms_.
+Instead of creating an HTML element tree, Angular creates a `DebugElement` tree that wraps the _native elements_ for the runtime platform.
 The `nativeElement` property unwraps the `DebugElement` and returns the platform-specific element object.
 
 Because the sample tests for this guide are designed to run only in a browser, a `nativeElement` in these tests is always an `HTMLElement` whose familiar methods and properties you can explore within a test.
@@ -11504,9 +12044,9 @@ The server-side renderer might not support the full HTML element API.
 If it doesn't support `querySelector`, the previous test could fail.
 
 The `DebugElement` offers query methods that work for all supported platforms.
-These query methods take a *predicate* function that returns `true` when a node in the `DebugElement` tree matches the selection criteria.
+These query methods take a _predicate_ function that returns `true` when a node in the `DebugElement` tree matches the selection criteria.
 
-You create a *predicate* with the help of a `By` class imported from a library for the runtime platform.
+You create a _predicate_ with the help of a `By` class imported from a library for the runtime platform.
 Here's the `By` import for the browser platform:
 
 <docs-code path="adev/src/content/examples/testing/src/app/banner/banner-initial.component.spec.ts" visibleRegion="import-by"/>
@@ -11517,13 +12057,14 @@ The following example re-implements the previous test with `DebugElement.query()
 
 Some noteworthy observations:
 
-* The `By.css()` static method selects `DebugElement` nodes with a [standard CSS selector](https://developer.mozilla.org/docs/Learn/CSS/Building_blocks/Selectors 'CSS selectors').
-* The query returns a `DebugElement` for the paragraph.
-* You must unwrap that result to get the paragraph element.
+- The `By.css()` static method selects `DebugElement` nodes with a [standard CSS selector](https://developer.mozilla.org/docs/Learn/CSS/Building_blocks/Selectors "CSS selectors").
+- The query returns a `DebugElement` for the paragraph.
+- You must unwrap that result to get the paragraph element.
 
-When you're filtering by CSS selector and only testing properties of a browser's *native element*, the `By.css` approach might be overkill.
+When you're filtering by CSS selector and only testing properties of a browser's _native element_, the `By.css` approach might be overkill.
 
 It's often more straightforward and clear to filter with a standard `HTMLElement` method such as `querySelector()` or `querySelectorAll()`.
+
 # Component testing scenarios
 
 This guide explores common component testing use cases.
@@ -11558,6 +12099,7 @@ Your instinct is to write a test that immediately inspects the `<h1>` like this:
 
 expected '' to contain 'Test Tour of Heroes'.
 ```
+
 Binding happens when Angular performs **change detection**.
 
 In production, change detection kicks in automatically when Angular creates a component or the user enters a keystroke, for example.
@@ -11644,7 +12186,8 @@ Error: This test module uses the component BannerComponent
 which is using a "templateUrl" or "styleUrls", but they were never compiled.
 Please call "TestBed.compileComponents" before your test.
 ```
-You get this test failure message when the runtime environment compiles the source code *during the tests themselves*.
+
+You get this test failure message when the runtime environment compiles the source code _during the tests themselves_.
 
 To correct the problem, call `compileComponents()` as explained in the following [Calling compileComponents](#calling-compilecomponents) section.
 
@@ -11766,6 +12309,7 @@ HELPFUL: The `it()` function receives an argument of the following form.
 
 fakeAsync(() => { /*test body*/ })
 ```
+
 The `fakeAsync()` function enables a linear coding style by running the test body in a special `fakeAsync test zone`.
 The test body appears to be synchronous.
 There is no nested syntax \(like a `Promise.then()`\) to disrupt the flow of control.
@@ -11824,6 +12368,7 @@ If you use the Angular CLI, configure this flag in `src/test.ts`.
 [window as any]('&lowbar;&lowbar;zone&lowbar;symbol__fakeAsyncPatchLock') = true;
 import 'zone.js/testing';
 ```
+
 ```
 ### Using the RxJS scheduler inside fakeAsync()
 
@@ -12247,6 +12792,7 @@ Error: This test module uses the component BannerComponent
 which is using a "templateUrl" or "styleUrls", but they were never compiled.
 Please call "TestBed.compileComponents" before your test.
 ```
+
 The root of the problem is at least one of the components involved in the test specifies an external template or CSS file as the following version of the `BannerComponent` does.
 
 ```
@@ -12274,6 +12820,7 @@ CRITICAL: If you neglect to make the test function async (for example, forget to
 
 Error: ViewDestroyedError: Attempt to use a destroyed view
 ```
+
 A typical approach is to divide the setup logic into two separate `beforeEach()` functions:
 
 | Functions                   | Details                      |
@@ -12432,6 +12979,7 @@ type MetadataOverride<T> = {
   set?: Partial<T>;
 };
 ```
+
 A metadata override object can either add-and-remove elements in metadata properties or completely reset those properties.
 This example resets the component's `providers` metadata.
 
@@ -12444,7 +12992,8 @@ templateUrl?: string;
 providers?: any[];
 …
 ```
-### Provide a *spy stub* (`HeroDetailServiceSpy`)
+
+### Provide a _spy stub_ (`HeroDetailServiceSpy`)
 
 This example completely replaces the component's `providers` array with a new array containing a `HeroDetailServiceSpy`.
 
@@ -12468,6 +13017,7 @@ The `TestBed.overrideComponent` method can be called multiple times for the same
 The `TestBed` offers similar `overrideDirective`, `overrideModule`, and `overridePipe` methods for digging into and replacing parts of these other classes.
 
 Explore the options and combinations on your own.
+
 # Debugging tests
 
 If your tests aren't working as you expect them to, you can inspect and debug them in the browser.
@@ -12475,7 +13025,7 @@ If your tests aren't working as you expect them to, you can inspect and debug th
 Debug specs in the browser in the same way that you debug an application.
 
 1. Reveal the Karma browser window.
-    See [Set up testing](guide/testing#set-up-testing) if you need help with this step.
+   See [Set up testing](guide/testing#set-up-testing) if you need help with this step.
 
 1. Click the **DEBUG** button to open a new browser tab and re-run the tests.
 1. Open the browser's **Developer Tools**. On Windows, press `Ctrl-Shift-I`. On macOS, press `Command-Option-I`.
@@ -12494,16 +13044,16 @@ The [`TestBed`](#testbed-api-summary) and [`ComponentFixture`](#component-fixtur
 
 Here's a summary of the stand-alone functions, in order of likely utility:
 
-| Function                     | Details |
-|:---                          |:---     |
-| `waitForAsync`               | Runs the body of a test \(`it`\) or setup \(`beforeEach`\) function within a special *async test zone*. See [waitForAsync](guide/testing/components-scenarios#waitForAsync).                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `fakeAsync`                  | Runs the body of a test \(`it`\) within a special *fakeAsync test zone*, enabling a linear control flow coding style. See [fakeAsync](guide/testing/components-scenarios#fake-async).                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
-| `tick`                       | Simulates the passage of time and the completion of pending asynchronous activities by flushing both *timer* and *micro-task* queues within the *fakeAsync test zone*.  The curious, dedicated reader might enjoy this lengthy blog post, ["*Tasks, microtasks, queues and schedules*"](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules).  Accepts an optional argument that moves the virtual clock forward by the specified number of milliseconds, clearing asynchronous activities scheduled within that timeframe. See [tick](guide/testing/components-scenarios#tick). |
-| `inject`                     | Injects one or more services from the current `TestBed` injector into a test function. It cannot inject a service provided by the component itself. See discussion of the [debugElement.injector](guide/testing/components-scenarios#get-injected-services).                                                                                                                                                                                                                                                                                                                                                                          |
-| `discardPeriodicTasks`       | When a `fakeAsync()` test ends with pending timer event *tasks* \(queued `setTimeOut` and `setInterval` callbacks\), the test fails with a clear error message. <br /> In general, a test should end with no queued tasks. When pending timer tasks are expected, call `discardPeriodicTasks` to flush the *task* queue and avoid the error.                                                                                                                                                                                                                                                                                          |
-| `flushMicrotasks`            | When a `fakeAsync()` test ends with pending *micro-tasks* such as unresolved promises, the test fails with a clear error message. <br /> In general, a test should wait for micro-tasks to finish. When pending microtasks are expected, call `flushMicrotasks` to flush the  *micro-task* queue and avoid the error.                                                                                                                                                                                                                                                                                                                 |
-| `ComponentFixtureAutoDetect` | A provider token for a service that turns on [automatic change detection](guide/testing/components-scenarios#automatic-change-detection).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
-| `getTestBed`                 | Gets the current instance of the `TestBed`. Usually unnecessary because the static class methods of the `TestBed` class are typically sufficient. The `TestBed` instance exposes a few rarely used members that are not available as static methods.                                                                                                                                                                                                                                                                                                                                                                                  |
+| Function                     | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| :--------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `waitForAsync`               | Runs the body of a test \(`it`\) or setup \(`beforeEach`\) function within a special _async test zone_. See [waitForAsync](guide/testing/components-scenarios#waitForAsync).                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `fakeAsync`                  | Runs the body of a test \(`it`\) within a special _fakeAsync test zone_, enabling a linear control flow coding style. See [fakeAsync](guide/testing/components-scenarios#fake-async).                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `tick`                       | Simulates the passage of time and the completion of pending asynchronous activities by flushing both _timer_ and _micro-task_ queues within the _fakeAsync test zone_. The curious, dedicated reader might enjoy this lengthy blog post, ["_Tasks, microtasks, queues and schedules_"](https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules). Accepts an optional argument that moves the virtual clock forward by the specified number of milliseconds, clearing asynchronous activities scheduled within that timeframe. See [tick](guide/testing/components-scenarios#tick). |
+| `inject`                     | Injects one or more services from the current `TestBed` injector into a test function. It cannot inject a service provided by the component itself. See discussion of the [debugElement.injector](guide/testing/components-scenarios#get-injected-services).                                                                                                                                                                                                                                                                                                                                    |
+| `discardPeriodicTasks`       | When a `fakeAsync()` test ends with pending timer event _tasks_ \(queued `setTimeOut` and `setInterval` callbacks\), the test fails with a clear error message. <br /> In general, a test should end with no queued tasks. When pending timer tasks are expected, call `discardPeriodicTasks` to flush the _task_ queue and avoid the error.                                                                                                                                                                                                                                                    |
+| `flushMicrotasks`            | When a `fakeAsync()` test ends with pending _micro-tasks_ such as unresolved promises, the test fails with a clear error message. <br /> In general, a test should wait for micro-tasks to finish. When pending microtasks are expected, call `flushMicrotasks` to flush the _micro-task_ queue and avoid the error.                                                                                                                                                                                                                                                                            |
+| `ComponentFixtureAutoDetect` | A provider token for a service that turns on [automatic change detection](guide/testing/components-scenarios#automatic-change-detection).                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| `getTestBed`                 | Gets the current instance of the `TestBed`. Usually unnecessary because the static class methods of the `TestBed` class are typically sufficient. The `TestBed` instance exposes a few rarely used members that are not available as static methods.                                                                                                                                                                                                                                                                                                                                            |
 
 ## `TestBed` class summary
 
@@ -12515,45 +13065,48 @@ The module definition passed to `configureTestingModule` is a subset of the `@Ng
 
 ```javascript
 type TestModuleMetadata = {
-  providers?: any[];
-  declarations?: any[];
-  imports?: any[];
-  schemas?: Array<SchemaMetadata | any[]>;
+  providers?: any[],
+  declarations?: any[],
+  imports?: any[],
+  schemas?: Array<SchemaMetadata | any[]>,
 };
 ```
+
 Each override method takes a `MetadataOverride<T>` where `T` is the kind of metadata appropriate to the method, that is, the parameter of an `@NgModule`, `@Component`, `@Directive`, or `@Pipe`.
 
 ```javascript
 type MetadataOverride<T> = {
-  add?: Partial<T>;
-  remove?: Partial<T>;
-  set?: Partial<T>;
+  add?: Partial<T>,
+  remove?: Partial<T>,
+  set?: Partial<T>,
 };
 ```
-The `TestBed` API consists of static class methods that either update or reference a *global* instance of the `TestBed`.
+
+The `TestBed` API consists of static class methods that either update or reference a _global_ instance of the `TestBed`.
 
 Internally, all static methods cover methods of the current runtime `TestBed` instance, which is also returned by the `getTestBed()` function.
 
-Call `TestBed` methods *within* a `beforeEach()` to ensure a fresh start before each individual test.
+Call `TestBed` methods _within_ a `beforeEach()` to ensure a fresh start before each individual test.
 
 Here are the most important static methods, in order of likely utility.
 
-| Methods                                                        | Details |
-|:---                                                            |:---     |
-| `configureTestingModule`                                       | The testing shims \(`karma-test-shim`, `browser-test-shim`\) establish the [initial test environment](guide/testing) and a default testing module. The default testing module is configured with basic declaratives and some Angular service substitutes that every tester needs. <br /> Call `configureTestingModule` to refine the testing module configuration for a particular set of tests by adding and removing imports, declarations \(of components, directives, and pipes\), and providers.                                                                                                                                              |
-| `compileComponents`                                            | Compile the testing module asynchronously after you've finished configuring it. You **must** call this method if *any* of the testing module components have a `templateUrl` or `styleUrls` because fetching component template and style files is necessarily asynchronous. See [compileComponents](guide/testing/components-scenarios#calling-compilecomponents). <br /> After calling `compileComponents`, the `TestBed` configuration is frozen for the duration of the current spec.                                                                                                                                                                 |
-| `createComponent<T>`                                     | Create an instance of a component of type `T` based on the current `TestBed` configuration. After calling `createComponent`, the `TestBed` configuration is frozen for the duration of the current spec.                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| `overrideModule`                                               | Replace metadata for the given `NgModule`. Recall that modules can import other modules. The `overrideModule` method can reach deeply into the current testing module to modify one of these inner modules.                                                                                                                                                                                                                                                                                                                                                                                                                                        |
-| `overrideComponent`                                            | Replace metadata for the given component class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `overrideDirective`                                            | Replace metadata for the given directive class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `overridePipe`                                                 | Replace metadata for the given pipe class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
-|
- `inject`                           | Retrieve a service from the current `TestBed` injector. The `inject` function is often adequate for this purpose. But `inject` throws an error if it can't provide the service. <br /> What if the service is optional? <br /> The `TestBed.inject()` method takes an optional second parameter, the object to return if Angular can't find the provider \(`null` in this example\): <docs-code header="app/demo/demo.testbed.spec.ts" path="adev/src/content/examples/testing/src/app/demo/demo.testbed.spec.ts" visibleRegion="testbed-get-w-null"/> After calling `TestBed.inject`, the `TestBed` configuration is frozen for the duration of the current spec. |
-|
- `initTestEnvironment` | Initialize the testing environment for the entire test run. <br /> The testing shims \(`karma-test-shim`, `browser-test-shim`\) call it for you so there is rarely a reason for you to call it yourself. <br /> Call this method *exactly once*. To change this default in the middle of a test run, call `resetTestEnvironment` first. <br /> Specify the Angular compiler factory, a `PlatformRef`, and a default Angular testing module. Alternatives for non-browser platforms are available in the general form `@angular/platform-<platform_name>/testing/<platform_name>`.                                                                  |
-| `resetTestEnvironment`                                         | Reset the initial test environment, including the default testing module.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| Methods                  | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| :----------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `configureTestingModule` | The testing shims \(`karma-test-shim`, `browser-test-shim`\) establish the [initial test environment](guide/testing) and a default testing module. The default testing module is configured with basic declaratives and some Angular service substitutes that every tester needs. <br /> Call `configureTestingModule` to refine the testing module configuration for a particular set of tests by adding and removing imports, declarations \(of components, directives, and pipes\), and providers. |
+| `compileComponents`      | Compile the testing module asynchronously after you've finished configuring it. You **must** call this method if _any_ of the testing module components have a `templateUrl` or `styleUrls` because fetching component template and style files is necessarily asynchronous. See [compileComponents](guide/testing/components-scenarios#calling-compilecomponents). <br /> After calling `compileComponents`, the `TestBed` configuration is frozen for the duration of the current spec.             |
+| `createComponent<T>`     | Create an instance of a component of type `T` based on the current `TestBed` configuration. After calling `createComponent`, the `TestBed` configuration is frozen for the duration of the current spec.                                                                                                                                                                                                                                                                                              |
+| `overrideModule`         | Replace metadata for the given `NgModule`. Recall that modules can import other modules. The `overrideModule` method can reach deeply into the current testing module to modify one of these inner modules.                                                                                                                                                                                                                                                                                           |
+| `overrideComponent`      | Replace metadata for the given component class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `overrideDirective`      | Replace metadata for the given directive class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `overridePipe`           | Replace metadata for the given pipe class, which could be nested deeply within an inner module.                                                                                                                                                                                                                                                                                                                                                                                                       |
 
-A few of the `TestBed` instance methods are not covered by static `TestBed` *class* methods.
+|
+`inject` | Retrieve a service from the current `TestBed` injector. The `inject` function is often adequate for this purpose. But `inject` throws an error if it can't provide the service. <br /> What if the service is optional? <br /> The `TestBed.inject()` method takes an optional second parameter, the object to return if Angular can't find the provider \(`null` in this example\): <docs-code header="app/demo/demo.testbed.spec.ts" path="adev/src/content/examples/testing/src/app/demo/demo.testbed.spec.ts" visibleRegion="testbed-get-w-null"/> After calling `TestBed.inject`, the `TestBed` configuration is frozen for the duration of the current spec. |
+|
+`initTestEnvironment` | Initialize the testing environment for the entire test run. <br /> The testing shims \(`karma-test-shim`, `browser-test-shim`\) call it for you so there is rarely a reason for you to call it yourself. <br /> Call this method _exactly once_. To change this default in the middle of a test run, call `resetTestEnvironment` first. <br /> Specify the Angular compiler factory, a `PlatformRef`, and a default Angular testing module. Alternatives for non-browser platforms are available in the general form `@angular/platform-<platform_name>/testing/<platform_name>`. |
+| `resetTestEnvironment` | Reset the initial test environment, including the default testing module. |
+
+A few of the `TestBed` instance methods are not covered by static `TestBed` _class_ methods.
 These are rarely needed.
 
 ## The `ComponentFixture`
@@ -12566,8 +13119,8 @@ The `ComponentFixture` properties and methods provide access to the component, i
 
 Here are the most important properties for testers, in order of likely utility.
 
-| Properties          | Details |
-|:---                 |:---     |
+| Properties          | Details                                                                                                                                                                                                                                                                                            |
+| :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `componentInstance` | The instance of the component class created by `TestBed.createComponent`.                                                                                                                                                                                                                          |
 | `debugElement`      | The `DebugElement` associated with the root element of the component. <br /> The `debugElement` provides insight into the component and its DOM element during test and debugging. It's a critical property for testers. The most interesting members are covered [below](#debug-element-details). |
 | `nativeElement`     | The native DOM element at the root of the component.                                                                                                                                                                                                                                               |
@@ -12575,18 +13128,18 @@ Here are the most important properties for testers, in order of likely utility.
 
 ### `ComponentFixture` methods
 
-The *fixture* methods cause Angular to perform certain tasks on the component tree.
+The _fixture_ methods cause Angular to perform certain tasks on the component tree.
 Call these method to trigger Angular behavior in response to simulated user action.
 
 Here are the most useful methods for testers.
 
-| Methods             | Details |
-|:---                 |:---     |
+| Methods             | Details                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| :------------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `detectChanges`     | Trigger a change detection cycle for the component. <br /> Call it to initialize the component \(it calls `ngOnInit`\) and after your test code, change the component's data bound property values. Angular can't see that you've changed `personComponent.name` and won't update the `name` binding until you call `detectChanges`. <br /> Runs `checkNoChanges` afterwards to confirm that there are no circular updates unless called as `detectChanges(false)`;                                                                                    |
 | `autoDetectChanges` | Set this to `true` when you want the fixture to detect changes automatically. <br /> When autodetect is `true`, the test fixture calls `detectChanges` immediately after creating the component. Then it listens for pertinent zone events and calls `detectChanges` accordingly. When your test code modifies component property values directly, you probably still have to call `fixture.detectChanges` to trigger data binding updates. <br /> The default is `false`. Testers who prefer fine control over test behavior tend to keep it `false`. |
 | `checkNoChanges`    | Do a change detection run to make sure there are no pending changes. Throws an exceptions if there are.                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `isStable`          | If the fixture is currently *stable*, returns `true`. If there are async tasks that have not completed, returns `false`.                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| `whenStable`        | Returns a promise that resolves when the fixture is stable. <br /> To resume testing after completion of asynchronous activity or asynchronous change detection, hook that promise. See [whenStable](guide/testing/components-scenarios#whenstable).                                                                                                                                                                                                                                                                                                  |
+| `isStable`          | If the fixture is currently _stable_, returns `true`. If there are async tasks that have not completed, returns `false`.                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `whenStable`        | Returns a promise that resolves when the fixture is stable. <br /> To resume testing after completion of asynchronous activity or asynchronous change detection, hook that promise. See [whenStable](guide/testing/components-scenarios#whenstable).                                                                                                                                                                                                                                                                                                   |
 | `destroy`           | Trigger component destruction.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 #### `DebugElement`
@@ -12597,34 +13150,34 @@ From the test root component's `DebugElement` returned by `fixture.debugElement`
 
 Here are the most useful `DebugElement` members for testers, in approximate order of utility:
 
-| Members               | Details |
-|:---                   |:---     |
-| `nativeElement`       | The corresponding DOM element in the browser                                                                                                                                                                                                                                                                        |
-| `query`               | Calling `query(predicate: Predicate<DebugElement>)` returns the first `DebugElement` that matches the [predicate](#query-predicate) at any depth in the subtree.                                                                                                                                                                                                                                        |
-| `queryAll`            | Calling `queryAll(predicate: Predicate<DebugElement>)` returns all `DebugElements` that matches the [predicate](#query-predicate) at any depth in subtree.                                                                                                                                                                                                                                              |
-| `injector`            | The host dependency injector. For example, the root element's component instance injector.                                                                                                                                                                                                                                                                                                              |
-| `componentInstance`   | The element's own component instance, if it has one.                                                                                                                                                                                                                                                                                                                                                    |
-| `context`             | An object that provides parent context for this element. Often an ancestor component instance that governs this element. <br /> When an element is repeated within `@for` block, the context is an `RepeaterContext` whose `$implicit` property is the value of the row instance value. For example, the `hero` in `@for(hero of heroes; ...)`.                                                                   |
-| `children`            | The immediate `DebugElement` children. Walk the tree by descending through `children`.  `DebugElement` also has `childNodes`, a list of `DebugNode` objects. `DebugElement` derives from `DebugNode` objects and there are often more nodes than elements. Testers can usually ignore plain nodes.                                                                  |
-| `parent`              | The `DebugElement` parent. Null if this is the root element.                                                                                                                                                                                                                                                                                                                                            |
-| `name`                | The element tag name, if it is an element.                                                                                                                                                                                                                                                                                                                                                              |
-| `triggerEventHandler` | Triggers the event by its name if there is a corresponding listener in the element's `listeners` collection. The second parameter is the *event object* expected by the handler. See [triggerEventHandler](guide/testing/components-scenarios#trigger-event-handler). <br /> If the event lacks a listener or there's some other problem, consider calling `nativeElement.dispatchEvent(eventObject)`. |
-| `listeners`           | The callbacks attached to the component's `@Output` properties and/or the element's event properties.                                                                                                                                                                                                                                                                                                   |
-| `providerTokens`      | This component's injector lookup tokens. Includes the component itself plus the tokens that the component lists in its `providers` metadata.                                                                                                                                                                                                                                                            |
-| `source`              | Where to find this element in the source component template.                                                                                                                                                                                                                                                                                                                                            |
-| `references`          | Dictionary of objects associated with template local variables \(for example, `#foo`\), keyed by the local variable name.                                                                                                                                                                                                                                                                                        |
+| Members               | Details                                                                                                                                                                                                                                                                                                                                                                                                |
+| :-------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `nativeElement`       | The corresponding DOM element in the browser                                                                                                                                                                                                                                                                                                                                                           |
+| `query`               | Calling `query(predicate: Predicate<DebugElement>)` returns the first `DebugElement` that matches the [predicate](#query-predicate) at any depth in the subtree.                                                                                                                                                                                                                                       |
+| `queryAll`            | Calling `queryAll(predicate: Predicate<DebugElement>)` returns all `DebugElements` that matches the [predicate](#query-predicate) at any depth in subtree.                                                                                                                                                                                                                                             |
+| `injector`            | The host dependency injector. For example, the root element's component instance injector.                                                                                                                                                                                                                                                                                                             |
+| `componentInstance`   | The element's own component instance, if it has one.                                                                                                                                                                                                                                                                                                                                                   |
+| `context`             | An object that provides parent context for this element. Often an ancestor component instance that governs this element. <br /> When an element is repeated within `@for` block, the context is an `RepeaterContext` whose `$implicit` property is the value of the row instance value. For example, the `hero` in `@for(hero of heroes; ...)`.                                                        |
+| `children`            | The immediate `DebugElement` children. Walk the tree by descending through `children`. `DebugElement` also has `childNodes`, a list of `DebugNode` objects. `DebugElement` derives from `DebugNode` objects and there are often more nodes than elements. Testers can usually ignore plain nodes.                                                                                                      |
+| `parent`              | The `DebugElement` parent. Null if this is the root element.                                                                                                                                                                                                                                                                                                                                           |
+| `name`                | The element tag name, if it is an element.                                                                                                                                                                                                                                                                                                                                                             |
+| `triggerEventHandler` | Triggers the event by its name if there is a corresponding listener in the element's `listeners` collection. The second parameter is the _event object_ expected by the handler. See [triggerEventHandler](guide/testing/components-scenarios#trigger-event-handler). <br /> If the event lacks a listener or there's some other problem, consider calling `nativeElement.dispatchEvent(eventObject)`. |
+| `listeners`           | The callbacks attached to the component's `@Output` properties and/or the element's event properties.                                                                                                                                                                                                                                                                                                  |
+| `providerTokens`      | This component's injector lookup tokens. Includes the component itself plus the tokens that the component lists in its `providers` metadata.                                                                                                                                                                                                                                                           |
+| `source`              | Where to find this element in the source component template.                                                                                                                                                                                                                                                                                                                                           |
+| `references`          | Dictionary of objects associated with template local variables \(for example, `#foo`\), keyed by the local variable name.                                                                                                                                                                                                                                                                              |
 
 The `DebugElement.query(predicate)` and `DebugElement.queryAll(predicate)` methods take a predicate that filters the source element's subtree for matching `DebugElement`.
 
-The predicate is any method that takes a `DebugElement` and returns a *truthy* value.
+The predicate is any method that takes a `DebugElement` and returns a _truthy_ value.
 The following example finds all `DebugElements` with a reference to a template local variable named "content":
 
 <docs-code header="app/demo/demo.testbed.spec.ts" path="adev/src/content/examples/testing/src/app/demo/demo.testbed.spec.ts" visibleRegion="custom-predicate"/>
 
 The Angular `By` class has three static methods for common predicates:
 
-| Static method             | Details |
-|:---                       |:---     |
+| Static method             | Details                                                                    |
+| :------------------------ | :------------------------------------------------------------------------- |
 | `By.all`                  | Return all elements                                                        |
 | `By.css(selector)`        | Return elements with matching CSS selectors                                |
 | `By.directive(directive)` | Return elements that Angular matched to an instance of the directive class |
@@ -12642,11 +13195,12 @@ Harnesses offer several benefits:
 
 ```typescript
 // Example of test with a harness for a component called MyButtonComponent
-it('should load button with exact text', async () => {
+it("should load button with exact text", async () => {
   const button = await loader.getHarness(MyButtonComponentHarness);
-  expect(await button.getText()).toBe('Confirm');
+  expect(await button.getText()).toBe("Confirm");
 });
 ```
+
 Component harnesses are especially useful for shared UI widgets. Developers often write tests that depend on private implementation details of widgets, such as DOM structure and CSS classes. Those dependencies make tests brittle and hard to maintain. Harnesses offer an alternative— a supported API that interacts with the widget the same way an end-user does. Widget implementation changes now become less likely to break user tests. For example, [Angular Material](https://material.angular.dev/components/categories) provides a test harness for each component in the library.
 
 Component harnesses support multiple testing environments. You can use the same harness implementation in both unit and end-to-end tests. Test authors only need to learn one API and component authors don't have to maintain separate unit and end-to-end test implementations.
@@ -12660,6 +13214,7 @@ Many developers can be categorized by one of the following developer type catego
 | Harness environment authors | Developers who want to add support for using component harnesses in additional testing environments. For information on supported testing environments out-of-the-box, see the [test harness environments and loaders](guide/testing/using-component-harnesses#test-harness-environments-and-loaders). | [Adding support for additional testing environments](guide/testing/component-harnesses-testing-environments) |
 
 For the full API reference, please see the [Angular CDK's component harness API reference page](/api#angular_cdk_testing).
+
 # Using component harnesses in tests
 
 ## Before you start
@@ -12673,6 +13228,7 @@ The [Component Dev Kit (CDK)](https://material.angular.dev/cdk/categories) is a 
 ```shell
 ng add @angular/cdk
 ```
+
 ## Test harness environments and loaders
 
 You can use component test harnesses in different test environments. Angular CDK supports two built-in environments:
@@ -12700,6 +13256,7 @@ const loader = TestbedHarnessEnvironment.loader(fixture);
 // Use the loader to get harness instances
 const myComponentHarness = await loader.getHarness(MyComponent);
 ```
+
 To create a harness loader for harnesses for elements that fall outside the fixture, use the `documentRootLoader()` method. For example, code that displays a floating element or pop-up often attaches DOM elements directly to the document body, such as the `Overlay` service in Angular CDK.
 
 You can also create a harness loader directly with `harnessForFixture()` for a harness at that fixture's root element directly.
@@ -12716,6 +13273,7 @@ const loader = SeleniumWebDriverHarnessEnvironment.loader(wd);
 ...
 const myComponentHarness = await loader.getHarness(MyComponent);
 ```
+
 ## Using a harness loader
 
 Harness loader instances correspond to a specific DOM element and are used to create component harness instances for elements under that specific element.
@@ -12729,6 +13287,7 @@ const myComponentHarness = await loader.getHarness(MyComponent);
 // Get harnesses for all instances of the element
 const myComponentHarnesses = await loader.getHarnesses(MyComponent);
 ```
+
 As an example, consider a reusable dialog-button component that opens a dialog on click. It contains the following components, each with a corresponding harness:
 
 - `MyDialogButton` (composes the `MyButton` and `MyDialog` with a convenient API)
@@ -12748,10 +13307,9 @@ beforeEach(() => {
   rootLoader = TestbedHarnessEnvironment.documentRootLoader(fixture);
 });
 
-it('loads harnesses', async () => {
+it("loads harnesses", async () => {
   // Load a harness for the bootstrapped component with `harnessForFixture`
-  dialogButtonHarness =
-    await TestbedHarnessEnvironment.harnessForFixture(fixture, MyDialogButtonHarness);
+  dialogButtonHarness = await TestbedHarnessEnvironment.harnessForFixture(fixture, MyDialogButtonHarness);
 
   // The button element is inside the fixture's root element, so we use `loader`.
   const buttonHarness = await loader.getHarness(MyButtonHarness);
@@ -12766,6 +13324,7 @@ it('loads harnesses', async () => {
   // ... make some assertions
 });
 ```
+
 ### Harness behavior in different environments
 
 Harnesses may not behave exactly the same in all environments. Some differences are unavoidable between the real user interaction versus the simulated events generated in unit tests. Angular CDK makes a best effort to normalize the behavior to the extent possible.
@@ -12778,11 +13337,12 @@ To interact with elements below the root element of this harness loader, use the
 const myComponentHarness = await loader.getHarness(MyComponent);
 
 // Get loader for first instance of child element with '.child' selector
-const childLoader = await myComponentHarness.getLoader('.child');
+const childLoader = await myComponentHarness.getLoader(".child");
 
 // Get loaders for all instances of child elements with '.child' selector
-const allChildLoaders = await myComponentHarness.getAllChildLoaders('.child');
+const allChildLoaders = await myComponentHarness.getAllChildLoaders(".child");
 ```
+
 ### Filtering harnesses
 
 When a page contains multiple instances of a particular component, you may want to filter based on some property of the component to get a particular component instance. You can use a <strong>harness predicate</strong>, a class used to associate a `ComponentHarness` class with predicates functions that can be used to filter component instances, to do so.
@@ -12796,15 +13356,17 @@ When you ask a `HarnessLoader` for a harness, you're actually providing a Harnes
 
 ```typescript
 // Example of loading a MyButtonComponentHarness with a harness predicate
-const disabledButtonPredicate = new HarnessPredicate(MyButtonComponentHarness, {selector: '[disabled]'});
+const disabledButtonPredicate = new HarnessPredicate(MyButtonComponentHarness, { selector: "[disabled]" });
 const disabledButton = await loader.getHarness(disabledButtonPredicate);
 ```
+
 However it's common for harnesses to implement a static `with()` method that accepts component-specific filtering options and returns a `HarnessPredicate`.
 
 ```typescript
 // Example of loading a MyButtonComponentHarness with a specific selector
-const button = await loader.getHarness(MyButtonComponentHarness.with({selector: 'btn'}))
+const button = await loader.getHarness(MyButtonComponentHarness.with({ selector: "btn" }));
 ```
+
 For more details refer to the specific harness documentation since additional filtering options are specific to each harness implementation.
 
 ## Using test harness APIs
@@ -12816,12 +13378,13 @@ Beyond that, the API of any given harness is specific to its corresponding compo
 As an example, the following is a test for a component that uses the [Angular Material slider component harness](https://material.angular.dev/components/slider/api#MatSliderHarness):
 
 ```typescript
-it('should get value of slider thumb', async () => {
+it("should get value of slider thumb", async () => {
   const slider = await loader.getHarness(MatSliderHarness);
   const thumb = await slider.getEndThumb();
   expect(await thumb.getValue()).toBe(50);
 });
 ```
+
 ## Interop with Angular change detection
 
 By default, test harnesses runs Angular's [change detection](https://angular.dev/best-practices/runtime-performance) before reading the state of a DOM element and after interacting with a DOM element.
@@ -12829,7 +13392,7 @@ By default, test harnesses runs Angular's [change detection](https://angular.dev
 There may be times that you need finer-grained control over change detection in your tests. such as checking the state of a component while an async operation is pending. In these cases use the `manualChangeDetection` function to disable automatic handling of change detection for a block of code.
 
 ```typescript
-it('checks state while async action is in progress', async () => {
+it("checks state while async action is in progress", async () => {
   const buttonHarness = loader.getHarness(MyButtonHarness);
   await manualChangeDetection(async () => {
     await buttonHarness.click();
@@ -12842,6 +13405,7 @@ it('checks state while async action is in progress', async () => {
   });
 });
 ```
+
 Almost all harness methods are asynchronous and return a `Promise` to support the following:
 
 - Support for unit tests
@@ -12853,13 +13417,10 @@ The Angular team recommends using [await](https://developer.mozilla.org/en-US/do
 Occasionally, you may want to perform multiple actions simultaneously and wait until they're all done rather than performing each action sequentially. For example, read multiple properties of a single component. In these situations use the `parallel` function to parallelize the operations. The parallel function works similarly to `Promise.all`, while also optimizing change detection checks.
 
 ```typescript
-it('reads properties in parallel', async () => {
+it("reads properties in parallel", async () => {
   const checkboxHarness = loader.getHarness(MyCheckboxHarness);
   // Read the checked and intermediate properties simultaneously.
-  const [checked, indeterminate] = await parallel(() => [
-    checkboxHarness.isChecked(),
-    checkboxHarness.isIndeterminate()
-  ]);
+  const [checked, indeterminate] = await parallel(() => [checkboxHarness.isChecked(), checkboxHarness.isIndeterminate()]);
   expect(checked).toBe(false);
   expect(indeterminate).toBe(true);
 });
@@ -12884,6 +13445,7 @@ The [Component Dev Kit (CDK)](https://material.angular.dev/cdk/categories) is a 
 ```shell
 ng add @angular/cdk
 ```
+
 ## Extending `ComponentHarness`
 
 The abstract `ComponentHarness` class is the base class for all component harnesses. To create a custom component harness, extend `ComponentHarness` and implement the static property `hostSelector`.
@@ -12892,16 +13454,16 @@ The `hostSelector` property identifies elements in the DOM that match this harne
 
 ```typescript
 @Component({
-  selector: 'my-popup',
+  selector: "my-popup",
   template: `
-    <button (click)="toggle()">{{triggerText()}}</button>
+    <button (click)="toggle()">{{ triggerText() }}</button>
     @if (isOpen()) {
-      <div class="my-popup-content"><ng-content></ng-content></div>
+    <div class="my-popup-content"><ng-content></ng-content></div>
     }
-  `
+  `,
 })
 class MyPopup {
-  triggerText = input('');
+  triggerText = input("");
 
   isOpen = signal(false);
 
@@ -12910,13 +13472,15 @@ class MyPopup {
   }
 }
 ```
+
 In this case, a minimal harness for the component would look like the following:
 
 ```typescript
 class MyPopupHarness extends ComponentHarness {
-  static hostSelector = 'my-popup';
+  static hostSelector = "my-popup";
 }
 ```
+
 While `ComponentHarness` subclasses require only the `hostSelector` property, most harnesses should also implement a static `with` method to generate `HarnessPredicate` instances. The [filtering harnesses section](guide/testing/using-component-harnesses#filtering-harnesses) covers this in more detail.
 
 ## Finding elements in the component's DOM
@@ -12931,15 +13495,16 @@ For example, the `MyPopupHarness` example discussed above could provide methods 
 
 ```typescript
 class MyPopupHarness extends ComponentHarness {
-  static hostSelector = 'my-popup';
+  static hostSelector = "my-popup";
 
   // Gets the trigger element
-  getTriggerElement = this.locatorFor('button');
+  getTriggerElement = this.locatorFor("button");
 
   // Gets the content element.
-  getContentElement = this.locatorForOptional('.my-popup-content');
+  getContentElement = this.locatorForOptional(".my-popup-content");
 }
 ```
+
 ## Working with `TestElement` instances
 
 `TestElement` is an abstraction designed to work across different test environments (Unit tests, WebDriver, etc). When using harnesses, you should perform all DOM interaction via this interface. Other means of accessing DOM elements, such as `document.querySelector()`, do not work in all test environments.
@@ -12952,10 +13517,10 @@ Instead, provide more narrow-focused methods for specific actions the end-user m
 
 ```typescript
 class MyPopupHarness extends ComponentHarness {
-  static hostSelector = 'my-popup';
+  static hostSelector = "my-popup";
 
-  protected getTriggerElement = this.locatorFor('button');
-  protected getContentElement = this.locatorForOptional('.my-popup-content');
+  protected getTriggerElement = this.locatorFor("button");
+  protected getContentElement = this.locatorForOptional(".my-popup-content");
 
   /** Toggles the open state of the popup. */
   async toggle() {
@@ -12970,6 +13535,7 @@ class MyPopupHarness extends ComponentHarness {
   }
 }
 ```
+
 ## Loading harnesses for subcomponents
 
 Larger components often compose sub-components. You can reflect this structure in a component's harness as well. Each of the `locatorFor` methods on `ComponentHarness` has an alternate signature that can be used for locating sub-harnesses rather than elements.
@@ -12980,29 +13546,30 @@ For example, consider a menu build using the popup from above:
 
 ```typescript
 @Directive({
-  selector: 'my-menu-item'
+  selector: "my-menu-item",
 })
 class MyMenuItem {}
 
 @Component({
-  selector: 'my-menu',
+  selector: "my-menu",
   template: `
     <my-popup>
       <ng-content></ng-content>
     </my-popup>
-  `
+  `,
 })
 class MyMenu {
-  triggerText = input('');
+  triggerText = input("");
 
   @ContentChildren(MyMenuItem) items: QueryList<MyMenuItem>;
 }
 ```
+
 The harness for `MyMenu` can then take advantage of other harnesses for `MyPopup` and `MyMenuItem`:
 
 ```typescript
 class MyMenuHarness extends ComponentHarness {
-  static hostSelector = 'my-menu';
+  static hostSelector = "my-menu";
 
   protected getPopupHarness = this.locatorFor(MyPopupHarness);
 
@@ -13017,9 +13584,10 @@ class MyMenuHarness extends ComponentHarness {
 }
 
 class MyMenuItemHarness extends ComponentHarness {
-  static hostSelector = 'my-menu-item';
+  static hostSelector = "my-menu-item";
 }
 ```
+
 ## Filtering harness instances with `HarnessPredicate`
 
 When a page contains multiple instances of a particular component, you may want to filter based on some property of the component to get a particular component instance. For example, you may want a button with some specific text, or a menu with a specific ID. The `HarnessPredicate` class can capture criteria like this for a `ComponentHarness` subclass. While the test author is able to construct `HarnessPredicate` instances manually, it's easier when the `ComponentHarness` subclass provides a helper method to construct predicates for common filters.
@@ -13078,6 +13646,7 @@ class MyMenuItemHarness extends ComponentHarness {
   }
 }
 ```
+
 You can pass a `HarnessPredicate` instead of a `ComponentHarness` class to any of the APIs on `HarnessLoader`, `LocatorFactory`, or `ComponentHarness`. This allows test authors to easily target a particular component instance when creating a harness instance. It also allows the harness author to leverage the same `HarnessPredicate` to enable more powerful APIs on their harness class. For example, consider the `getItems` method on the `MyMenuHarness` shown above. Adding a filtering API allows users of the harness to search for particular menu items:
 
 ```typescript
@@ -13092,6 +13661,7 @@ class MyMenuHarness extends ComponentHarness {
   ...
 }
 ```
+
 ## Creating `HarnessLoader` for elements that use content projection
 
 Some components project additional content into the component's template. See the [content projection guide](guide/components/content-projection) for more information.
@@ -13102,9 +13672,10 @@ For example, the `MyPopupHarness` example from above can extend `ContentContaine
 
 ```typescript
 class MyPopupHarness extends ContentContainerComponentHarness<string> {
-  static hostSelector = 'my-popup';
+  static hostSelector = "my-popup";
 }
 ```
+
 ## Accessing elements outside of the component's host element
 
 There are times when a component harness might need to access elements outside of its corresponding component's host element. For example, code that displays a floating element or pop-up often attaches DOM elements directly to the document body, such as the `Overlay` service in Angular CDK.
@@ -13115,15 +13686,16 @@ Consider if the `MyPopup` component above used the CDK overlay for the popup con
 
 ```typescript
 class MyPopupHarness extends ComponentHarness {
-  static hostSelector = 'my-popup';
+  static hostSelector = "my-popup";
 
   /** Gets a `HarnessLoader` whose root element is the popup's content element. */
   async getHarnessLoaderForContent(): Promise<HarnessLoader> {
     const rootLocator = this.documentRootLocatorFactory();
-    return rootLocator.harnessLoaderFor('my-popup-content');
+    return rootLocator.harnessLoaderFor("my-popup-content");
   }
 }
 ```
+
 ## Waiting for asynchronous tasks
 
 The methods on `TestElement` automatically trigger Angular's change detection and wait for tasks inside the `NgZone`. In most cases no special effort is required for harness authors to wait on asynchronous tasks. However, there are some edge cases where this may not be sufficient.
@@ -13131,20 +13703,21 @@ The methods on `TestElement` automatically trigger Angular's change detection an
 Under some circumstances, Angular animations may require a second cycle of change detection and subsequent `NgZone` stabilization before animation events are fully flushed. In cases where this is needed, the `ComponentHarness` offers a `forceStabilize()` method that can be called to do the second round.
 
 You can use `NgZone.runOutsideAngular()` to schedule tasks outside of NgZone. Call the `waitForTasksOutsideAngular()` method on the corresponding harness if you need to explicitly wait for tasks outside `NgZone` since this does not happen automatically.
+
 # Animating your Application with CSS
 
 CSS offers a robust set of tools for you to create beautiful and engaging animations within your application.
 
 ## How to write animations in native CSS
 
-If you've never written any native CSS animations, there are a number of excellent guides to get you started. Here's a few of them:
-[MDN's CSS Animations guide](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
-[W3Schools CSS3 Animations guide](https://www.w3schools.com/css/css3_animations.asp)
-[The Complete CSS Animations Tutorial](https://www.lambdatest.com/blog/css-animations-tutorial/)
+If you've never written any native CSS animations, there are a number of excellent guides to get you started. Here's a few of them:  
+[MDN's CSS Animations guide](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)  
+[W3Schools CSS3 Animations guide](https://www.w3schools.com/css/css3_animations.asp)  
+[The Complete CSS Animations Tutorial](https://www.lambdatest.com/blog/css-animations-tutorial/)  
 [CSS Animation for Beginners](https://thoughtbot.com/blog/css-animation-for-beginners)
 
-and a couple of videos:
-[Learn CSS Animation in 9 Minutes](https://www.youtube.com/watch?v=z2LQYsZhsFw)
+and a couple of videos:  
+[Learn CSS Animation in 9 Minutes](https://www.youtube.com/watch?v=z2LQYsZhsFw)  
 [Net Ninja CSS Animation Tutorial Playlist](https://www.youtube.com/watch?v=jgw82b5Y2MU&list=PL4cUxeGkcC9iGYgmEd2dm3zAKzyCGDtM5)
 
 Check some of these various guides and tutorials out, and then come back to this guide.
@@ -13256,14 +13829,14 @@ Applying this class to an element prevents any animation from firing on that ele
 
 If you have actions you would like to execute at certain points during animations, there are a number of available events you can listen to. Here's a few of them.
 
-[`OnAnimationStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationstart_event)
-[`OnAnimationEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event)
-[`OnAnimationIteration`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationitration_event)
+[`OnAnimationStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationstart_event)  
+[`OnAnimationEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event)  
+[`OnAnimationIteration`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationitration_event)  
 [`OnAnimationCancel`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationcancel_event)
 
-[`OnTransitionStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionstart_event)
-[`OnTransitionRun`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionrun_event)
-[`OnTransitionEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event)
+[`OnTransitionStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionstart_event)  
+[`OnTransitionRun`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionrun_event)  
+[`OnTransitionEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event)  
 [`OnTransitionCancel`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitioncancel_event)
 
 The Web Animations API has a lot of additional functionality. [Take a look at the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) to see all the available animation APIs.
@@ -13309,6 +13882,7 @@ Items in a `@for` loop will be removed and re-added, which will fire off animati
 ## Programmatic control of animations
 
 You can retrieve animations off an element directly using [`Element.getAnimations()`](https://developer.mozilla.org/en-US/docs/Web/API/Element/getAnimations). This returns an array of every [`Animation`](https://developer.mozilla.org/en-US/docs/Web/API/Animation) on that element. You can use the `Animation` API to do much more than you could with what the `AnimationPlayer` from the animations package offered. From here you can `cancel()`, `play()`, `pause()`, `reverse()` and much more. This native API should provide everything you need to control your animations.
+
 # Route transition animations
 
 When a user navigates from one route to another, the Angular Router maps the URL path to the relevant component and displays its view. Animating this route transition can greatly enhance the user experience. The Router has support for the View Transitions API when navigating between routes in Chrome/Chromium browsers.
@@ -13345,13 +13919,11 @@ To enable this feature, simply add `withViewTransitions` to the `provideRouter` 
 
 ```ts
 // Standalone bootstrap
-bootstrapApplication(MyApp, {providers: [
-  provideRouter(ROUTES, withViewTransitions()),
-]});
+bootstrapApplication(MyApp, { providers: [provideRouter(ROUTES, withViewTransitions())] });
 
 // NgModule bootstrap
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {enableViewTransitions: true})]
+  imports: [RouterModule.forRoot(routes, { enableViewTransitions: true })],
 })
 export class AppRouting {}
 ```
@@ -13367,22 +13939,22 @@ View transitions can be customized with CSS. We can also instruct the browser to
 ```css
 /* Custom transition */
 @keyframes rotate-out {
- to {
-   transform: rotate(90deg);
- }
+  to {
+    transform: rotate(90deg);
+  }
 }
 @keyframes rotate-in {
- from {
-   transform: rotate(-90deg);
- }
+  from {
+    transform: rotate(-90deg);
+  }
 }
 ::view-transition-old(count),
 ::view-transition-new(count) {
- animation-duration: 200ms;
- animation-name: -ua-view-transition-fade-in, rotate-in;
+  animation-duration: 200ms;
+  animation-name: -ua-view-transition-fade-in, rotate-in;
 }
 ::view-transition-old(count) {
- animation-name: -ua-view-transition-fade-out, rotate-out;
+  animation-name: -ua-view-transition-fade-out, rotate-out;
 }
 ```
 
@@ -13425,17 +13997,17 @@ We’ve recreated some of the great examples from the Chrome Team in Angular for
 
 ### Transitioning elements don’t need to be the same DOM element
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#transitioning_elements_dont_need_to_be_the_same_dom_element)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-dh8npr?file=src%2Fmain.ts)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#transitioning_elements_dont_need_to_be_the_same_dom_element)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-dh8npr?file=src%2Fmain.ts)
 
 ### Custom entry and exit animations
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#custom_entry_and_exit_transitions)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-8kly3o)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#custom_entry_and_exit_transitions)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-8kly3o)
 
 ### Async DOM updates and waiting for content
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#async_dom_updates_and_waiting_for_content)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#async_dom_updates_and_waiting_for_content)
 
 > During this time, the page is frozen, so delays here should be kept to a minimum…in some cases it’s better to avoid the delay altogether, and use the content you already have.
 
@@ -13443,43 +14015,44 @@ The view transition feature in the Angular router does not provide a way to dela
 
 ### Handle multiple view transition styles with view transition types
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#view-transition-types)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-vxzcam)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#view-transition-types)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-vxzcam)
 
 ### Handle multiple view transition styles with a class name on the view transition root (deprecated)
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#changing-on-navigation-type)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-nmnzzg?file=src%2Fmain.ts)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#changing-on-navigation-type)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-nmnzzg?file=src%2Fmain.ts)
 
 ### Transitioning without freezing other animations
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#transitioning-without-freezing)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-76kgww)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#transitioning-without-freezing)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-76kgww)
 
 ### Animating with Javascript
 
-* [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#animating-with-javascript)
-* [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-cklnkm)
+- [Chrome Explainer](https://developer.chrome.com/docs/web-platform/view-transitions/same-document#animating-with-javascript)
+- [Angular Example on StackBlitz](https://stackblitz.com/edit/stackblitz-starters-cklnkm)
 
 ## Native View Transitions Alternative
 
 Animating the transition between routes can also be done with the `@angular/animations` package.
 The animation [triggers and transitions](/guide/animations/transition-and-triggers)
 can be derived from the router state, such as the current URL or `ActivatedRoute`.
+
 # Migrating away from Angular's Animations package
 
 Almost all the features supported by `@angular/animations` have simpler alternatives with native CSS. Consider removing the Angular Animations package from your application, as the package can contribute around 60 kilobytes to your JavaScript bundle. Native CSS animations offer superior performance, as they can benefit from hardware acceleration. Animations defined in the animations package lack that ability. This guide walks through the process of refactoring your code from `@angular/animations` to native CSS animations.
 
 ## How to write animations in native CSS
 
-If you've never written any native CSS animations, there are a number of excellent guides to get you started. Here's a few of them:
-[MDN's CSS Animations guide](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)
-[W3Schools CSS3 Animations guide](https://www.w3schools.com/css/css3_animations.asp)
-[The Complete CSS Animations Tutorial](https://www.lambdatest.com/blog/css-animations-tutorial/)
+If you've never written any native CSS animations, there are a number of excellent guides to get you started. Here's a few of them:  
+[MDN's CSS Animations guide](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_animations/Using_CSS_animations)  
+[W3Schools CSS3 Animations guide](https://www.w3schools.com/css/css3_animations.asp)  
+[The Complete CSS Animations Tutorial](https://www.lambdatest.com/blog/css-animations-tutorial/)  
 [CSS Animation for Beginners](https://thoughtbot.com/blog/css-animation-for-beginners)
 
-and a couple of videos:
-[Learn CSS Animation in 9 Minutes](https://www.youtube.com/watch?v=z2LQYsZhsFw)
+and a couple of videos:  
+[Learn CSS Animation in 9 Minutes](https://www.youtube.com/watch?v=z2LQYsZhsFw)  
 [Net Ninja CSS Animation Tutorial Playlist](https://www.youtube.com/watch?v=jgw82b5Y2MU&list=PL4cUxeGkcC9iGYgmEd2dm3zAKzyCGDtM5)
 
 Check some of these various guides and tutorials out, and then come back to this guide.
@@ -13489,9 +14062,11 @@ Check some of these various guides and tutorials out, and then come back to this
 Just like with the animations package, you can create reusable animations that can be shared across your application. The animations package version of this had you using the `animation()` function in a shared typescript file. The native CSS version of this is similar, but lives in a shared CSS file.
 
 #### With Animations Package
+
 <docs-code header="src/app/animations.ts" path="adev/src/content/examples/animations/src/app/animations.1.ts" visibleRegion="animation-example"/>
 
 #### With Native CSS
+
 <docs-code header="src/app/animations.css" path="adev/src/content/examples/animations/src/app/animations.css" visibleRegion="animation-shared"/>
 
 Adding the class `animated-class` to an element would trigger the animation on that element.
@@ -13503,11 +14078,13 @@ Adding the class `animated-class` to an element would trigger the animation on t
 The animations package allowed you to define various states using the [`state()`](api/animations/state) function within a component. Examples might be an `open` or `closed` state containing the styles for each respective state within the definition. For example:
 
 #### With Animations Package
+
 <docs-code header="src/app/open-close.component.ts" path="adev/src/content/examples/animations/src/app/open-close.component.ts" visibleRegion="state1"/>
 
 This same behavior can be accomplished natively by using CSS classes either using a keyframe animation or transition styling.
 
 #### With Native CSS
+
 <docs-code header="src/app/animations.css" path="adev/src/content/examples/animations/src/app/animations.css" visibleRegion="animation-states"/>
 
 Triggering the `open` or `closed` state is done by toggling classes on the element in your component. You can find examples of how to do this in our [template guide](guide/templates/binding#css-class-and-style-property-bindings).
@@ -13531,7 +14108,9 @@ Similarly, you can use `transition-duration`, `transition-delay`, and `transitio
 The animations package required specifying triggers using the `trigger()` function and nesting all of your states within it. With native CSS, this is unnecessary. Animations can be triggered by toggling CSS styles or classes. Once a class is present on an element, the animation will occur. Removing the class will revert the element back to whatever CSS is defined for that element. This results in significantly less code to do the same animation. Here's an example:
 
 #### With Animations Package
+
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/open-close.component.ts">
     <docs-code header="src/app/open-close.component.ts" path="adev/src/content/examples/animations/src/app/native-css/open-close.component.ts" />
     <docs-code header="src/app/open-close.component.html" path="adev/src/content/examples/animations/src/app/native-css/open-close.component.html" />
@@ -13551,9 +14130,11 @@ These state matching patterns are not needed at all when animating with CSS dire
 The animations package offers the ability to animate things that have been historically difficult to animate, like animating a set height to `height: auto`. You can now do this with pure CSS as well.
 
 #### With Animations Package
+
 You can use css-grid to animate to auto height.
 
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/auto-height.component.ts">
     <docs-code header="src/app/auto-height.component.ts" path="adev/src/content/examples/animations/src/app/native-css/auto-height.component.ts" />
     <docs-code header="src/app/auto-height.component.html" path="adev/src/content/examples/animations/src/app/native-css/auto-height.component.html" />
@@ -13567,9 +14148,11 @@ If you don't have to worry about supporting all browsers, you can also check out
 The animations package offered the previously mentioned pattern matching for entering and leaving but also included the shorthand aliases of `:enter` and `:leave`.
 
 #### With Animations Package
+
 Here's how the same thing can be accomplished without the animations package.
 
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/insert.component.ts">
     <docs-code header="src/app/insert.component.ts" path="adev/src/content/examples/animations/src/app/native-css/insert.component.ts" />
     <docs-code header="src/app/insert.component.html" path="adev/src/content/examples/animations/src/app/native-css/insert.component.html" />
@@ -13579,6 +14162,7 @@ Here's how the same thing can be accomplished without the animations package.
 Leaving a view is slightly more complex. The element removal needs to be delayed until the exit animation is complete. This requires a bit of extra code in your component class to accomplish.
 
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/remove.component.ts">
     <docs-code header="src/app/remove.component.ts" path="adev/src/content/examples/animations/src/app/native-css/remove.component.ts" />
     <docs-code header="src/app/remove.component.html" path="adev/src/content/examples/animations/src/app/native-css/remove.component.html" />
@@ -13590,7 +14174,9 @@ Leaving a view is slightly more complex. The element removal needs to be delayed
 Along with the aforementioned `:enter` and `:leave`, there's also `:increment` and `:decrement`. You can animate these also by adding and removing classes. Unlike the animation package built-in aliases, there is no automatic application of classes when the values go up or down. You can apply the appropriate classes programmatically. Here's an example:
 
 #### With Animations Package
+
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/increment-decrement.component.ts">
     <docs-code header="src/app/increment-decrement.component.ts" path="adev/src/content/examples/animations/src/app/native-css/increment-decrement.component.ts" />
     <docs-code header="src/app/increment-decrement.component.html" path="adev/src/content/examples/animations/src/app/native-css/increment-decrement.component.html" />
@@ -13624,14 +14210,14 @@ Applying this class to an element prevents any animation from firing on that ele
 
 The animations package exposed callbacks for you to use in the case that you want to do something when the animation has finished. Native CSS animations also have these callbacks.
 
-[`OnAnimationStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationstart_event)
-[`OnAnimationEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event)
-[`OnAnimationIteration`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationitration_event)
+[`OnAnimationStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationstart_event)  
+[`OnAnimationEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationend_event)  
+[`OnAnimationIteration`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationitration_event)  
 [`OnAnimationCancel`](https://developer.mozilla.org/en-US/docs/Web/API/Element/animationcancel_event)
 
-[`OnTransitionStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionstart_event)
-[`OnTransitionRun`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionrun_event)
-[`OnTransitionEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event)
+[`OnTransitionStart`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionstart_event)  
+[`OnTransitionRun`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionrun_event)  
+[`OnTransitionEnd`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitionend_event)  
 [`OnTransitionCancel`](https://developer.mozilla.org/en-US/docs/Web/API/Element/transitioncancel_event)
 
 The Web Animations API has a lot of additional functionality. [Take a look at the documentation](https://developer.mozilla.org/en-US/docs/Web/API/Web_Animations_API) to see all the available animation APIs.
@@ -13653,7 +14239,9 @@ To toggle classes for child nodes within a template, you can use class and style
 The `stagger()` function allowed you to delay the animation of each item in a list of items by a specified time to create a cascade effect. You can replicate this behavior in native CSS by utilizing `animation-delay` or `transition-delay`. Here is an example of what that CSS might look like.
 
 #### With Animations Package
+
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/stagger.component.ts">
     <docs-code header="src/app/stagger.component.ts" path="adev/src/content/examples/animations/src/app/native-css/stagger.component.ts" />
     <docs-code header="src/app/stagger.component.html" path="adev/src/content/examples/animations/src/app/native-css/stagger.component.html" />
@@ -13677,7 +14265,9 @@ In this example, the `rotate` and `fade-in` animations fire at the same time.
 Items reordering in a list works out of the box using the previously described techniques. No additional special work is required. Items in a `@for` loop will be removed and re-added properly, which will fire off animations using `@starting-styles` for entry animations. Removal animations will require additional code to add the event listener, as seen in the example above.
 
 #### With Animations Package<
+
 #### With Native CSS
+
 <docs-code-multifile preview path="adev/src/content/examples/animations/src/app/native-css/reorder.component.ts">
     <docs-code header="src/app/reorder.component.ts" path="adev/src/content/examples/animations/src/app/native-css/reorder.component.ts" />
     <docs-code header="src/app/reorder.component.html" path="adev/src/content/examples/animations/src/app/native-css/reorder.component.html" />
@@ -13708,14 +14298,12 @@ The API for enabling Zoneless is currently in developer preview. The shape of th
 
 ```typescript
 // standalone bootstrap
-bootstrapApplication(MyApp, {providers: [
-  provideZonelessChangeDetection(),
-]});
+bootstrapApplication(MyApp, { providers: [provideZonelessChangeDetection()] });
 
 // NgModule bootstrap
 platformBrowser().bootstrapModule(AppModule);
 @NgModule({
-  providers: [provideZonelessChangeDetection()]
+  providers: [provideZonelessChangeDetection()],
 })
 export class AppModule {}
 ```
@@ -13770,6 +14358,7 @@ through Angular's render hooks).
 `NgZone.run` and `NgZone.runOutsideAngular` do not need to be removed in order for code to be compatible with
 Zoneless applications. In fact, removing these calls can lead to performance regressions for libraries that
 are used in applications that still rely on ZoneJS.
+
 ### `PendingTasks` for Server Side Rendering (SSR)
 
 If you are using SSR with Angular, you may know that it relies on ZoneJS to help determine when the application
@@ -13820,7 +14409,7 @@ Angular application.
 
 ```typescript
 TestBed.configureTestingModule({
-  providers: [provideZonelessChangeDetection()]
+  providers: [provideZonelessChangeDetection()],
 });
 
 const fixture = TestBed.createComponent(MyComponent);
@@ -13870,27 +14459,32 @@ Start developing with the latest Angular features from our roadmap. This list re
 
 ### Available to experiment with
 
-* [Zoneless change detection](/guide/zoneless)
-* [Resource API](/guide/signals/resource)
-* [httpResource](/api/common/http/httpResource)
+- [Zoneless change detection](/guide/zoneless)
+- [Resource API](/guide/signals/resource)
+- [httpResource](/api/common/http/httpResource)
 
 ### Production ready
 
-* [Linked Signal API](/guide/signals/linked-signal)
-* [Incremental hydration](/guide/incremental-hydration)
-* [Effect API](/api/core/effect)
-* [Event replay with SSR](/api/platform-browser/withEventReplay)
-* [Route-level render mode](/guide/ssr)
+- [Linked Signal API](/guide/signals/linked-signal)
+- [Incremental hydration](/guide/incremental-hydration)
+- [Effect API](/api/core/effect)
+- [Event replay with SSR](/api/platform-browser/withEventReplay)
+- [Route-level render mode](/guide/ssr)
 
 ## Improving the Angular developer experience
 
 ### Developer velocity
+
 ### Improve Angular Material and the CDK
+
 ### Improve tooling
+
 ## Future work, explorations, and prototyping
 
 This section represents explorations and prototyping of potential future projects. A reasonable outcome is to decide that our current solutions are the best options. Other projects may result in RFCs, graduating to in-progress projects, or being deprioritized as the web continues to innovate along with our framework.
+
 ## Completed projects
+
 # Keeping your Angular projects up-to-date
 
 Just like Web and the entire web ecosystem, Angular is continuously improving.
@@ -13902,7 +14496,7 @@ This document contains information and resources to help you keep your Angular a
 For information about our versioning policy and practices —including support and deprecation practices, as well as the release schedule— see [Angular versioning and releases](reference/releases "Angular versioning and releases").
 
 HELPFUL: If you are currently using AngularJS, see [Upgrading from AngularJS](https://angular.io/guide/upgrade "Upgrading from Angular JS").
-*AngularJS* is the name for all v1.x versions of Angular.
+_AngularJS_ is the name for all v1.x versions of Angular.
 
 ## Getting notified of new releases
 
@@ -13910,7 +14504,7 @@ To be notified when new releases are available, follow [@angular](https://x.com/
 
 ## Learning about new features
 
-What's new? What's changed? We share the most important things you need to know on the Angular blog in [release announcements]( https://blog.angular.dev/ "Angular blog - release announcements").
+What's new? What's changed? We share the most important things you need to know on the Angular blog in [release announcements](https://blog.angular.dev/ "Angular blog - release announcements").
 
 To review a complete list of changes, organized by version, see the [Angular change log](https://github.com/angular/angular/blob/main/CHANGELOG.md "Angular change log").
 
@@ -13941,20 +14535,21 @@ It also describes supported update paths.
 
 ## Resource summary
 
-* Release announcements:
-    [Angular blog - release announcements](https://blog.angular.dev/ "Angular blog announcements about recent releases")
+- Release announcements:
+  [Angular blog - release announcements](https://blog.angular.dev/ "Angular blog announcements about recent releases")
 
-* Release details:
-    [Angular change log](https://github.com/angular/angular/blob/main/CHANGELOG.md "Angular change log")
+- Release details:
+  [Angular change log](https://github.com/angular/angular/blob/main/CHANGELOG.md "Angular change log")
 
-* Update instructions:
-    [Angular Update Guide](update-guide)
+- Update instructions:
+  [Angular Update Guide](update-guide)
 
-* Update command reference:
-    [Angular CLI `ng update` command reference](cli/update)
+- Update command reference:
+  [Angular CLI `ng update` command reference](cli/update)
 
-* Versioning, release, support, and deprecation practices:
-    [Angular versioning and releases](reference/releases "Angular versioning and releases")
+- Versioning, release, support, and deprecation practices:
+  [Angular versioning and releases](reference/releases "Angular versioning and releases")
+
 # `HttpClient` security
 
 `HttpClient` includes built-in support for two common HTTP security mechanisms: XSSI protection and XSRF/CSRF protection.
@@ -13980,7 +14575,8 @@ CSRF protection is only needed for requests that can change state on the backend
 To take advantage of this, your server needs to set a token in a JavaScript readable session cookie called `XSRF-TOKEN` on either the page load or the first GET request. On subsequent requests the server can verify that the cookie matches the `X-XSRF-TOKEN` HTTP header, and therefore be sure that only code running on your domain could have sent the request. The token must be unique for each user and must be verifiable by the server; this prevents the client from making up its own tokens. Set the token to a digest of your site's authentication cookie with a salt for added security.
 
 To prevent collisions in environments where multiple Angular apps share the same domain or subdomain, give each application a unique cookie name.
-  Your backend service must be configured to set the cookie for your page, and to verify that the header is present on all eligible requests. Failing to do so renders Angular's default protection ineffective.
+Your backend service must be configured to set the cookie for your page, and to verify that the header is present on all eligible requests. Failing to do so renders Angular's default protection ineffective.
+
 ### Configure custom cookie/header names
 
 If your backend service uses different names for the XSRF token cookie or header, use `withXsrfConfiguration` to override the defaults.
@@ -13992,42 +14588,39 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideHttpClient(
       withXsrfConfiguration({
-        cookieName: 'CUSTOM_XSRF_TOKEN',
-        headerName: 'X-Custom-Xsrf-Header',
-      }),
+        cookieName: "CUSTOM_XSRF_TOKEN",
+        headerName: "X-Custom-Xsrf-Header",
+      })
     ),
-  ]
+  ],
 };
 ```
+
 ### Disabling XSRF protection
 
 If the built-in XSRF protection mechanism doesn't work for your application, you can disable it using the `withNoXsrfProtection` feature:
 
 ```ts
 export const appConfig: ApplicationConfig = {
-  providers: [
-    provideHttpClient(
-      withNoXsrfProtection(),
-    ),
-  ]
+  providers: [provideHttpClient(withNoXsrfProtection())],
 };
 ```
 
 # Angular Internationalization
 
-*Internationalization*, sometimes referenced as i18n, is the process of designing and preparing your project for use in different locales around the world.
-*Localization* is the process of building versions of your project for different locales.
+_Internationalization_, sometimes referenced as i18n, is the process of designing and preparing your project for use in different locales around the world.
+_Localization_ is the process of building versions of your project for different locales.
 The localization process includes the following actions.
 
-* Extract text for translation into different languages
-* Format data for a specific locale
+- Extract text for translation into different languages
+- Format data for a specific locale
 
-A *locale* identifies a region in which people speak a particular language or language variant.
+A _locale_ identifies a region in which people speak a particular language or language variant.
 Possible regions include countries and geographical regions.
 A locale determines the formatting and parsing of the following details.
 
-* Measurement units including date and time, numbers, and currencies
-* Translated names including time zones, languages, and countries
+- Measurement units including date and time, numbers, and currencies
+- Translated names including time zones, languages, and countries
 
 For a quick introduction to localization and internationalization watch this video:
 
