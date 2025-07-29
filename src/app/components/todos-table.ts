@@ -269,7 +269,6 @@ export class TodosTable implements OnInit {
         ...(completed !== 'all' ? { completed } : { completed: null }),
       },
       queryParamsHandling: 'merge',
-      // replaceUrl: true,
     });
   });
 
@@ -288,14 +287,12 @@ export class TodosTable implements OnInit {
   }
 
   onSearch(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const value = input.value.trim();
+    const value = (event.target as HTMLInputElement).value.trim();
     this.searchTerm.set(value);
   }
 
   onFilter(event: Event) {
-    const select = event.target as HTMLSelectElement;
-    const value = select.value;
+    const value = (event.target as HTMLSelectElement).value;
     this.filter.set(value as 'all' | 'completed' | 'not-completed');
   }
 }
